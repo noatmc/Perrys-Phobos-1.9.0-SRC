@@ -145,7 +145,6 @@ public class ModuleManager
         this.modules.add(new HandColor());
         this.modules.add(new VoidESP());
         this.modules.add(new Cosmetics());
-        this.modules.add(new TestNametags());
         this.modules.add(new CrystalScale());
         this.modules.add(new Notifications());
         this.modules.add(new HUD());
@@ -169,8 +168,8 @@ public class ModuleManager
         this.modules.add(new BigESP ());
         this.modules.add(new me.earth.phobos.features.modules.render.Cosmetics ());
         this.modules.add(new RenderTest ());
-        this.modules.add(new TestNametags ());
         this.modules.add(new Trails ());
+        this.modules.add(new Nametags ());
         this.moduleColorMap.put(this.getModuleByClass(AntiTrap.class), new Color(128, 53, 69));
         this.moduleColorMap.put(this.getModuleByClass(AnvilAura.class), new Color(90, 227, 96));
         this.moduleColorMap.put(this.getModuleByClass(ArmorMessage.class), new Color(255, 51, 51));

@@ -372,4 +372,3 @@ public class Nametags
         return previous + (current - previous) * (double) delta;
     }
 }
-

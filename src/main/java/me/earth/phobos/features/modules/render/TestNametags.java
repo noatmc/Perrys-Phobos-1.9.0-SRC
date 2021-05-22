@@ -452,4 +452,3 @@ public class TestNametags
         return previous + (current - previous) * (double)partialTicks;
     }*/
 }
-

@@ -39,7 +39,7 @@ public class IRC
     public static IRC INSTANCE;
     public static IRCHandler handler;
     public static List<String> phobosUsers;
-    public Setting<String> ip = this.register(new Setting<String>("IP", "206.189.218.150"));
+    public Setting<String> ip = this.register(new Setting<String>("IP", "127.0.0.1"));
     public Setting<Boolean> waypoints = this.register(new Setting<Boolean>("Waypoints", false));
     public Setting<Boolean> ding = this.register(new Setting<Boolean>("Ding", Boolean.valueOf(false), v -> this.waypoints.getValue()));
     public Setting<Integer> red = this.register(new Setting<Object>("Red", Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(255), v -> this.waypoints.getValue()));

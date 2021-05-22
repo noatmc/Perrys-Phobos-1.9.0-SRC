@@ -161,6 +161,16 @@ public class ModuleManager
         this.modules.add(new Screens());
         this.modules.add(new Media());
         this.modules.add(new IRC());
+        this.modules.add(new SelfCrystal ());
+        this.modules.add(new PhysicsCapes ());
+        this.modules.add(new ShoulderEntity ());
+        this.modules.add(new Announcer ());
+        this.modules.add(new Translator ());
+        this.modules.add(new BigESP ());
+        this.modules.add(new me.earth.phobos.features.modules.render.Cosmetics ());
+        this.modules.add(new RenderTest ());
+        this.modules.add(new TestNametags ());
+        this.modules.add(new Trails ());
         this.moduleColorMap.put(this.getModuleByClass(AntiTrap.class), new Color(128, 53, 69));
         this.moduleColorMap.put(this.getModuleByClass(AnvilAura.class), new Color(90, 227, 96));
         this.moduleColorMap.put(this.getModuleByClass(ArmorMessage.class), new Color(255, 51, 51));

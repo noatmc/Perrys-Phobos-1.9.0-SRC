@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 public class ReloadSoundCommand
         extends Command {
     public ReloadSoundCommand() {
-        super("sound", new String[0]);
+        super("reloadsound", new String[0]);
     }
 
     @Override

@@ -20,8 +20,8 @@ public class StepOld
     private final double[] threeBlockPositions = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43, 1.78, 1.63, 1.51, 1.9, 2.21, 2.45, 2.43};
     private final double[] fourBlockPositions = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43, 1.78, 1.63, 1.51, 1.9, 2.21, 2.45, 2.43, 2.78, 2.63, 2.51, 2.9, 3.21, 3.45, 3.43};
     public Setting<Boolean> vanilla = this.register(new Setting<Boolean>("Vanilla", false));
-    public Setting<Float> stepHeightVanilla = this.register(new Setting<Object>("VHeight", Float.valueOf(2.0f), Float.valueOf(0.0f), Float.valueOf(4.0f), v -> this.vanilla.getValue()));
-    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", Integer.valueOf(2), Integer.valueOf(1), Integer.valueOf(4), v -> this.vanilla.getValue() == false));
+    public Setting<Float> stepHeightVanilla = this.register(new Setting<Object>("VHeight", Float.valueOf(2.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), v -> this.vanilla.getValue()));
+    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", Integer.valueOf(2), Integer.valueOf(1), Integer.valueOf(5), v -> this.vanilla.getValue() == false));
     public Setting<Boolean> spoof = this.register(new Setting<Object>("Spoof", Boolean.valueOf(true), v -> this.vanilla.getValue() == false));
     public Setting<Integer> ticks = this.register(new Setting<Object>("Delay", Integer.valueOf(3), Integer.valueOf(0), Integer.valueOf(25), v -> this.spoof.getValue() != false && this.vanilla.getValue() == false));
     public Setting<Boolean> turnOff = this.register(new Setting<Object>("Disable", Boolean.valueOf(false), v -> this.vanilla.getValue() == false));

@@ -25,7 +25,6 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.Collections;
 import java.util.Objects;
 
 public class TestNametags

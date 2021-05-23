@@ -3,9 +3,8 @@ package me.earth.phobos.features.modules.player;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import me.earth.phobos.util.Timer;
 
-public class TimerSpeed
+public class Timer
         extends Module {
     public Setting<Boolean> autoOff = this.register(new Setting<Boolean>("AutoOff", false));
     public Setting<Integer> timeLimit = this.register(new Setting<Object>("Limit", Integer.valueOf(250), Integer.valueOf(1), Integer.valueOf(2500), v -> this.autoOff.getValue()));
@@ -16,11 +15,12 @@ public class TimerSpeed
     public Setting<Integer> slowTime = this.register(new Setting<Object>("SlowTime", 20, 1, 500, v -> this.mode.getValue() == TimerMode.SWITCH, "Recover from too fast.(ms * 10)"));
     public Setting<Boolean> startFast = this.register(new Setting<Object>("StartFast", Boolean.valueOf(false), v -> this.mode.getValue() == TimerMode.SWITCH));
     public float speed = 1.0f;
-    private final Timer timer = new Timer();
-    private final Timer turnOffTimer = new Timer();
+    private final me.earth.phobos.util.Timer timer = new me.earth.phobos.util.Timer ();
+    private final me.earth.phobos.util.Timer turnOffTimer = new me.earth.phobos.util.Timer ();
     private boolean fast = false;
 
-    public TimerSpeed() {
+    public
+    Timer () {
         super("Timer", "Will speed up the game.", Module.Category.PLAYER, false, false, false);
     }
 

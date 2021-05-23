@@ -7,9 +7,9 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.TextUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Managers
+public class Management
         extends Module {
-    private static Managers INSTANCE = new Managers();
+    private static Management INSTANCE = new Management ();
     public Setting<Boolean> betterFrames = this.register(new Setting<Boolean>("BetterMaxFPS", false));
     public Setting<String> commandBracket = this.register(new Setting<String>("Bracket", "<"));
     public Setting<String> commandBracket2 = this.register(new Setting<String>("Bracket2", ">"));
@@ -37,14 +37,16 @@ public class Managers
     public Setting<Integer> baritoneTimeOut = this.register(new Setting<Integer>("Baritone", 5, 1, 20));
     public Setting<Boolean> oneChunk = this.register(new Setting<Boolean>("OneChunk", false));
 
-    public Managers() {
+    public
+    Management () {
         super("Management", "ClientManagement", Module.Category.CLIENT, false, false, true);
         this.setInstance();
     }
 
-    public static Managers getInstance() {
+    public static
+    Management getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new Managers();
+            INSTANCE = new Management ();
         }
         return INSTANCE;
     }
@@ -62,7 +64,7 @@ public class Managers
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 2) {
             if (this.oneChunk.getPlannedValue().booleanValue()) {
-                Managers.mc.gameSettings.renderDistanceChunks = 1;
+                Management.mc.gameSettings.renderDistanceChunks = 1;
             }
             if (event.getSetting() != null && this.equals(event.getSetting().getFeature())) {
                 if (event.getSetting().equals(this.holeThread)) {

@@ -4,6 +4,7 @@ import me.earth.phobos.event.events.UpdateWalkingPlayerEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.*;
+import me.earth.phobos.util.Timer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

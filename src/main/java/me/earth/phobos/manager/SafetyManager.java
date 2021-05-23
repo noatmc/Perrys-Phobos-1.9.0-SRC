@@ -1,7 +1,7 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.features.modules.combat.AutoCrystal;
 import me.earth.phobos.util.BlockUtil;
 import me.earth.phobos.util.DamageUtil;
@@ -36,8 +36,8 @@ public class SafetyManager
         if (!SafetyManager.fullNullCheck()) {
             EntityPlayer closest;
             boolean safe = true;
-            EntityPlayer entityPlayer = closest = Managers.getInstance().safety.getValue() != false ? EntityUtil.getClosestEnemy(18.0) : null;
-            if (Managers.getInstance().safety.getValue().booleanValue() && closest == null) {
+            EntityPlayer entityPlayer = closest = Management.getInstance().safety.getValue() != false ? EntityUtil.getClosestEnemy(18.0) : null;
+            if ( Management.getInstance().safety.getValue().booleanValue() && closest == null) {
                 this.SAFE.set(true);
                 return;
             }
@@ -49,7 +49,7 @@ public class SafetyManager
                 break;
             }
             if (safe) {
-                for (BlockPos pos : BlockUtil.possiblePlacePositions(4.0f, false, Managers.getInstance().oneDot15.getValue())) {
+                for (BlockPos pos : BlockUtil.possiblePlacePositions(4.0f, false, Management.getInstance().oneDot15.getValue())) {
                     if (!((double) DamageUtil.calculateDamage(pos, SafetyManager.mc.player) > 4.0) || closest != null && !(closest.getDistanceSq(pos) < 40.0))
                         continue;
                     safe = false;
@@ -77,7 +77,7 @@ public class SafetyManager
 
     public ScheduledExecutorService getService() {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(this, 0L, Managers.getInstance().safetyCheck.getValue().intValue(), TimeUnit.MILLISECONDS);
+        service.scheduleAtFixedRate(this, 0L, Management.getInstance().safetyCheck.getValue().intValue(), TimeUnit.MILLISECONDS);
         return service;
     }
 }

@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ServerModule
+public class PingBypass
         extends Module {
-    private static ServerModule instance;
+    private static PingBypass instance;
     private final AtomicBoolean connected = new AtomicBoolean(false);
     private final Timer pingTimer = new Timer();
     private final List<Long> pingList = new ArrayList<Long>();
@@ -38,14 +38,16 @@ public class ServerModule
     private long averagePing = 0L;
     private String serverPrefix = "idk";
 
-    public ServerModule() {
+    public
+    PingBypass () {
         super("PingBypass", "Manages Phobos`s internal Server", Module.Category.CLIENT, false, false, true);
         instance = this;
     }
 
-    public static ServerModule getInstance() {
+    public static
+    PingBypass getInstance() {
         if (instance == null) {
-            instance = new ServerModule();
+            instance = new PingBypass ();
         }
         return instance;
     }
@@ -89,7 +91,7 @@ public class ServerModule
                 mc.getConnection().sendPacket(new CPacketChatMessage("@Servername"));
                 this.getName.setValue(false);
             }
-            if (this.serverPrefix.equalsIgnoreCase("idk") && ServerModule.mc.world != null) {
+            if (this.serverPrefix.equalsIgnoreCase("idk") && PingBypass.mc.world != null) {
                 mc.getConnection().sendPacket(new CPacketChatMessage("@Servergetprefix"));
             }
             if (this.pingTimer.passedMs(this.delay.getValue() * 1000)) {

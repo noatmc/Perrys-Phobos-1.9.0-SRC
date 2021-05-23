@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class Tracer
+public class Tracers
         extends Module {
     public Setting<Boolean> players = this.register(new Setting<Boolean>("Players", true));
     public Setting<Boolean> mobs = this.register(new Setting<Boolean>("Mobs", false));
@@ -26,17 +26,18 @@ public class Tracer
     public Setting<Integer> distance = this.register(new Setting<Integer>("Radius", 300, 0, 300));
     public Setting<Boolean> crystalCheck = this.register(new Setting<Boolean>("CrystalCheck", false));
 
-    public Tracer() {
+    public
+    Tracers () {
         super("Tracers", "Draws lines to other players.", Module.Category.RENDER, false, false, false);
     }
 
     @Override
     public void onRender3D(Render3DEvent event) {
-        if (Tracer.fullNullCheck()) {
+        if ( Tracers.fullNullCheck()) {
             return;
         }
         GlStateManager.pushMatrix();
-        Tracer.mc.world.loadedEntityList.stream().filter(EntityUtil::isLiving).filter(entity -> entity instanceof EntityPlayer ? this.players.getValue().booleanValue() && Tracer.mc.player != entity : (EntityUtil.isPassive(entity) ? this.animals.getValue().booleanValue() : this.mobs.getValue().booleanValue())).filter(entity -> Tracer.mc.player.getDistanceSq(entity) < MathUtil.square(this.distance.getValue().intValue())).filter(entity -> this.invisibles.getValue() != false || !entity.isInvisible()).forEach(entity -> {
+        Tracers.mc.world.loadedEntityList.stream().filter(EntityUtil::isLiving).filter( entity -> entity instanceof EntityPlayer ? this.players.getValue().booleanValue() && Tracers.mc.player != entity : (EntityUtil.isPassive(entity) ? this.animals.getValue().booleanValue() : this.mobs.getValue().booleanValue())).filter( entity -> Tracers.mc.player.getDistanceSq(entity) < MathUtil.square(this.distance.getValue().intValue())).filter( entity -> this.invisibles.getValue() != false || !entity.isInvisible()).forEach( entity -> {
             float[] colour = this.getColorByDistance(entity);
             this.drawLineToEntity(entity, colour[0], colour[1], colour[2], colour[3]);
         });
@@ -48,9 +49,9 @@ public class Tracer
     }
 
     public double[] interpolate(Entity entity) {
-        double posX = this.interpolate(entity.posX, entity.lastTickPosX) - Tracer.mc.getRenderManager().renderPosX;
-        double posY = this.interpolate(entity.posY, entity.lastTickPosY) - Tracer.mc.getRenderManager().renderPosY;
-        double posZ = this.interpolate(entity.posZ, entity.lastTickPosZ) - Tracer.mc.getRenderManager().renderPosZ;
+        double posX = this.interpolate(entity.posX, entity.lastTickPosX) - Tracers.mc.getRenderManager().renderPosX;
+        double posY = this.interpolate(entity.posY, entity.lastTickPosY) - Tracers.mc.getRenderManager().renderPosY;
+        double posZ = this.interpolate(entity.posZ, entity.lastTickPosZ) - Tracers.mc.getRenderManager().renderPosZ;
         return new double[]{posX, posY, posZ};
     }
 
@@ -60,9 +61,9 @@ public class Tracer
     }
 
     public void drawLine(double posx, double posy, double posz, double up, float red, float green, float blue, float opacity) {
-        Vec3d eyes = new Vec3d(0.0, 0.0, 1.0).rotatePitch(-((float) Math.toRadians(Tracer.mc.player.rotationPitch))).rotateYaw(-((float) Math.toRadians(Tracer.mc.player.rotationYaw)));
+        Vec3d eyes = new Vec3d(0.0, 0.0, 1.0).rotatePitch(-((float) Math.toRadians( Tracers.mc.player.rotationPitch))).rotateYaw(-((float) Math.toRadians( Tracers.mc.player.rotationYaw)));
         if (!this.drawFromSky.getValue().booleanValue()) {
-            this.drawLineFromPosToPos(eyes.x, eyes.y + (double) Tracer.mc.player.getEyeHeight(), eyes.z, posx, posy, posz, up, red, green, blue, opacity);
+            this.drawLineFromPosToPos(eyes.x, eyes.y + (double) Tracers.mc.player.getEyeHeight(), eyes.z, posx, posy, posz, up, red, green, blue, opacity);
         } else {
             this.drawLineFromPosToPos(posx, 256.0, posz, posx, posy, posz, up, red, green, blue, opacity);
         }
@@ -78,7 +79,7 @@ public class Tracer
         GL11.glColor4f(red, green, blue, opacity);
         GlStateManager.disableLighting();
         GL11.glLoadIdentity();
-        Tracer.mc.entityRenderer.orientCamera(mc.getRenderPartialTicks());
+        Tracers.mc.entityRenderer.orientCamera(mc.getRenderPartialTicks());
         GL11.glBegin(1);
         GL11.glVertex3d(posx, posy, posz);
         GL11.glVertex3d(posx2, posy2, posz2);
@@ -97,7 +98,7 @@ public class Tracer
             return new float[]{0.0f, 0.5f, 1.0f, 1.0f};
         }
         AutoCrystal autoCrystal = Phobos.moduleManager.getModuleByClass(AutoCrystal.class);
-        Color col = new Color(Color.HSBtoRGB((float) (Math.max(0.0, Math.min(Tracer.mc.player.getDistanceSq(entity), this.crystalCheck.getValue() != false ? (double) (autoCrystal.placeRange.getValue().floatValue() * autoCrystal.placeRange.getValue().floatValue()) : 2500.0) / (double) (this.crystalCheck.getValue() != false ? autoCrystal.placeRange.getValue().floatValue() * autoCrystal.placeRange.getValue().floatValue() : 2500.0f)) / 3.0), 1.0f, 0.8f) | 0xFF000000);
+        Color col = new Color(Color.HSBtoRGB((float) (Math.max(0.0, Math.min( Tracers.mc.player.getDistanceSq(entity), this.crystalCheck.getValue() != false ? (double) (autoCrystal.placeRange.getValue().floatValue() * autoCrystal.placeRange.getValue().floatValue()) : 2500.0) / (double) (this.crystalCheck.getValue() != false ? autoCrystal.placeRange.getValue().floatValue() * autoCrystal.placeRange.getValue().floatValue() : 2500.0f)) / 3.0), 1.0f, 0.8f) | 0xFF000000);
         return new float[]{(float) col.getRed() / 255.0f, (float) col.getGreen() / 255.0f, (float) col.getBlue() / 255.0f, 1.0f};
     }
 }

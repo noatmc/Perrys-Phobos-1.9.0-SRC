@@ -1,7 +1,7 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.util.Timer;
 
 import java.text.DecimalFormat;
@@ -22,7 +22,7 @@ public class ServerManager
     }
 
     public boolean isServerNotResponding() {
-        return this.timer.passedMs(Managers.getInstance().respondTime.getValue().intValue());
+        return this.timer.passedMs( Management.getInstance().respondTime.getValue().intValue());
     }
 
     public long serverRespondingTime() {

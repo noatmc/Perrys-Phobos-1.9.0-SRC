@@ -1,7 +1,7 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.features.modules.combat.HoleFiller;
 import me.earth.phobos.features.modules.movement.HoleTP;
 import me.earth.phobos.features.modules.render.HoleESP;
@@ -34,11 +34,11 @@ public class HoleManager
     private Thread thread;
 
     public void update() {
-        if (Managers.getInstance().holeThread.getValue() == Managers.ThreadMode.WHILE) {
-            if (this.thread == null || this.thread.isInterrupted() || !this.thread.isAlive() || this.syncTimer.passedMs(Managers.getInstance().holeSync.getValue().intValue())) {
+        if ( Management.getInstance().holeThread.getValue() == Management.ThreadMode.WHILE) {
+            if (this.thread == null || this.thread.isInterrupted() || !this.thread.isAlive() || this.syncTimer.passedMs( Management.getInstance().holeSync.getValue().intValue())) {
                 if (this.thread == null) {
                     this.thread = new Thread(this);
-                } else if (this.syncTimer.passedMs(Managers.getInstance().holeSync.getValue().intValue()) && !this.shouldInterrupt.get()) {
+                } else if (this.syncTimer.passedMs( Management.getInstance().holeSync.getValue().intValue()) && !this.shouldInterrupt.get()) {
                     this.shouldInterrupt.set(true);
                     this.syncTimer.reset();
                     return;
@@ -55,15 +55,15 @@ public class HoleManager
                     this.syncTimer.reset();
                 }
             }
-        } else if (Managers.getInstance().holeThread.getValue() == Managers.ThreadMode.WHILE) {
-            if (this.executorService == null || this.executorService.isTerminated() || this.executorService.isShutdown() || this.syncTimer.passedMs(10000L) || this.lastUpdates != Managers.getInstance().holeUpdates.getValue()) {
-                this.lastUpdates = Managers.getInstance().holeUpdates.getValue();
+        } else if ( Management.getInstance().holeThread.getValue() == Management.ThreadMode.WHILE) {
+            if (this.executorService == null || this.executorService.isTerminated() || this.executorService.isShutdown() || this.syncTimer.passedMs(10000L) || this.lastUpdates != Management.getInstance().holeUpdates.getValue()) {
+                this.lastUpdates = Management.getInstance().holeUpdates.getValue();
                 if (this.executorService != null) {
                     this.executorService.shutdown();
                 }
                 this.executorService = this.getExecutor();
             }
-        } else if (this.holeTimer.passedMs(Managers.getInstance().holeUpdates.getValue().intValue()) && !HoleManager.fullNullCheck() && (HoleESP.getInstance().isOn() || HoleFiller.getInstance().isOn() || HoleTP.getInstance().isOn())) {
+        } else if (this.holeTimer.passedMs( Management.getInstance().holeUpdates.getValue().intValue()) && !HoleManager.fullNullCheck() && (HoleESP.getInstance().isOn() || HoleFiller.getInstance().isOn() || HoleTP.getInstance().isOn())) {
             this.holes = this.calcHoles();
             this.holeTimer.reset();
         }
@@ -80,13 +80,13 @@ public class HoleManager
 
     private ScheduledExecutorService getExecutor() {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(this, 0L, Managers.getInstance().holeUpdates.getValue().intValue(), TimeUnit.MILLISECONDS);
+        service.scheduleAtFixedRate(this, 0L, Management.getInstance().holeUpdates.getValue().intValue(), TimeUnit.MILLISECONDS);
         return service;
     }
 
     @Override
     public void run() {
-        if (Managers.getInstance().holeThread.getValue() == Managers.ThreadMode.WHILE) {
+        if ( Management.getInstance().holeThread.getValue() == Management.ThreadMode.WHILE) {
             while (true) {
                 if (this.shouldInterrupt.get()) {
                     this.shouldInterrupt.set(false);
@@ -98,14 +98,14 @@ public class HoleManager
                     this.holes = this.calcHoles();
                 }
                 try {
-                    Thread.sleep(Managers.getInstance().holeUpdates.getValue().intValue());
+                    Thread.sleep( Management.getInstance().holeUpdates.getValue().intValue());
                 } catch (InterruptedException e) {
                     this.thread.interrupt();
                     e.printStackTrace();
                 }
             }
         }
-        if (Managers.getInstance().holeThread.getValue() == Managers.ThreadMode.POOL && !HoleManager.fullNullCheck() && (HoleESP.getInstance().isOn() || HoleFiller.getInstance().isOn())) {
+        if ( Management.getInstance().holeThread.getValue() == Management.ThreadMode.POOL && !HoleManager.fullNullCheck() && (HoleESP.getInstance().isOn() || HoleFiller.getInstance().isOn())) {
             this.holes = this.calcHoles();
         }
     }
@@ -126,7 +126,7 @@ public class HoleManager
     public List<BlockPos> calcHoles() {
         ArrayList<BlockPos> safeSpots = new ArrayList<BlockPos>();
         this.midSafety.clear();
-        List<BlockPos> positions = BlockUtil.getSphere(EntityUtil.getPlayerPos(HoleManager.mc.player), Managers.getInstance().holeRange.getValue().floatValue(), Managers.getInstance().holeRange.getValue().intValue(), false, true, 0);
+        List<BlockPos> positions = BlockUtil.getSphere(EntityUtil.getPlayerPos(HoleManager.mc.player), Management.getInstance().holeRange.getValue().floatValue(), Management.getInstance().holeRange.getValue().intValue(), false, true, 0);
         for (BlockPos pos : positions) {
             if (!HoleManager.mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR) || !HoleManager.mc.world.getBlockState(pos.add(0, 1, 0)).getBlock().equals(Blocks.AIR) || !HoleManager.mc.world.getBlockState(pos.add(0, 2, 0)).getBlock().equals(Blocks.AIR))
                 continue;

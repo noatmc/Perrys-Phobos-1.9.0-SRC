@@ -21,9 +21,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TestPhase
+public class Packetfly
         extends Module {
-    private static TestPhase instance;
+    private static Packetfly instance;
     private final Set<CPacketPlayer> packets = new ConcurrentSet();
     private final Map<Integer, IDtime> teleportmap = new ConcurrentHashMap<Integer, IDtime>();
     public Setting<Boolean> flight = this.register(new Setting<Boolean>("Flight", true));
@@ -47,14 +47,16 @@ public class TestPhase
     private int flightCounter = 0;
     private int teleportID = 0;
 
-    public TestPhase() {
+    public
+    Packetfly () {
         super("Packetfly", "Uses packets to fly!", Module.Category.MOVEMENT, true, false, false);
         instance = this;
     }
 
-    public static TestPhase getInstance() {
+    public static
+    Packetfly getInstance() {
         if (instance == null) {
-            instance = new TestPhase();
+            instance = new Packetfly ();
         }
         return instance;
     }
@@ -73,30 +75,30 @@ public class TestPhase
         if (event.getStage() == 1) {
             return;
         }
-        TestPhase.mc.player.setVelocity(0.0, 0.0, 0.0);
+        Packetfly.mc.player.setVelocity(0.0, 0.0, 0.0);
         double speed = 0.0;
         boolean checkCollisionBoxes = this.checkHitBoxes();
-        speed = TestPhase.mc.player.movementInput.jump && (checkCollisionBoxes || !EntityUtil.isMoving()) ? (this.flight.getValue().booleanValue() && !checkCollisionBoxes ? (this.flightMode.getValue() == 0 ? (this.resetCounter(10) ? -0.032 : 0.062) : (this.resetCounter(20) ? -0.032 : 0.062)) : 0.062) : (TestPhase.mc.player.movementInput.sneak ? -0.062 : (!checkCollisionBoxes ? (this.resetCounter(4) ? (this.flight.getValue().booleanValue() ? -0.04 : 0.0) : 0.0) : 0.0));
+        speed = Packetfly.mc.player.movementInput.jump && (checkCollisionBoxes || !EntityUtil.isMoving()) ? (this.flight.getValue().booleanValue() && !checkCollisionBoxes ? (this.flightMode.getValue() == 0 ? (this.resetCounter(10) ? -0.032 : 0.062) : (this.resetCounter(20) ? -0.032 : 0.062)) : 0.062) : ( Packetfly.mc.player.movementInput.sneak ? -0.062 : (!checkCollisionBoxes ? (this.resetCounter(4) ? (this.flight.getValue().booleanValue() ? -0.04 : 0.0) : 0.0) : 0.0));
         if (this.doAntiFactor.getValue().booleanValue() && checkCollisionBoxes && EntityUtil.isMoving() && speed != 0.0) {
             speed /= this.antiFactor.getValue().doubleValue();
         }
         double[] strafing = this.getMotion(this.strafeFactor.getValue() != false && checkCollisionBoxes ? 0.031 : 0.26);
         for (int i = 1; i < this.loops.getValue() + 1; ++i) {
-            TestPhase.mc.player.motionX = strafing[0] * (double) i * this.extraFactor.getValue();
-            TestPhase.mc.player.motionY = speed * (double) i;
-            TestPhase.mc.player.motionZ = strafing[1] * (double) i * this.extraFactor.getValue();
-            this.sendPackets(TestPhase.mc.player.motionX, TestPhase.mc.player.motionY, TestPhase.mc.player.motionZ, this.sendTeleport.getValue());
+            Packetfly.mc.player.motionX = strafing[0] * (double) i * this.extraFactor.getValue();
+            Packetfly.mc.player.motionY = speed * (double) i;
+            Packetfly.mc.player.motionZ = strafing[1] * (double) i * this.extraFactor.getValue();
+            this.sendPackets( Packetfly.mc.player.motionX, Packetfly.mc.player.motionY, Packetfly.mc.player.motionZ, this.sendTeleport.getValue());
         }
     }
 
     @SubscribeEvent
     public void onMove(MoveEvent event) {
         if (this.setMove.getValue().booleanValue() && this.flightCounter != 0) {
-            event.setX(TestPhase.mc.player.motionX);
-            event.setY(TestPhase.mc.player.motionY);
-            event.setZ(TestPhase.mc.player.motionZ);
+            event.setX( Packetfly.mc.player.motionX);
+            event.setY( Packetfly.mc.player.motionY);
+            event.setZ( Packetfly.mc.player.motionZ);
             if (this.nocliperino.getValue().booleanValue() && this.checkHitBoxes()) {
-                TestPhase.mc.player.noClip = true;
+                Packetfly.mc.player.noClip = true;
             }
         }
     }
@@ -118,15 +120,15 @@ public class TestPhase
 
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
-        if (event.getPacket() instanceof SPacketPlayerPosLook && !TestPhase.fullNullCheck()) {
+        if (event.getPacket() instanceof SPacketPlayerPosLook && ! Packetfly.fullNullCheck()) {
             BlockPos pos;
             SPacketPlayerPosLook packet = event.getPacket();
-            if (TestPhase.mc.player.isEntityAlive() && TestPhase.mc.world.isBlockLoaded(pos = new BlockPos(TestPhase.mc.player.posX, TestPhase.mc.player.posY, TestPhase.mc.player.posZ), false) && !(TestPhase.mc.currentScreen instanceof GuiDownloadTerrain) && this.clearIDs.getValue().booleanValue()) {
+            if ( Packetfly.mc.player.isEntityAlive() && Packetfly.mc.world.isBlockLoaded(pos = new BlockPos( Packetfly.mc.player.posX, Packetfly.mc.player.posY, Packetfly.mc.player.posZ), false) && !( Packetfly.mc.currentScreen instanceof GuiDownloadTerrain) && this.clearIDs.getValue().booleanValue()) {
                 this.teleportmap.remove(packet.getTeleportId());
             }
             if (this.setYaw.getValue().booleanValue()) {
-                packet.yaw = TestPhase.mc.player.rotationYaw;
-                packet.pitch = TestPhase.mc.player.rotationPitch;
+                packet.yaw = Packetfly.mc.player.rotationYaw;
+                packet.pitch = Packetfly.mc.player.rotationPitch;
             }
             if (this.setID.getValue().booleanValue()) {
                 this.teleportID = packet.getTeleportId();
@@ -135,7 +137,7 @@ public class TestPhase
     }
 
     private boolean checkHitBoxes() {
-        return !TestPhase.mc.world.getCollisionBoxes(TestPhase.mc.player, TestPhase.mc.player.getEntityBoundingBox().expand(-0.0625, -0.0625, -0.0625)).isEmpty();
+        return ! Packetfly.mc.world.getCollisionBoxes( Packetfly.mc.player, Packetfly.mc.player.getEntityBoundingBox().expand(-0.0625, -0.0625, -0.0625)).isEmpty();
     }
 
     private boolean resetCounter(int counter) {
@@ -147,9 +149,9 @@ public class TestPhase
     }
 
     private double[] getMotion(double speed) {
-        float moveForward = TestPhase.mc.player.movementInput.moveForward;
-        float moveStrafe = TestPhase.mc.player.movementInput.moveStrafe;
-        float rotationYaw = TestPhase.mc.player.prevRotationYaw + (TestPhase.mc.player.rotationYaw - TestPhase.mc.player.prevRotationYaw) * mc.getRenderPartialTicks();
+        float moveForward = Packetfly.mc.player.movementInput.moveForward;
+        float moveStrafe = Packetfly.mc.player.movementInput.moveStrafe;
+        float rotationYaw = Packetfly.mc.player.prevRotationYaw + ( Packetfly.mc.player.rotationYaw - Packetfly.mc.player.prevRotationYaw) * mc.getRenderPartialTicks();
         if (moveForward != 0.0f) {
             if (moveStrafe > 0.0f) {
                 rotationYaw += (float) (moveForward > 0.0f ? -45 : 45);
@@ -170,21 +172,21 @@ public class TestPhase
 
     private void sendPackets(double x, double y, double z, boolean teleport) {
         Vec3d vec = new Vec3d(x, y, z);
-        Vec3d position = TestPhase.mc.player.getPositionVector().add(vec);
+        Vec3d position = Packetfly.mc.player.getPositionVector().add(vec);
         Vec3d outOfBoundsVec = this.outOfBoundsVec(vec, position);
-        this.packetSender(new CPacketPlayer.Position(position.x, position.y, position.z, TestPhase.mc.player.onGround));
+        this.packetSender(new CPacketPlayer.Position(position.x, position.y, position.z, Packetfly.mc.player.onGround));
         if (this.invalidPacket.getValue().booleanValue()) {
-            this.packetSender(new CPacketPlayer.Position(outOfBoundsVec.x, outOfBoundsVec.y, outOfBoundsVec.z, TestPhase.mc.player.onGround));
+            this.packetSender(new CPacketPlayer.Position(outOfBoundsVec.x, outOfBoundsVec.y, outOfBoundsVec.z, Packetfly.mc.player.onGround));
         }
         if (this.setPos.getValue().booleanValue()) {
-            TestPhase.mc.player.setPosition(position.x, position.y, position.z);
+            Packetfly.mc.player.setPosition(position.x, position.y, position.z);
         }
         this.teleportPacket(position, teleport);
     }
 
     private void teleportPacket(Vec3d pos, boolean shouldTeleport) {
         if (shouldTeleport) {
-            TestPhase.mc.player.connection.sendPacket(new CPacketConfirmTeleport(++this.teleportID));
+            Packetfly.mc.player.connection.sendPacket(new CPacketConfirmTeleport(++this.teleportID));
             this.teleportmap.put(this.teleportID, new IDtime(pos, new Timer()));
         }
     }
@@ -195,7 +197,7 @@ public class TestPhase
 
     private void packetSender(CPacketPlayer packet) {
         this.packets.add(packet);
-        TestPhase.mc.player.connection.sendPacket(packet);
+        Packetfly.mc.player.connection.sendPacket(packet);
     }
 
     private void clean() {

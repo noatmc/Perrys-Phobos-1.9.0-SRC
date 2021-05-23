@@ -2,7 +2,7 @@ package me.earth.phobos.mixin.mixins;
 
 import me.earth.phobos.event.events.RenderEntityModelEvent;
 import me.earth.phobos.features.modules.client.Colors;
-import me.earth.phobos.features.modules.render.CrystalScale;
+import me.earth.phobos.features.modules.render.CrystalModifier;
 import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.RenderUtil;
 import net.minecraft.client.model.ModelBase;
@@ -29,18 +29,18 @@ public class MixinRenderEnderCrystal {
 
     @Redirect(method={"doRender"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V"))
     public void renderModelBaseHook(ModelBase model, Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        if (CrystalScale.INSTANCE.isEnabled()) {
-            if (CrystalScale.INSTANCE.animateScale.getValue().booleanValue() && CrystalScale.INSTANCE.scaleMap.containsKey((Object)((EntityEnderCrystal)entity))) {
-                GlStateManager.scale((float)CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue(), (float)CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue(), (float)CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue());
+        if ( CrystalModifier.INSTANCE.isEnabled()) {
+            if ( CrystalModifier.INSTANCE.animateScale.getValue().booleanValue() && CrystalModifier.INSTANCE.scaleMap.containsKey((Object)((EntityEnderCrystal)entity))) {
+                GlStateManager.scale((float) CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue(), (float) CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue(), (float) CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue());
             } else {
-                GlStateManager.scale((float)CrystalScale.INSTANCE.scale.getValue().floatValue(), (float)CrystalScale.INSTANCE.scale.getValue().floatValue(), (float)CrystalScale.INSTANCE.scale.getValue().floatValue());
+                GlStateManager.scale((float) CrystalModifier.INSTANCE.scale.getValue().floatValue(), (float) CrystalModifier.INSTANCE.scale.getValue().floatValue(), (float) CrystalModifier.INSTANCE.scale.getValue().floatValue());
             }
         }
-        if (CrystalScale.INSTANCE.isEnabled() && CrystalScale.INSTANCE.wireframe.getValue().booleanValue()) {
+        if ( CrystalModifier.INSTANCE.isEnabled() && CrystalModifier.INSTANCE.wireframe.getValue().booleanValue()) {
             RenderEntityModelEvent event = new RenderEntityModelEvent(0, model, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-            CrystalScale.INSTANCE.onRenderModel(event);
+            CrystalModifier.INSTANCE.onRenderModel(event);
         }
-        if (CrystalScale.INSTANCE.isEnabled() && CrystalScale.INSTANCE.chams.getValue().booleanValue()) {
+        if ( CrystalModifier.INSTANCE.isEnabled() && CrystalModifier.INSTANCE.chams.getValue().booleanValue()) {
             GL11.glPushAttrib((int)1048575);
             GL11.glDisable((int)3008);
             GL11.glDisable((int)3553);
@@ -49,48 +49,48 @@ public class MixinRenderEnderCrystal {
             GL11.glBlendFunc((int)770, (int)771);
             GL11.glLineWidth((float)1.5f);
             GL11.glEnable((int)2960);
-            if (CrystalScale.INSTANCE.rainbow.getValue().booleanValue()) {
-                Color rainbowColor1 = CrystalScale.INSTANCE.colorSync.getValue() != false ? Colors.INSTANCE.getCurrentColor() : new Color(RenderUtil.getRainbow(CrystalScale.INSTANCE.speed.getValue() * 100, 0, (float)CrystalScale.INSTANCE.saturation.getValue().intValue() / 100.0f, (float)CrystalScale.INSTANCE.brightness.getValue().intValue() / 100.0f));
-                Color rainbowColor = EntityUtil.getColor(entity, rainbowColor1.getRed(), rainbowColor1.getGreen(), rainbowColor1.getBlue(), CrystalScale.INSTANCE.alpha.getValue(), true);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+            if ( CrystalModifier.INSTANCE.rainbow.getValue().booleanValue()) {
+                Color rainbowColor1 = CrystalModifier.INSTANCE.colorSync.getValue() != false ? Colors.INSTANCE.getCurrentColor() : new Color(RenderUtil.getRainbow( CrystalModifier.INSTANCE.speed.getValue() * 100, 0, (float) CrystalModifier.INSTANCE.saturation.getValue().intValue() / 100.0f, (float) CrystalModifier.INSTANCE.brightness.getValue().intValue() / 100.0f));
+                Color rainbowColor = EntityUtil.getColor(entity, rainbowColor1.getRed(), rainbowColor1.getGreen(), rainbowColor1.getBlue(), CrystalModifier.INSTANCE.alpha.getValue(), true);
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glDisable((int)2929);
                     GL11.glDepthMask((boolean)false);
                 }
                 GL11.glEnable((int)10754);
-                GL11.glColor4f((float)((float)rainbowColor.getRed() / 255.0f), (float)((float)rainbowColor.getGreen() / 255.0f), (float)((float)rainbowColor.getBlue() / 255.0f), (float)((float)CrystalScale.INSTANCE.alpha.getValue().intValue() / 255.0f));
+                GL11.glColor4f((float)((float)rainbowColor.getRed() / 255.0f), (float)((float)rainbowColor.getGreen() / 255.0f), (float)((float)rainbowColor.getBlue() / 255.0f), (float)((float) CrystalModifier.INSTANCE.alpha.getValue().intValue() / 255.0f));
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glEnable((int)2929);
                     GL11.glDepthMask((boolean)true);
                 }
-            } else if (CrystalScale.INSTANCE.xqz.getValue().booleanValue() && CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+            } else if ( CrystalModifier.INSTANCE.xqz.getValue().booleanValue() && CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                 Color visibleColor;
-                Color hiddenColor = CrystalScale.INSTANCE.colorSync.getValue() != false ? EntityUtil.getColor(entity, CrystalScale.INSTANCE.hiddenRed.getValue(), CrystalScale.INSTANCE.hiddenGreen.getValue(), CrystalScale.INSTANCE.hiddenBlue.getValue(), CrystalScale.INSTANCE.hiddenAlpha.getValue(), true) : EntityUtil.getColor(entity, CrystalScale.INSTANCE.hiddenRed.getValue(), CrystalScale.INSTANCE.hiddenGreen.getValue(), CrystalScale.INSTANCE.hiddenBlue.getValue(), CrystalScale.INSTANCE.hiddenAlpha.getValue(), true);
-                Color color = visibleColor = CrystalScale.INSTANCE.colorSync.getValue() != false ? EntityUtil.getColor(entity, CrystalScale.INSTANCE.red.getValue(), CrystalScale.INSTANCE.green.getValue(), CrystalScale.INSTANCE.blue.getValue(), CrystalScale.INSTANCE.alpha.getValue(), true) : EntityUtil.getColor(entity, CrystalScale.INSTANCE.red.getValue(), CrystalScale.INSTANCE.green.getValue(), CrystalScale.INSTANCE.blue.getValue(), CrystalScale.INSTANCE.alpha.getValue(), true);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+                Color hiddenColor = CrystalModifier.INSTANCE.colorSync.getValue() != false ? EntityUtil.getColor(entity, CrystalModifier.INSTANCE.hiddenRed.getValue(), CrystalModifier.INSTANCE.hiddenGreen.getValue(), CrystalModifier.INSTANCE.hiddenBlue.getValue(), CrystalModifier.INSTANCE.hiddenAlpha.getValue(), true) : EntityUtil.getColor(entity, CrystalModifier.INSTANCE.hiddenRed.getValue(), CrystalModifier.INSTANCE.hiddenGreen.getValue(), CrystalModifier.INSTANCE.hiddenBlue.getValue(), CrystalModifier.INSTANCE.hiddenAlpha.getValue(), true);
+                Color color = visibleColor = CrystalModifier.INSTANCE.colorSync.getValue() != false ? EntityUtil.getColor(entity, CrystalModifier.INSTANCE.red.getValue(), CrystalModifier.INSTANCE.green.getValue(), CrystalModifier.INSTANCE.blue.getValue(), CrystalModifier.INSTANCE.alpha.getValue(), true) : EntityUtil.getColor(entity, CrystalModifier.INSTANCE.red.getValue(), CrystalModifier.INSTANCE.green.getValue(), CrystalModifier.INSTANCE.blue.getValue(), CrystalModifier.INSTANCE.alpha.getValue(), true);
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glDisable((int)2929);
                     GL11.glDepthMask((boolean)false);
                 }
                 GL11.glEnable((int)10754);
-                GL11.glColor4f((float)((float)hiddenColor.getRed() / 255.0f), (float)((float)hiddenColor.getGreen() / 255.0f), (float)((float)hiddenColor.getBlue() / 255.0f), (float)((float)CrystalScale.INSTANCE.alpha.getValue().intValue() / 255.0f));
+                GL11.glColor4f((float)((float)hiddenColor.getRed() / 255.0f), (float)((float)hiddenColor.getGreen() / 255.0f), (float)((float)hiddenColor.getBlue() / 255.0f), (float)((float) CrystalModifier.INSTANCE.alpha.getValue().intValue() / 255.0f));
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glEnable((int)2929);
                     GL11.glDepthMask((boolean)true);
                 }
-                GL11.glColor4f((float)((float)visibleColor.getRed() / 255.0f), (float)((float)visibleColor.getGreen() / 255.0f), (float)((float)visibleColor.getBlue() / 255.0f), (float)((float)CrystalScale.INSTANCE.alpha.getValue().intValue() / 255.0f));
+                GL11.glColor4f((float)((float)visibleColor.getRed() / 255.0f), (float)((float)visibleColor.getGreen() / 255.0f), (float)((float)visibleColor.getBlue() / 255.0f), (float)((float) CrystalModifier.INSTANCE.alpha.getValue().intValue() / 255.0f));
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             } else {
                 Color visibleColor;
-                Color color = visibleColor = CrystalScale.INSTANCE.colorSync.getValue() != false ? Colors.INSTANCE.getCurrentColor() : EntityUtil.getColor(entity, CrystalScale.INSTANCE.red.getValue(), CrystalScale.INSTANCE.green.getValue(), CrystalScale.INSTANCE.blue.getValue(), CrystalScale.INSTANCE.alpha.getValue(), true);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+                Color color = visibleColor = CrystalModifier.INSTANCE.colorSync.getValue() != false ? Colors.INSTANCE.getCurrentColor() : EntityUtil.getColor(entity, CrystalModifier.INSTANCE.red.getValue(), CrystalModifier.INSTANCE.green.getValue(), CrystalModifier.INSTANCE.blue.getValue(), CrystalModifier.INSTANCE.alpha.getValue(), true);
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glDisable((int)2929);
                     GL11.glDepthMask((boolean)false);
                 }
                 GL11.glEnable((int)10754);
-                GL11.glColor4f((float)((float)visibleColor.getRed() / 255.0f), (float)((float)visibleColor.getGreen() / 255.0f), (float)((float)visibleColor.getBlue() / 255.0f), (float)((float)CrystalScale.INSTANCE.alpha.getValue().intValue() / 255.0f));
+                GL11.glColor4f((float)((float)visibleColor.getRed() / 255.0f), (float)((float)visibleColor.getGreen() / 255.0f), (float)((float)visibleColor.getBlue() / 255.0f), (float)((float) CrystalModifier.INSTANCE.alpha.getValue().intValue() / 255.0f));
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                if (CrystalScale.INSTANCE.throughWalls.getValue().booleanValue()) {
+                if ( CrystalModifier.INSTANCE.throughWalls.getValue().booleanValue()) {
                     GL11.glEnable((int)2929);
                     GL11.glDepthMask((boolean)true);
                 }
@@ -100,7 +100,7 @@ public class MixinRenderEnderCrystal {
             GL11.glEnable((int)3553);
             GL11.glEnable((int)3008);
             GL11.glPopAttrib();
-            if (CrystalScale.INSTANCE.glint.getValue().booleanValue()) {
+            if ( CrystalModifier.INSTANCE.glint.getValue().booleanValue()) {
                 GL11.glDisable((int)2929);
                 GL11.glDepthMask((boolean)false);
                 GlStateManager.enableAlpha();
@@ -113,11 +113,11 @@ public class MixinRenderEnderCrystal {
         } else {
             model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         }
-        if (CrystalScale.INSTANCE.isEnabled()) {
-            if (CrystalScale.INSTANCE.animateScale.getValue().booleanValue() && CrystalScale.INSTANCE.scaleMap.containsKey((Object)((EntityEnderCrystal)entity))) {
-                GlStateManager.scale((float)(1.0f / CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()), (float)(1.0f / CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()), (float)(1.0f / CrystalScale.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()));
+        if ( CrystalModifier.INSTANCE.isEnabled()) {
+            if ( CrystalModifier.INSTANCE.animateScale.getValue().booleanValue() && CrystalModifier.INSTANCE.scaleMap.containsKey((Object)((EntityEnderCrystal)entity))) {
+                GlStateManager.scale((float)(1.0f / CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()), (float)(1.0f / CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()), (float)(1.0f / CrystalModifier.INSTANCE.scaleMap.get((Object)((EntityEnderCrystal)entity)).floatValue()));
             } else {
-                GlStateManager.scale((float)(1.0f / CrystalScale.INSTANCE.scale.getValue().floatValue()), (float)(1.0f / CrystalScale.INSTANCE.scale.getValue().floatValue()), (float)(1.0f / CrystalScale.INSTANCE.scale.getValue().floatValue()));
+                GlStateManager.scale((float)(1.0f / CrystalModifier.INSTANCE.scale.getValue().floatValue()), (float)(1.0f / CrystalModifier.INSTANCE.scale.getValue().floatValue()), (float)(1.0f / CrystalModifier.INSTANCE.scale.getValue().floatValue()));
             }
         }
     }

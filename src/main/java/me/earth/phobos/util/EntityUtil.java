@@ -1,7 +1,7 @@
 package me.earth.phobos.util;
 
 import me.earth.phobos.Phobos;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.features.modules.combat.Killaura;
 import me.earth.phobos.features.modules.player.Blink;
 import me.earth.phobos.features.modules.player.FakePlayer;
@@ -810,7 +810,7 @@ public class EntityUtil implements Util {
         final StringBuilder healthSB = new StringBuilder();
         final StringBuilder distanceSB = new StringBuilder();
         for (final EntityPlayer player : EntityUtil.mc.world.playerEntities) {
-            if (player.isInvisible() && !Managers.getInstance().tRadarInv.getValue()) {
+            if (player.isInvisible() && ! Management.getInstance().tRadarInv.getValue()) {
                 continue;
             }
             if (player.getName().equals(EntityUtil.mc.player.getName())) {

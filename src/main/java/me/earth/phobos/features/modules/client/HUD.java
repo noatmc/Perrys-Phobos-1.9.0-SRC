@@ -143,7 +143,7 @@ public class HUD
                 module.sliding = true;
             }
         }
-        if (this.timer.passedMs(Managers.getInstance().textRadarUpdates.getValue())) {
+        if (this.timer.passedMs( Management.getInstance().textRadarUpdates.getValue())) {
             this.players = this.getTextRadarPlayers();
             this.timer.reset();
         }
@@ -305,7 +305,7 @@ public class HUD
                 renderer7.drawString(text11, x7, (float) (n7 - k), (this.rolling.getValue() && this.rainbow.getValue()) ? this.colorMap.get(height - k) : this.color, true);
             }
             final String fpsText = grayString + "FPS " + "\u00A7f" + Minecraft.debugFPS;
-            final String text = grayString + "Ping " + "\u00A7f" + (ServerModule.getInstance().isConnected() ? ServerModule.getInstance().getServerPing() : Phobos.serverManager.getPing()) + (this.MS.getValue() ? "ms" : "");
+            final String text = grayString + "Ping " + "\u00A7f" + ( PingBypass.getInstance().isConnected() ? PingBypass.getInstance().getServerPing() : Phobos.serverManager.getPing()) + (this.MS.getValue() ? "ms" : "");
             if (this.renderer.getStringWidth(text) > this.renderer.getStringWidth(fpsText)) {
                 if (this.ping.getValue()) {
                     final TextManager renderer8 = this.renderer;

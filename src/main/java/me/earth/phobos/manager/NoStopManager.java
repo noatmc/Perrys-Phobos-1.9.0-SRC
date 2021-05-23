@@ -1,7 +1,7 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.util.BlockUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +29,7 @@ public class NoStopManager
                 return;
             }
             if (currentPos.equals(this.lastPos)) {
-                if (this.stopped && this.timer.passedS(Managers.getInstance().baritoneTimeOut.getValue().intValue())) {
+                if (this.stopped && this.timer.passedS( Management.getInstance().baritoneTimeOut.getValue().intValue())) {
                     this.sendMessage();
                     this.stopped = false;
                     return;

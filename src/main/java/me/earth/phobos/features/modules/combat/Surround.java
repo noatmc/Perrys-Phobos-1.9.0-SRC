@@ -7,7 +7,7 @@ import me.earth.phobos.features.command.Command;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.modules.client.ClickGui;
 import me.earth.phobos.features.modules.client.Colors;
-import me.earth.phobos.features.modules.client.ServerModule;
+import me.earth.phobos.features.modules.client.PingBypass;
 import me.earth.phobos.features.modules.player.BlockTweaks;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.Timer;
@@ -176,7 +176,7 @@ public class Surround
     }
 
     private boolean shouldServer() {
-        return ServerModule.getInstance().isConnected() && this.server.getValue() != false;
+        return PingBypass.getInstance().isConnected() && this.server.getValue() != false;
     }
 
     private void doFeetPlace() {

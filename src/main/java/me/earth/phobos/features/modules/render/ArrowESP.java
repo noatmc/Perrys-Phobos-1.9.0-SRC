@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.Map;
 
-public class OffscreenESP
+public class ArrowESP
         extends Module {
     private final Setting<Boolean> colorSync = this.register(new Setting<Boolean>("Sync", false));
     private final Setting<Boolean> invisibles = this.register(new Setting<Boolean>("Invisibles", false));
@@ -34,22 +34,23 @@ public class OffscreenESP
     private final Setting<Integer> blue = this.register(new Setting<Integer>("Blue", 255, 0, 255));
     private final EntityListener entityListener = new EntityListener();
 
-    public OffscreenESP() {
+    public
+    ArrowESP () {
         super("ArrowESP", "Shows the direction players are in with cool little triangles :3", Module.Category.RENDER, true, false, false);
     }
 
     @Override
     public void onRender2D(Render2DEvent event) {
         this.entityListener.render();
-        OffscreenESP.mc.world.loadedEntityList.forEach(o -> {
+        ArrowESP.mc.world.loadedEntityList.forEach( o -> {
             if (o instanceof EntityPlayer && this.isValid((EntityPlayer) o)) {
                 EntityPlayer entity = (EntityPlayer) o;
                 Vec3d pos = this.entityListener.getEntityLowerBounds().get(entity);
                 if (!(pos == null || this.isOnScreen(pos) || RenderUtil.isInViewFrustrum(entity) && this.offscreenOnly.getValue().booleanValue())) {
-                    Color color = this.colorSync.getValue() != false ? new Color(Colors.INSTANCE.getCurrentColor().getRed(), Colors.INSTANCE.getCurrentColor().getGreen(), Colors.INSTANCE.getCurrentColor().getBlue(), (int) MathHelper.clamp(255.0f - 255.0f / (float) this.fadeDistance.getValue().intValue() * OffscreenESP.mc.player.getDistance(entity), 100.0f, 255.0f)) : EntityUtil.getColor(entity, this.red.getValue(), this.green.getValue(), this.blue.getValue(), (int) MathHelper.clamp(255.0f - 255.0f / (float) this.fadeDistance.getValue().intValue() * OffscreenESP.mc.player.getDistance(entity), 100.0f, 255.0f), true);
-                    int x = Display.getWidth() / 2 / (OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale);
-                    int y = Display.getHeight() / 2 / (OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale);
-                    float yaw = this.getRotations(entity) - OffscreenESP.mc.player.rotationYaw;
+                    Color color = this.colorSync.getValue() != false ? new Color(Colors.INSTANCE.getCurrentColor().getRed(), Colors.INSTANCE.getCurrentColor().getGreen(), Colors.INSTANCE.getCurrentColor().getBlue(), (int) MathHelper.clamp(255.0f - 255.0f / (float) this.fadeDistance.getValue().intValue() * ArrowESP.mc.player.getDistance(entity), 100.0f, 255.0f)) : EntityUtil.getColor(entity, this.red.getValue(), this.green.getValue(), this.blue.getValue(), (int) MathHelper.clamp(255.0f - 255.0f / (float) this.fadeDistance.getValue().intValue() * ArrowESP.mc.player.getDistance(entity), 100.0f, 255.0f), true);
+                    int x = Display.getWidth() / 2 / ( ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale);
+                    int y = Display.getHeight() / 2 / ( ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale);
+                    float yaw = this.getRotations(entity) - ArrowESP.mc.player.rotationYaw;
                     GL11.glTranslatef((float) x, (float) y, 0.0f);
                     GL11.glRotatef(yaw, 0.0f, 0.0f, 1.0f);
                     GL11.glTranslatef((float) (-x), (float) (-y), 0.0f);
@@ -69,23 +70,23 @@ public class OffscreenESP
     private boolean isOnScreen(Vec3d pos) {
         if (!(pos.x > -1.0)) return false;
         if (!(pos.y < 1.0)) return false;
-        int n = OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale;
+        int n = ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale;
         if (!(pos.x / (double) n >= 0.0)) return false;
-        int n2 = OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale;
+        int n2 = ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale;
         if (!(pos.x / (double) n2 <= (double) Display.getWidth())) return false;
-        int n3 = OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale;
+        int n3 = ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale;
         if (!(pos.y / (double) n3 >= 0.0)) return false;
-        int n4 = OffscreenESP.mc.gameSettings.guiScale == 0 ? 1 : OffscreenESP.mc.gameSettings.guiScale;
+        int n4 = ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale;
         return pos.y / (double) n4 <= (double) Display.getHeight();
     }
 
     private boolean isValid(EntityPlayer entity) {
-        return entity != OffscreenESP.mc.player && (!entity.isInvisible() || this.invisibles.getValue() != false) && entity.isEntityAlive();
+        return entity != ArrowESP.mc.player && (!entity.isInvisible() || this.invisibles.getValue() != false) && entity.isEntityAlive();
     }
 
     private float getRotations(EntityLivingBase ent) {
-        double x = ent.posX - OffscreenESP.mc.player.posX;
-        double z = ent.posZ - OffscreenESP.mc.player.posZ;
+        double x = ent.posX - ArrowESP.mc.player.posX;
+        double z = ent.posZ - ArrowESP.mc.player.posZ;
         return (float) (-(Math.atan2(x, z) * 57.29577951308232));
     }
 

@@ -2,7 +2,7 @@ package me.earth.phobos.mixin.mixins;
 
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.gui.custom.GuiCustomMainScreen;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import me.earth.phobos.features.modules.client.Screens;
 import me.earth.phobos.features.modules.player.MultiTask;
 import me.earth.phobos.features.modules.render.NoRender;
@@ -41,8 +41,8 @@ public abstract class MixinMinecraft {
     @Inject(method={"getLimitFramerate"}, at={@At(value="HEAD")}, cancellable=true)
     public void getLimitFramerateHook(CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         try {
-            if (Managers.getInstance().unfocusedCpu.getValue().booleanValue() && !Display.isActive()) {
-                callbackInfoReturnable.setReturnValue(Managers.getInstance().cpuFPS.getValue());
+            if ( Management.getInstance().unfocusedCpu.getValue().booleanValue() && !Display.isActive()) {
+                callbackInfoReturnable.setReturnValue( Management.getInstance().cpuFPS.getValue());
             }
         }
         catch (NullPointerException nullPointerException) {
@@ -52,8 +52,8 @@ public abstract class MixinMinecraft {
 
     @Redirect(method={"runGameLoop"}, at=@At(value="INVOKE", target="Lorg/lwjgl/opengl/Display;sync(I)V", remap=false))
     public void syncHook(int maxFps) {
-        if (Managers.getInstance().betterFrames.getValue().booleanValue()) {
-            Display.sync((int)Managers.getInstance().betterFPS.getValue());
+        if ( Management.getInstance().betterFrames.getValue().booleanValue()) {
+            Display.sync((int) Management.getInstance().betterFPS.getValue());
         } else {
             Display.sync((int)maxFps);
         }

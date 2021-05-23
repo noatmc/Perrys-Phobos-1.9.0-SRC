@@ -17,9 +17,9 @@ import java.awt.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CrystalScale
+public class CrystalModifier
         extends Module {
-    public static CrystalScale INSTANCE;
+    public static CrystalModifier INSTANCE;
     public Setting<Boolean> animateScale = this.register(new Setting<Boolean>("AnimateScale", false));
     public Setting<Boolean> chams = this.register(new Setting<Boolean>("Chams", false));
     public Setting<Boolean> throughWalls = this.register(new Setting<Boolean>("ThroughWalls", true));
@@ -44,14 +44,15 @@ public class CrystalScale
     public Setting<Integer> hiddenAlpha = this.register(new Setting<Object>("Hidden Alpha", Integer.valueOf(255), Integer.valueOf(0), Integer.valueOf(255), v -> this.xqz.getValue() != false && this.rainbow.getValue() == false));
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<EntityEnderCrystal, Float>();
 
-    public CrystalScale() {
+    public
+    CrystalModifier () {
         super("CrystalModifier", "Modifies crystal rendering in different ways", Module.Category.RENDER, true, false, false);
         INSTANCE = this;
     }
 
     @Override
     public void onUpdate() {
-        for (Entity crystal : CrystalScale.mc.world.loadedEntityList) {
+        for (Entity crystal : CrystalModifier.mc.world.loadedEntityList) {
             if (!(crystal instanceof EntityEnderCrystal)) continue;
             if (!this.scaleMap.containsKey(crystal)) {
                 this.scaleMap.put((EntityEnderCrystal) crystal, Float.valueOf(3.125E-4f));
@@ -69,7 +70,7 @@ public class CrystalScale
         if (event.getPacket() instanceof SPacketDestroyEntities) {
             SPacketDestroyEntities packet = event.getPacket();
             for (int id : packet.getEntityIDs()) {
-                Entity entity = CrystalScale.mc.world.getEntityByID(id);
+                Entity entity = CrystalModifier.mc.world.getEntityByID(id);
                 if (!(entity instanceof EntityEnderCrystal)) continue;
                 this.scaleMap.remove(entity);
             }
@@ -81,10 +82,10 @@ public class CrystalScale
             return;
         }
         Color color = this.colorSync.getValue() != false ? Colors.INSTANCE.getCurrentColor() : EntityUtil.getColor(event.entity, this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue(), false);
-        boolean fancyGraphics = CrystalScale.mc.gameSettings.fancyGraphics;
-        CrystalScale.mc.gameSettings.fancyGraphics = false;
-        float gamma = CrystalScale.mc.gameSettings.gammaSetting;
-        CrystalScale.mc.gameSettings.gammaSetting = 10000.0f;
+        boolean fancyGraphics = CrystalModifier.mc.gameSettings.fancyGraphics;
+        CrystalModifier.mc.gameSettings.fancyGraphics = false;
+        float gamma = CrystalModifier.mc.gameSettings.gammaSetting;
+        CrystalModifier.mc.gameSettings.gammaSetting = 10000.0f;
         GL11.glPushMatrix();
         GL11.glPushAttrib(1048575);
         GL11.glPolygonMode(1032, 6913);

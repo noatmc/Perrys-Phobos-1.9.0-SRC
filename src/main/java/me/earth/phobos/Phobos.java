@@ -1,7 +1,7 @@
 package me.earth.phobos;
 
 import me.earth.phobos.features.gui.custom.GuiCustomMainScreen;
-import me.earth.phobos.features.modules.client.IRC;
+import me.earth.phobos.features.modules.client.PhobosChat;
 import me.earth.phobos.features.modules.misc.RPC;
 import me.earth.phobos.manager.*;
 import net.minecraftforge.fml.common.Mod;
@@ -85,7 +85,7 @@ public class Phobos {
         notificationManager = new NotificationManager();
         safetyManager = new SafetyManager();
         waypointManager = new WaypointManager();
-        LOGGER.info("Initialized Managers");
+        LOGGER.info("Initialized Management");
         moduleManager.init();
         LOGGER.info("Modules loaded.");
         configManager.init();
@@ -142,7 +142,7 @@ public class Phobos {
     public static void onUnload() {
         if (!unloaded) {
             try {
-                IRC.INSTANCE.disconnect();
+                PhobosChat.INSTANCE.disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
             }

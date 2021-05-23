@@ -2,7 +2,7 @@ package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
 import me.earth.phobos.features.modules.client.HUD;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -31,7 +31,7 @@ public class PotionManager
 
     public void update() {
         this.updatePlayer();
-        if (HUD.getInstance().isOn() && HUD.getInstance().textRadar.getValue().booleanValue() && Managers.getInstance().potions.getValue().booleanValue()) {
+        if (HUD.getInstance().isOn() && HUD.getInstance().textRadar.getValue().booleanValue() && Management.getInstance().potions.getValue().booleanValue()) {
             ArrayList<EntityPlayer> removeList = new ArrayList<EntityPlayer>();
             for (Map.Entry<EntityPlayer, PotionList> potionEntry : this.potions.entrySet()) {
                 boolean notFound = true;

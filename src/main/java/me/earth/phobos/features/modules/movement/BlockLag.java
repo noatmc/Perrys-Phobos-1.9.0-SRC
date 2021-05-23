@@ -15,9 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class LagBlock
+public class BlockLag
         extends Module {
-    private static LagBlock INSTANCE;
+    private static BlockLag INSTANCE;
     private final Timer timer = new Timer();
     private final Setting<Boolean> packet = this.register(new Setting<Boolean>("Packet", true));
     private final Setting<Boolean> invalidPacket = this.register(new Setting<Boolean>("InvalidPacket", false));
@@ -27,14 +27,16 @@ public class LagBlock
     private int lastHotbarSlot = -1;
     private int blockSlot = -1;
 
-    public LagBlock() {
+    public
+    BlockLag () {
         super("BlockLag", "Lags You back", Module.Category.MOVEMENT, true, false, false);
         INSTANCE = this;
     }
 
-    public static LagBlock getInstance() {
+    public static
+    BlockLag getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new LagBlock();
+            INSTANCE = new BlockLag ();
         }
         return INSTANCE;
     }
@@ -43,17 +45,17 @@ public class LagBlock
     public void onEnable() {
         this.lastHotbarSlot = -1;
         this.blockSlot = -1;
-        if (LagBlock.fullNullCheck()) {
+        if ( BlockLag.fullNullCheck()) {
             this.disable();
             return;
         }
         this.blockSlot = this.findBlockSlot();
-        this.startPos = new BlockPos(LagBlock.mc.player.getPositionVector());
+        this.startPos = new BlockPos( BlockLag.mc.player.getPositionVector());
         if (!BlockUtil.isElseHole(this.startPos) || this.blockSlot == -1) {
             this.disable();
             return;
         }
-        LagBlock.mc.player.jump();
+        BlockLag.mc.player.jump();
         this.timer.reset();
     }
 
@@ -62,15 +64,15 @@ public class LagBlock
         if (event.getStage() != 0 || !this.timer.passedMs(this.timeOut.getValue().intValue())) {
             return;
         }
-        this.lastHotbarSlot = LagBlock.mc.player.inventory.currentItem;
+        this.lastHotbarSlot = BlockLag.mc.player.inventory.currentItem;
         InventoryUtil.switchToHotbarSlot(this.blockSlot, false);
         for (int i = 0; i < this.rotations.getValue(); ++i) {
             RotationUtil.faceVector(new Vec3d(this.startPos), true);
         }
-        BlockUtil.placeBlock(this.startPos, this.blockSlot == -2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, false, this.packet.getValue(), LagBlock.mc.player.isSneaking());
+        BlockUtil.placeBlock(this.startPos, this.blockSlot == -2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, false, this.packet.getValue(), BlockLag.mc.player.isSneaking());
         InventoryUtil.switchToHotbarSlot(this.lastHotbarSlot, false);
         if (this.invalidPacket.getValue().booleanValue()) {
-            LagBlock.mc.player.connection.sendPacket(new CPacketPlayer.Position(LagBlock.mc.player.posX, 1337.0, LagBlock.mc.player.posZ, true));
+            BlockLag.mc.player.connection.sendPacket(new CPacketPlayer.Position( BlockLag.mc.player.posX, 1337.0, BlockLag.mc.player.posZ, true));
         }
         this.disable();
     }
@@ -78,11 +80,11 @@ public class LagBlock
     private int findBlockSlot() {
         int obbySlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
         if (obbySlot == -1) {
-            if (InventoryUtil.isBlock(LagBlock.mc.player.getHeldItemOffhand().getItem(), BlockObsidian.class)) {
+            if (InventoryUtil.isBlock( BlockLag.mc.player.getHeldItemOffhand().getItem(), BlockObsidian.class)) {
                 return -2;
             }
             int echestSlot = InventoryUtil.findHotbarBlock(BlockEnderChest.class);
-            if (echestSlot == -1 && InventoryUtil.isBlock(LagBlock.mc.player.getHeldItemOffhand().getItem(), BlockEnderChest.class)) {
+            if (echestSlot == -1 && InventoryUtil.isBlock( BlockLag.mc.player.getHeldItemOffhand().getItem(), BlockEnderChest.class)) {
                 return -2;
             }
             return -1;

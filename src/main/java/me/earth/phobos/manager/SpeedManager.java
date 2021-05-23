@@ -1,7 +1,7 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.client.Managers;
+import me.earth.phobos.features.modules.client.Management;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -54,7 +54,7 @@ public class SpeedManager
             this.didJumpLastTick = false;
             this.lastJumpSpeed = 0.0;
         }
-        if (Managers.getInstance().speed.getValue().booleanValue()) {
+        if ( Management.getInstance().speed.getValue().booleanValue()) {
             this.updatePlayers();
         }
     }

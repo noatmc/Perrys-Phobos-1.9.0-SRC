@@ -2,8 +2,7 @@ package me.earth.phobos.manager;
 
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.gui.font.CustomFont;
-import me.earth.phobos.features.modules.client.FontMod;
+import me.earth.phobos.features.modules.client.CustomFont;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.util.math.MathHelper;
@@ -16,7 +15,7 @@ public class TextManager
     public int scaledWidth;
     public int scaledHeight;
     public int scaleFactor;
-    private CustomFont customFont = new CustomFont(new Font("Verdana", 0, 17), true, false);
+    private me.earth.phobos.features.gui.font.CustomFont customFont = new me.earth.phobos.features.gui.font.CustomFont (new Font("Verdana", 0, 17), true, false);
     private boolean idling;
 
     public TextManager() {
@@ -24,7 +23,7 @@ public class TextManager
     }
 
     public void init(boolean startup) {
-        FontMod cFont = Phobos.moduleManager.getModuleByClass(FontMod.class);
+        CustomFont cFont = Phobos.moduleManager.getModuleByClass( CustomFont.class);
         try {
             this.setFontRenderer(new Font(cFont.fontName.getValue(), cFont.fontStyle.getValue(), cFont.fontSize.getValue()), cFont.antiAlias.getValue(), cFont.fractionalMetrics.getValue());
         } catch (Exception exception) {
@@ -37,7 +36,7 @@ public class TextManager
     }
 
     public float drawString(String text, float x, float y, int color, boolean shadow) {
-        if (Phobos.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Phobos.moduleManager.isModuleEnabled( CustomFont.class)) {
             if (shadow) {
                 return this.customFont.drawStringWithShadow(text, x, y, color);
             }
@@ -85,14 +84,14 @@ public class TextManager
     }
 
     public int getStringWidth(String text) {
-        if (Phobos.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Phobos.moduleManager.isModuleEnabled( CustomFont.class)) {
             return this.customFont.getStringWidth(text);
         }
         return TextManager.mc.fontRenderer.getStringWidth(text);
     }
 
     public int getFontHeight() {
-        if (Phobos.moduleManager.isModuleEnabled(FontMod.class)) {
+        if (Phobos.moduleManager.isModuleEnabled( CustomFont.class)) {
             String text = "A";
             return this.customFont.getStringHeight(text);
         }
@@ -100,7 +99,7 @@ public class TextManager
     }
 
     public void setFontRenderer(Font font, boolean antiAlias, boolean fractionalMetrics) {
-        this.customFont = new CustomFont(font, antiAlias, fractionalMetrics);
+        this.customFont = new me.earth.phobos.features.gui.font.CustomFont (font, antiAlias, fractionalMetrics);
     }
 
     public Font getCurrentFont() {

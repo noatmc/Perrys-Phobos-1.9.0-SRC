@@ -5,8 +5,8 @@ import me.earth.phobos.Phobos;
 import me.earth.phobos.event.events.*;
 import me.earth.phobos.features.Feature;
 import me.earth.phobos.features.command.Command;
-import me.earth.phobos.features.modules.client.Managers;
-import me.earth.phobos.features.modules.client.ServerModule;
+import me.earth.phobos.features.modules.client.Management;
+import me.earth.phobos.features.modules.client.PingBypass;
 import me.earth.phobos.features.modules.combat.AutoCrystal;
 import me.earth.phobos.util.GLUProjection;
 import me.earth.phobos.util.Timer;
@@ -63,7 +63,7 @@ public class EventManager
             Phobos.safetyManager.onUpdate();
             Phobos.moduleManager.onUpdate();
             Phobos.timerManager.update();
-            if (this.timer.passedMs(Managers.getInstance().moduleListUpdates.getValue().intValue())) {
+            if (this.timer.passedMs( Management.getInstance().moduleListUpdates.getValue().intValue())) {
                 Phobos.moduleManager.sortModules(true);
                 Phobos.moduleManager.alphabeticallySortModules();
                 this.timer.reset();
@@ -73,8 +73,8 @@ public class EventManager
 
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
-        if (event.getStage() == 2 && mc.getConnection() != null && ServerModule.getInstance().isConnected() && EventManager.mc.world != null) {
-            String command = "@Server" + ServerModule.getInstance().getServerPrefix() + "module " + event.getSetting().getFeature().getName() + " set " + event.getSetting().getName() + " " + event.getSetting().getPlannedValue().toString();
+        if (event.getStage() == 2 && mc.getConnection() != null && PingBypass.getInstance().isConnected() && EventManager.mc.world != null) {
+            String command = "@Server" + PingBypass.getInstance().getServerPrefix() + "module " + event.getSetting().getFeature().getName() + " set " + event.getSetting().getName() + " " + event.getSetting().getPlannedValue().toString();
             CPacketChatMessage cPacketChatMessage = new CPacketChatMessage(command);
         }
     }

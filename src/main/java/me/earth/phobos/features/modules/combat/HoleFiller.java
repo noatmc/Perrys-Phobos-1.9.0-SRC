@@ -4,7 +4,7 @@ import me.earth.phobos.Phobos;
 import me.earth.phobos.event.events.UpdateWalkingPlayerEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.modules.client.ClickGui;
-import me.earth.phobos.features.modules.client.ServerModule;
+import me.earth.phobos.features.modules.client.PingBypass;
 import me.earth.phobos.features.modules.player.BlockTweaks;
 import me.earth.phobos.features.modules.player.Freecam;
 import me.earth.phobos.features.setting.Bind;
@@ -83,7 +83,7 @@ public class HoleFiller
     }
 
     private boolean shouldServer() {
-        return ServerModule.getInstance().isConnected() && this.server.getValue() != false;
+        return PingBypass.getInstance().isConnected() && this.server.getValue() != false;
     }
 
     @Override

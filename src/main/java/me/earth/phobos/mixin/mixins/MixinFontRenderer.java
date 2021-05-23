@@ -1,7 +1,7 @@
 package me.earth.phobos.mixin.mixins;
 
 import me.earth.phobos.Phobos;
-import me.earth.phobos.features.modules.client.FontMod;
+import me.earth.phobos.features.modules.client.CustomFont;
 import me.earth.phobos.features.modules.client.HUD;
 import me.earth.phobos.features.modules.client.Media;
 import net.minecraft.client.gui.FontRenderer;
@@ -22,7 +22,7 @@ public abstract class MixinFontRenderer {
 
     @Inject(method={"drawString(Ljava/lang/String;FFIZ)I"}, at={@At(value="HEAD")}, cancellable=true)
     public void renderStringHook(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info) {
-        if (FontMod.getInstance().isOn() && FontMod.getInstance().full.getValue().booleanValue() && Phobos.textManager != null) {
+        if ( CustomFont.getInstance().isOn() && CustomFont.getInstance().full.getValue().booleanValue() && Phobos.textManager != null) {
             float result = Phobos.textManager.drawString(text, x, y, color, dropShadow);
             info.setReturnValue((int)result);
         }

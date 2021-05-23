@@ -5,7 +5,7 @@ import me.earth.phobos.features.command.Command;
 import me.earth.phobos.features.gui.PhobosGui;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.modules.client.ClickGui;
-import me.earth.phobos.features.modules.client.ServerModule;
+import me.earth.phobos.features.modules.client.PingBypass;
 import me.earth.phobos.features.setting.Bind;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.entity.Entity;
@@ -56,14 +56,14 @@ public class MCF
             if (Phobos.friendManager.isFriend(entity.getName())) {
                 Phobos.friendManager.removeFriend(entity.getName());
                 Command.sendMessage("\u00a7c" + entity.getName() + "\u00a7r" + " unfriended.");
-                if (this.server.getValue().booleanValue() && ServerModule.getInstance().isConnected()) {
+                if (this.server.getValue().booleanValue() && PingBypass.getInstance().isConnected()) {
                     MCF.mc.player.connection.sendPacket(new CPacketChatMessage("@Serverprefix" + ClickGui.getInstance().prefix.getValue()));
                     MCF.mc.player.connection.sendPacket(new CPacketChatMessage("@Server" + ClickGui.getInstance().prefix.getValue() + "friend del " + entity.getName()));
                 }
             } else {
                 Phobos.friendManager.addFriend(entity.getName());
                 Command.sendMessage("\u00a7b" + entity.getName() + "\u00a7r" + " friended.");
-                if (this.server.getValue().booleanValue() && ServerModule.getInstance().isConnected()) {
+                if (this.server.getValue().booleanValue() && PingBypass.getInstance().isConnected()) {
                     MCF.mc.player.connection.sendPacket(new CPacketChatMessage("@Serverprefix" + ClickGui.getInstance().prefix.getValue()));
                     MCF.mc.player.connection.sendPacket(new CPacketChatMessage("@Server" + ClickGui.getInstance().prefix.getValue() + "friend add " + entity.getName()));
                 }

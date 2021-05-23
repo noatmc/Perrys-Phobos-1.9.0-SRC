@@ -31,11 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class IRC
+public class PhobosChat
         extends Module {
     public static final Random avRandomizer = new Random();
     private static final ResourceLocation SHULKER_GUI_TEXTURE = null;
-    public static IRC INSTANCE;
+    public static PhobosChat INSTANCE;
     public static IRCHandler handler;
     public static List<String> phobosUsers;
     public Setting<String> ip = this.register(new Setting<String>("IP", "127.0.0.1"));
@@ -65,19 +65,20 @@ public class IRC
     private boolean down = false;
     private boolean pressed = false;
 
-    public IRC() {
+    public
+    PhobosChat () {
         super("PhobosChat", "Phobos chat server", Module.Category.CLIENT, true, false, true);
         INSTANCE = this;
     }
 
     public static void updateInventory() throws IOException {
-        IRC.handler.outputStream.writeUTF("updateinventory");
-        IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-        writeByteArray(serializeInventory(), IRC.handler.outputStream);
+        PhobosChat.handler.outputStream.writeUTF("updateinventory");
+        PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+        writeByteArray(serializeInventory(), PhobosChat.handler.outputStream);
     }
 
     public static void updateInventories() {
-        for (final String player : IRC.phobosUsers) {
+        for (final String player : PhobosChat.phobosUsers) {
             try {
                 send("inventory", player);
             } catch (IOException e) {
@@ -91,24 +92,24 @@ public class IRC
     }
 
     public static void removeWaypoint() throws IOException {
-        IRC.handler.outputStream.writeUTF("removewaypoint");
-        IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF("removewaypoint");
+        PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+        PhobosChat.handler.outputStream.flush();
     }
 
     public static void send(final String command, final String data, final String data1) throws IOException {
-        IRC.handler.outputStream.writeUTF(command);
-        IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-        IRC.handler.outputStream.writeUTF(data);
-        IRC.handler.outputStream.writeUTF(data1);
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF(command);
+        PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+        PhobosChat.handler.outputStream.writeUTF(data);
+        PhobosChat.handler.outputStream.writeUTF(data1);
+        PhobosChat.handler.outputStream.flush();
     }
 
     public static void send(final String command, final String data) throws IOException {
-        IRC.handler.outputStream.writeUTF(command);
-        IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-        IRC.handler.outputStream.writeUTF(data);
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF(command);
+        PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+        PhobosChat.handler.outputStream.writeUTF(data);
+        PhobosChat.handler.outputStream.flush();
     }
 
     private static byte[] readByteArrayLWithLength(final DataInputStream reader) throws IOException {
@@ -136,21 +137,21 @@ public class IRC
     public static byte[] serializeInventory() throws IOException {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         final ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(new ArrayList(IRC.mc.player.inventory.mainInventory));
+        oos.writeObject(new ArrayList( PhobosChat.mc.player.inventory.mainInventory));
         return bos.toByteArray();
     }
 
     public static void say(final String message) throws IOException {
-        IRC.handler.outputStream.writeUTF("message");
-        IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-        IRC.handler.outputStream.writeUTF(message);
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF("message");
+        PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+        PhobosChat.handler.outputStream.writeUTF(message);
+        PhobosChat.handler.outputStream.flush();
     }
 
     public static void cockt(final int id) throws IOException {
-        IRC.handler.outputStream.writeUTF("cockt");
-        IRC.handler.outputStream.writeInt(id);
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF("cockt");
+        PhobosChat.handler.outputStream.writeInt(id);
+        PhobosChat.handler.outputStream.flush();
     }
 
     public static String getDimension(final int dim) {
@@ -172,22 +173,22 @@ public class IRC
 
     @Override
     public void onUpdate() {
-        if (IRC.handler != null && IRC.handler.isAlive() && !IRC.handler.isInterrupted()) {
-            this.status = !IRC.handler.socket.isClosed();
+        if ( PhobosChat.handler != null && PhobosChat.handler.isAlive() && ! PhobosChat.handler.isInterrupted()) {
+            this.status = ! PhobosChat.handler.socket.isClosed();
         } else {
             this.status = false;
         }
-        if (this.updateTimer.passedMs(5000L) && IRC.handler != null && IRC.handler.isAlive() && !IRC.handler.socket.isClosed()) {
+        if (this.updateTimer.passedMs(5000L) && PhobosChat.handler != null && PhobosChat.handler.isAlive() && ! PhobosChat.handler.socket.isClosed()) {
             try {
-                IRC.handler.outputStream.writeUTF("update");
-                IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-                IRC.handler.outputStream.flush();
+                PhobosChat.handler.outputStream.writeUTF("update");
+                PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+                PhobosChat.handler.outputStream.flush();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             this.updateTimer.reset();
         }
-        if (!IRC.mc.isSingleplayer() && !(IRC.mc.currentScreen instanceof PhobosGui) && IRC.handler != null && !IRC.handler.socket.isClosed() && this.status) {
+        if (! PhobosChat.mc.isSingleplayer() && !( PhobosChat.mc.currentScreen instanceof PhobosGui) && PhobosChat.handler != null && ! PhobosChat.handler.socket.isClosed() && this.status) {
             if (this.down) {
                 if (this.downTimer.passedMs(2000L)) {
                     try {
@@ -200,7 +201,7 @@ public class IRC
                 }
                 if (!Keyboard.isKeyDown(this.pingBind.getValue().getKey())) {
                     try {
-                        updateWaypoint(this.waypointTarget, IRC.mc.currentServerData.serverIP, String.valueOf(IRC.mc.player.dimension), new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()));
+                        updateWaypoint(this.waypointTarget, PhobosChat.mc.currentServerData.serverIP, String.valueOf( PhobosChat.mc.player.dimension), new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()));
                     } catch (IOException e2) {
                         e2.printStackTrace();
                     }
@@ -221,17 +222,17 @@ public class IRC
 
     @Override
     public void onRender3D(final Render3DEvent event) {
-        if (Feature.fullNullCheck() || IRC.mc.isSingleplayer()) {
+        if (Feature.fullNullCheck() || PhobosChat.mc.isSingleplayer()) {
             return;
         }
-        final RayTraceResult result = IRC.mc.player.rayTrace(2000.0, event.getPartialTicks());
+        final RayTraceResult result = PhobosChat.mc.player.rayTrace(2000.0, event.getPartialTicks());
         if (result != null) {
             this.waypointTarget = new BlockPos(result.hitVec);
         }
         if (this.waypoints.getValue()) {
             for (final WaypointManager.Waypoint waypoint : Phobos.waypointManager.waypoints.values()) {
-                if (IRC.mc.player.dimension == waypoint.dimension) {
-                    if (!IRC.mc.currentServerData.serverIP.equals(waypoint.server)) {
+                if ( PhobosChat.mc.player.dimension == waypoint.dimension) {
+                    if (! PhobosChat.mc.currentServerData.serverIP.equals(waypoint.server)) {
                         continue;
                     }
                     waypoint.renderBox();
@@ -256,7 +257,7 @@ public class IRC
             final int x = -4 + this.xOffset.getValue();
             int y = 10 + this.yOffset.getValue();
             this.textRadarY = 0;
-            for (final String player : IRC.phobosUsers) {
+            for (final String player : PhobosChat.phobosUsers) {
                 if (Phobos.inventoryManager.inventories.get(player) != null) {
                     continue;
                 }
@@ -269,13 +270,13 @@ public class IRC
     }
 
     public void connect() throws IOException {
-        if (!IRC.INSTANCE.status) {
+        if (! PhobosChat.INSTANCE.status) {
             final Socket socket = new Socket(this.ip.getValue(), 1488);
-            (IRC.handler = new IRCHandler(socket)).start();
-            IRC.handler.outputStream.writeUTF("update");
-            IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
-            IRC.handler.outputStream.flush();
-            IRC.INSTANCE.status = true;
+            ( PhobosChat.handler = new IRCHandler(socket)).start();
+            PhobosChat.handler.outputStream.writeUTF("update");
+            PhobosChat.handler.outputStream.writeUTF( PhobosChat.mc.player.getName());
+            PhobosChat.handler.outputStream.flush();
+            PhobosChat.INSTANCE.status = true;
             Command.sendMessage( "\u00A7aIRC connected successfully!" );
         } else {
             Command.sendMessage( "\u00A7cIRC is already connected!" );
@@ -283,10 +284,10 @@ public class IRC
     }
 
     public void disconnect() throws IOException {
-        if (IRC.INSTANCE.status) {
-            IRC.handler.socket.close();
-            if (!IRC.handler.isInterrupted()) {
-                IRC.handler.interrupt();
+        if ( PhobosChat.INSTANCE.status) {
+            PhobosChat.handler.socket.close();
+            if (! PhobosChat.handler.isInterrupted()) {
+                PhobosChat.handler.interrupt();
             }
         } else {
             Command.sendMessage( "\u00A7cIRC is not connected!" );
@@ -294,13 +295,13 @@ public class IRC
     }
 
     public void friendAll() throws IOException {
-        IRC.handler.outputStream.writeUTF("friendall");
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF("friendall");
+        PhobosChat.handler.outputStream.flush();
     }
 
     public void list() throws IOException {
-        IRC.handler.outputStream.writeUTF("list");
-        IRC.handler.outputStream.flush();
+        PhobosChat.handler.outputStream.writeUTF("list");
+        PhobosChat.handler.outputStream.flush();
     }
 
     public void renderShulkerToolTip(final List<ItemStack> stacks, final int x, final int y, final String name) {
@@ -309,7 +310,7 @@ public class IRC
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        IRC.mc.getTextureManager().bindTexture(IRC.SHULKER_GUI_TEXTURE);
+        PhobosChat.mc.getTextureManager().bindTexture( PhobosChat.SHULKER_GUI_TEXTURE);
         RenderUtil.drawTexturedRect(x, y, 0, 0, 176, 16, 500);
         RenderUtil.drawTexturedRect(x, y + 16, 0, 16, 176, 54 + this.invH.getValue(), 500);
         RenderUtil.drawTexturedRect(x, y + 16 + 54, 0, 160, 176, 8, 500);
@@ -325,10 +326,10 @@ public class IRC
             final int iX = x + i % 9 * 18 + 8;
             final int iY = y + i / 9 * 18 + 18;
             final ItemStack itemStack = stacks.get(i);
-            IRC.mc.getRenderItem().zLevel = 501.0f;
+            PhobosChat.mc.getRenderItem().zLevel = 501.0f;
             RenderUtil.itemRender.renderItemAndEffectIntoGUI(itemStack, iX, iY);
-            RenderUtil.itemRender.renderItemOverlayIntoGUI(IRC.mc.fontRenderer, itemStack, iX, iY, null);
-            IRC.mc.getRenderItem().zLevel = 0.0f;
+            RenderUtil.itemRender.renderItemOverlayIntoGUI( PhobosChat.mc.fontRenderer, itemStack, iX, iY, null);
+            PhobosChat.mc.getRenderItem().zLevel = 0.0f;
         }
         GlStateManager.disableLighting();
         GlStateManager.disableBlend();
@@ -364,7 +365,7 @@ public class IRC
                             if (input.equalsIgnoreCase("message")) {
                                 final String name = this.inputStream.readUTF();
                                 final String message = this.inputStream.readUTF();
-                                Command.sendMessage( "\u00A7c[IRC] \u00A7r<" + name + ">: " + message);
+                                Command.sendMessage( "\u00A7c[PhobosChat] \u00A7r<" + name + ">: " + message);
                             }
                             if (input.equalsIgnoreCase("list")) {
                                 final String f = this.inputStream.readUTF();
@@ -391,38 +392,38 @@ public class IRC
                                 final String dimension = inputs[1];
                                 final Color color = new Color(Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2]), Integer.parseInt(colors[3]));
                                 Phobos.waypointManager.waypoints.put(name, new WaypointManager.Waypoint(name, server, Integer.parseInt(dimension), Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]), Integer.parseInt(inputs[4]), color));
-                                Command.sendMessage( "\u00A7c[IRC] \u00A7r" + name + " has set a waypoint at " + "\u00A7c" + "(" + Integer.parseInt(inputs[2]) + "," + Integer.parseInt(inputs[3]) + "," + Integer.parseInt(inputs[4]) + ")" + "\u00A7r" + " on the server " + "\u00A7c" + server + "\u00A7r" + " in the dimension " + "\u00A7c" + IRC.getDimension(Integer.parseInt(dimension)));
-                                if (IRC.INSTANCE.ding.getValue()) {
+                                Command.sendMessage( "\u00A7c[PhobosChat] \u00A7r" + name + " has set a waypoint at " + "\u00A7c" + "(" + Integer.parseInt(inputs[2]) + "," + Integer.parseInt(inputs[3]) + "," + Integer.parseInt(inputs[4]) + ")" + "\u00A7r" + " on the server " + "\u00A7c" + server + "\u00A7r" + " in the dimension " + "\u00A7c" + PhobosChat.getDimension(Integer.parseInt(dimension)));
+                                if ( PhobosChat.INSTANCE.ding.getValue()) {
                                     Util.mc.world.playSound(Util.mc.player.posX, Util.mc.player.posY, Util.mc.player.posZ, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 0.7f, false);
                                 }
                             } else if (input.equalsIgnoreCase("removewaypoint")) {
                                 final String name = this.inputStream.readUTF();
                                 Phobos.waypointManager.waypoints.remove(name);
-                                Command.sendMessage( "\u00A7c[IRC] \u00A7r" + name + " has removed their waypoint");
-                                if (IRC.INSTANCE.ding.getValue()) {
+                                Command.sendMessage( "\u00A7c[PhobosChat] \u00A7r" + name + " has removed their waypoint");
+                                if ( PhobosChat.INSTANCE.ding.getValue()) {
                                     Util.mc.world.playSound(Util.mc.player.posX, Util.mc.player.posY, Util.mc.player.posZ, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, -0.7f, false);
                                 }
                             } else if (input.equalsIgnoreCase("inventory")) {
                                 final String name = this.inputStream.readUTF();
                                 final byte[] inventory = readByteArrayLWithLength(this.inputStream);
-                                for (final String player : IRC.phobosUsers) {
+                                for (final String player : PhobosChat.phobosUsers) {
                                     if (player.equalsIgnoreCase(name)) {
-                                        Phobos.inventoryManager.inventories.put(player, IRC.deserializeInventory(inventory));
+                                        Phobos.inventoryManager.inventories.put(player, PhobosChat.deserializeInventory(inventory));
                                     }
                                 }
                             } else if (input.equalsIgnoreCase("users")) {
                                 final byte[] inputBytes = readByteArrayLWithLength(this.inputStream);
                                 final ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(inputBytes));
                                 final List<String> players = (List<String>) stream.readObject();
-                                Command.sendMessage( "\u00A7c[IRC]\u00A7r Active Users:" );
+                                Command.sendMessage( "\u00A7c[PhobosChat]\u00A7r Active Users:" );
                                 for (final String name2 : players) {
                                     Command.sendMessage(name2);
-                                    if (!IRC.phobosUsers.contains(name2)) {
-                                        IRC.phobosUsers.add(name2);
+                                    if (! PhobosChat.phobosUsers.contains(name2)) {
+                                        PhobosChat.phobosUsers.add(name2);
                                     }
                                 }
                             }
-                            IRC.INSTANCE.status = !this.socket.isClosed();
+                            PhobosChat.INSTANCE.status = !this.socket.isClosed();
                         }
                     }
                     /*catch (IOException | ClassNotFoundException ex2) {

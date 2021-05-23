@@ -1,6 +1,5 @@
 package me.earth.phobos.features.gui.font;
 
-import me.earth.phobos.features.modules.client.FontMod;
 import me.earth.phobos.features.modules.client.Media;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -48,7 +47,7 @@ public class CustomFont
         String text = Media.getInstance().isOn() && Media.getInstance().changeOwn.getValue() != false ? textIn.replace(Media.getPlayerName(), Media.getInstance().ownName.getValue()) : textIn;
         double x = xI;
         double y = yI;
-        if (FontMod.getInstance().isOn() && !FontMod.getInstance().shadow.getValue().booleanValue() && shadow) {
+        if ( me.earth.phobos.features.modules.client.CustomFont.getInstance().isOn() && ! me.earth.phobos.features.modules.client.CustomFont.getInstance().shadow.getValue().booleanValue() && shadow) {
             x -= 0.5;
             y -= 0.5;
         }

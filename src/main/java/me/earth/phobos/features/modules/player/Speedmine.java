@@ -7,6 +7,7 @@ import me.earth.phobos.event.events.Render3DEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.*;
+import me.earth.phobos.util.Timer;
 import net.minecraft.block.BlockEndPortalFrame;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

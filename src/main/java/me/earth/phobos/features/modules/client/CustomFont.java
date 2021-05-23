@@ -9,9 +9,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 
-public class FontMod
+public class CustomFont
         extends Module {
-    private static FontMod INSTANCE = new FontMod();
+    private static CustomFont INSTANCE = new CustomFont ();
     public Setting<String> fontName = this.register(new Setting<String>("FontName", "Arial", "Name of the font."));
     public Setting<Integer> fontSize = this.register(new Setting<Integer>("FontSize", Integer.valueOf(18), "Size of the font."));
     public Setting<Integer> fontStyle = this.register(new Setting<Integer>("FontStyle", Integer.valueOf(0), "Style of the font."));
@@ -22,14 +22,16 @@ public class FontMod
     public Setting<Boolean> full = this.register(new Setting<Boolean>("Full", false));
     private boolean reloadFont = false;
 
-    public FontMod() {
+    public
+    CustomFont () {
         super("CustomFont", "CustomFont for all of the clients text. Use the font command.", Module.Category.CLIENT, true, false, false);
         this.setInstance();
     }
 
-    public static FontMod getInstance() {
+    public static
+    CustomFont getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new FontMod();
+            INSTANCE = new CustomFont ();
         }
         return INSTANCE;
     }
@@ -54,7 +56,7 @@ public class FontMod
     public void onSettingChange(ClientEvent event) {
         Setting setting;
         if (event.getStage() == 2 && (setting = event.getSetting()) != null && setting.getFeature().equals(this)) {
-            if (setting.getName().equals("FontName") && !FontMod.checkFont(setting.getPlannedValue().toString(), false)) {
+            if (setting.getName().equals("FontName") && ! CustomFont.checkFont(setting.getPlannedValue().toString(), false)) {
                 Command.sendMessage("\u00a7cThat font doesnt exist.");
                 event.setCanceled(true);
                 return;
@@ -66,7 +68,7 @@ public class FontMod
     @Override
     public void onTick() {
         if (this.showFonts.getValue().booleanValue()) {
-            FontMod.checkFont("Hello", true);
+            CustomFont.checkFont("Hello", true);
             Command.sendMessage("Current Font: " + this.fontName.getValue());
             this.showFonts.setValue(false);
         }

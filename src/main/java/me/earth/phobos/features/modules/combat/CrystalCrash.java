@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Crasher
+public class CrystalCrash
         extends Module {
     private final Setting<Boolean> oneDot15 = this.register(new Setting<Boolean>("1.15", false));
     private final Setting<Float> placeRange = this.register(new Setting<Float>("PlaceRange", Float.valueOf(6.0f), Float.valueOf(0.0f), Float.valueOf(10.0f)));
@@ -37,27 +37,28 @@ public class Crasher
     private boolean chinese = false;
     private int currentID = -1000;
 
-    public Crasher() {
+    public
+    CrystalCrash () {
         super("CrystalCrash", "Attempts to crash chinese AutoCrystals", Module.Category.COMBAT, false, false, true);
     }
 
     @Override
     public void onEnable() {
         this.chinese = false;
-        if (Crasher.fullNullCheck() || !this.timer.passedMs(this.coolDown.getValue().intValue())) {
+        if ( CrystalCrash.fullNullCheck() || !this.timer.passedMs(this.coolDown.getValue().intValue())) {
             this.disable();
             return;
         }
-        this.lastHotbarSlot = Crasher.mc.player.inventory.currentItem;
+        this.lastHotbarSlot = CrystalCrash.mc.player.inventory.currentItem;
         this.placeCrystals();
         this.disable();
     }
 
     @Override
     public void onDisable() {
-        if (!Crasher.fullNullCheck()) {
+        if (! CrystalCrash.fullNullCheck()) {
             for (int i : this.entityIDs) {
-                Crasher.mc.world.removeEntityFromWorld(i);
+                CrystalCrash.mc.world.removeEntityFromWorld(i);
             }
         }
         this.entityIDs.clear();
@@ -67,21 +68,21 @@ public class Crasher
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (Crasher.fullNullCheck() || event.phase == TickEvent.Phase.START || this.isOff() && this.timer.passedMs(10L)) {
+        if ( CrystalCrash.fullNullCheck() || event.phase == TickEvent.Phase.START || this.isOff() && this.timer.passedMs(10L)) {
             return;
         }
         this.switchItem(true);
     }
 
     private void placeCrystals() {
-        this.offhand = Crasher.mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL;
-        this.mainhand = Crasher.mc.player.getHeldItemMainhand().getItem() == Items.END_CRYSTAL;
+        this.offhand = CrystalCrash.mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL;
+        this.mainhand = CrystalCrash.mc.player.getHeldItemMainhand().getItem() == Items.END_CRYSTAL;
         int crystalcount = 0;
         List<BlockPos> blocks = BlockUtil.possiblePlacePositions(this.placeRange.getValue().floatValue(), false, this.oneDot15.getValue());
         if (this.sort.getValue() == 1) {
-            blocks.sort(Comparator.comparingDouble(hole -> Crasher.mc.player.getDistanceSq(hole)));
+            blocks.sort(Comparator.comparingDouble(hole -> CrystalCrash.mc.player.getDistanceSq(hole)));
         } else if (this.sort.getValue() == 2) {
-            blocks.sort(Comparator.comparingDouble(hole -> -Crasher.mc.player.getDistanceSq(hole)));
+            blocks.sort(Comparator.comparingDouble(hole -> - CrystalCrash.mc.player.getDistanceSq(hole)));
         }
         for (BlockPos pos : blocks) {
             if (this.isOff() || crystalcount >= this.crystals.getValue()) break;
@@ -96,14 +97,14 @@ public class Crasher
             this.disable();
             return;
         }
-        RayTraceResult result = Crasher.mc.world.rayTraceBlocks(new Vec3d(Crasher.mc.player.posX, Crasher.mc.player.posY + (double) Crasher.mc.player.getEyeHeight(), Crasher.mc.player.posZ), new Vec3d((double) pos.getX() + 0.5, (double) pos.getY() - 0.5, (double) pos.getZ() + 0.5));
+        RayTraceResult result = CrystalCrash.mc.world.rayTraceBlocks(new Vec3d( CrystalCrash.mc.player.posX, CrystalCrash.mc.player.posY + (double) CrystalCrash.mc.player.getEyeHeight(), CrystalCrash.mc.player.posZ), new Vec3d((double) pos.getX() + 0.5, (double) pos.getY() - 0.5, (double) pos.getZ() + 0.5));
         EnumFacing facing = result == null || result.sideHit == null ? EnumFacing.UP : result.sideHit;
-        Crasher.mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, facing, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, 0.0f, 0.0f, 0.0f));
-        Crasher.mc.player.swingArm(EnumHand.MAIN_HAND);
-        EntityEnderCrystal fakeCrystal = new EntityEnderCrystal(Crasher.mc.world, (float) pos.getX() + 0.5f, pos.getY() + 1, (float) pos.getZ() + 0.5f);
+        CrystalCrash.mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, facing, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, 0.0f, 0.0f, 0.0f));
+        CrystalCrash.mc.player.swingArm(EnumHand.MAIN_HAND);
+        EntityEnderCrystal fakeCrystal = new EntityEnderCrystal( CrystalCrash.mc.world, (float) pos.getX() + 0.5f, pos.getY() + 1, (float) pos.getZ() + 0.5f);
         int newID = this.currentID--;
         this.entityIDs.add(newID);
-        Crasher.mc.world.addEntityToWorld(newID, fakeCrystal);
+        CrystalCrash.mc.world.addEntityToWorld(newID, fakeCrystal);
     }
 
     private boolean switchItem(boolean back) {

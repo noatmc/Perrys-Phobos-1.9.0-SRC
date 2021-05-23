@@ -2,15 +2,15 @@ package me.earth.phobos.manager;
 
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.Feature;
-import me.earth.phobos.features.modules.player.TimerSpeed;
+import me.earth.phobos.features.modules.player.Timer;
 
 public class TimerManager
         extends Feature {
     private float timer = 1.0f;
-    private TimerSpeed module;
+    private Timer module;
 
     public void init() {
-        this.module = Phobos.moduleManager.getModuleByClass(TimerSpeed.class);
+        this.module = Phobos.moduleManager.getModuleByClass( Timer.class);
     }
 
     public void unload() {

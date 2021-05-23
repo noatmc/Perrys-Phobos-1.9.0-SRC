@@ -1,7 +1,32 @@
 package me.earth.phobos.features.modules.render;
 
+import me.earth.phobos.Phobos;
+import me.earth.phobos.event.events.Render3DEvent;
 import me.earth.phobos.features.modules.Module;
+import me.earth.phobos.features.modules.client.Colors;
 import me.earth.phobos.features.setting.Setting;
+import me.earth.phobos.util.DamageUtil;
+import me.earth.phobos.util.EntityUtil;
+import me.earth.phobos.util.RotationUtil;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.Collections;
+import java.util.Objects;
 
 public class TestNametags
         extends Module {
@@ -45,8 +70,8 @@ public class TestNametags
         return INSTANCE;
     }
 
-    /*@Override
-    public void onRender3D(Render3DEvent event) {
+    @Override
+    public void onRender3D( Render3DEvent event) {
         if (!TestNametags.fullNullCheck()) {
             for (EntityPlayer player : TestNametags.mc.world.playerEntities) {
                 if (player == null || player.equals((Object)TestNametags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !this.invisibles.getValue().booleanValue() || this.onlyFov.getValue().booleanValue() && !RotationUtil.isInFov((Entity)player)) continue;
@@ -112,14 +137,11 @@ public class TestNametags
             GL11.glScalef((float)1.5f, (float)1.5f, (float)1.0f);
             GL11.glPopMatrix();
         }
-        ArrayList armorInventory = new ArrayList(player.inventory.armorInventory);
         if (this.reverseArmor.getValue().booleanValue()) {
-            Collections.reverse(armorInventory);
         }
         GlStateManager.pushMatrix();
         int xOffset = -8;
-        for (ItemStack stack : armorInventory) {
-            if (stack == null) continue;
+        {
             xOffset -= 8;
         }
         xOffset -= 8;
@@ -129,13 +151,10 @@ public class TestNametags
         }
         this.renderItemStack(player, renderOffhand, xOffset, -26, this.armor.getValue());
         xOffset += 16;
-        for (ItemStack stack : armorInventory) {
-            if (stack == null) continue;
-            ItemStack armourStack = stack.copy();
-            if (!armourStack.hasEffect() || armourStack.getItem() instanceof ItemTool || armourStack.getItem() instanceof ItemArmor) {
+        {
+            {
                 // empty if block
             }
-            this.renderItemStack(player, armourStack, xOffset, -26, this.armor.getValue());
             xOffset += 16;
         }
         this.renderItemStack(player, renderMainHand, xOffset, -26, this.armor.getValue());
@@ -309,7 +328,7 @@ public class TestNametags
         }
         NBTTagList enchants = stack.getEnchantmentTagList();
         for (int index = 0; index < enchants.tagCount(); ++index) {
-            String encName;
+            String encName = null;
             short id = enchants.getCompoundTagAt(index).getShort("id");
             short level = enchants.getCompoundTagAt(index).getShort("lvl");
             Enchantment enc = Enchantment.getEnchantmentByID((int)id);
@@ -324,7 +343,7 @@ public class TestNametags
             this.renderer.drawStringWithShadow(encName, x * 2, enchantmentY, -1);
             enchantmentY -= 8;
         }
-        if (DamageUtil.hasDurability(stack)) {
+        if ( DamageUtil.hasDurability(stack)) {
             int percent = DamageUtil.getRoundedDamage(stack);
             String color = percent >= 60 ? "\u00a7a" : (percent >= 25 ? "\u00a7e" : "\u00a7c");
             this.renderer.drawStringWithShadow(color + percent + "%", x * 2, enchantmentY, -1);
@@ -437,7 +456,7 @@ public class TestNametags
         if (this.whiter.getValue().booleanValue()) {
             colour = -1;
         }
-        if (Phobos.friendManager.isFriend(player)) {
+        if ( Phobos.friendManager.isFriend(player)) {
             return -11157267;
         }
         if (player.isInvisible()) {
@@ -450,5 +469,5 @@ public class TestNametags
 
     private double interpolate(double previous, double current, float partialTicks) {
         return previous + (current - previous) * (double)partialTicks;
-    }*/
+    }
 }

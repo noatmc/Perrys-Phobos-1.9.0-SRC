@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.modules.client.ClickGui;
-import me.earth.phobos.features.modules.client.ServerModule;
+import me.earth.phobos.features.modules.client.PingBypass;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.play.client.CPacketChatMessage;
@@ -52,7 +52,7 @@ public class FakePlayer
             this.disable();
             return;
         }
-        if (ServerModule.getInstance().isConnected()) {
+        if ( PingBypass.getInstance().isConnected()) {
             FakePlayer.mc.player.connection.sendPacket(new CPacketChatMessage("@Serverprefix" + ClickGui.getInstance().prefix.getValue()));
             FakePlayer.mc.player.connection.sendPacket(new CPacketChatMessage("@Server" + ClickGui.getInstance().prefix.getValue() + "module FakePlayer set Enabled true"));
         }
@@ -77,7 +77,7 @@ public class FakePlayer
         if (FakePlayer.fullNullCheck()) {
             return;
         }
-        if (ServerModule.getInstance().isConnected()) {
+        if ( PingBypass.getInstance().isConnected()) {
             FakePlayer.mc.player.connection.sendPacket(new CPacketChatMessage("@Serverprefix" + ClickGui.getInstance().prefix.getValue()));
             FakePlayer.mc.player.connection.sendPacket(new CPacketChatMessage("@Server" + ClickGui.getInstance().prefix.getValue() + "module FakePlayer set Enabled false"));
         }

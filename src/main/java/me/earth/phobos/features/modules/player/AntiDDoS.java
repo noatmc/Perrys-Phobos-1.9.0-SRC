@@ -10,22 +10,24 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NoDDoS
+public class AntiDDoS
         extends Module {
-    private static NoDDoS instance;
+    private static AntiDDoS instance;
     public final Setting<Boolean> full = this.register(new Setting<Boolean>("Full", false));
     private final Map<String, Setting> servers = new ConcurrentHashMap<String, Setting>();
     public Setting<String> newIP = this.register(new Setting<Object>("NewServer", "Add Server...", v -> this.full.getValue() == false));
     public Setting<Boolean> showServer = this.register(new Setting<Object>("ShowServers", Boolean.valueOf(false), v -> this.full.getValue() == false));
 
-    public NoDDoS() {
+    public
+    AntiDDoS () {
         super("AntiDDoS", "Prevents DDoS attacks", Module.Category.PLAYER, false, false, true);
         instance = this;
     }
 
-    public static NoDDoS getInstance() {
+    public static
+    AntiDDoS getInstance() {
         if (instance == null) {
-            instance = new NoDDoS();
+            instance = new AntiDDoS ();
         }
         return instance;
     }
@@ -39,7 +41,7 @@ public class NoDDoS
             if (event.getSetting().equals(this.newIP) && !this.shouldntPing(this.newIP.getPlannedValue()) && !event.getSetting().getPlannedValue().equals(event.getSetting().getDefaultValue())) {
                 Setting setting = this.register(new Setting<Boolean>(this.newIP.getPlannedValue(), Boolean.valueOf(true), v -> this.showServer.getValue() != false && this.full.getValue() == false));
                 this.registerServer(setting);
-                Command.sendMessage("<NoDDoS> Added new Server: " + this.newIP.getPlannedValue());
+                Command.sendMessage("<AntiDDoS> Added new Server: " + this.newIP.getPlannedValue());
                 event.setCanceled(true);
             } else {
                 Setting setting = event.getSetting();

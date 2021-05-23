@@ -1,8 +1,8 @@
 package me.earth.phobos.mixin.mixins;
 
 import me.earth.phobos.Phobos;
-import me.earth.phobos.features.modules.client.ServerModule;
-import me.earth.phobos.features.modules.player.NoDDoS;
+import me.earth.phobos.features.modules.client.PingBypass;
+import me.earth.phobos.features.modules.player.AntiDDoS;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.ServerPinger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,20 +16,20 @@ import java.net.UnknownHostException;
 public class MixinServerPinger {
     @Inject(method={"ping"}, at={@At(value="HEAD")}, cancellable=true)
     public void pingHook(ServerData server, CallbackInfo info) throws UnknownHostException {
-        if (server.serverIP.equalsIgnoreCase(ServerModule.getInstance().ip.getValue())) {
+        if (server.serverIP.equalsIgnoreCase( PingBypass.getInstance().ip.getValue())) {
             info.cancel();
-        } else if (NoDDoS.getInstance().shouldntPing(server.serverIP)) {
-            Phobos.LOGGER.info("NoDDoS preventing Ping to: " + server.serverIP);
+        } else if ( AntiDDoS.getInstance().shouldntPing(server.serverIP)) {
+            Phobos.LOGGER.info("AntiDDoS preventing Ping to: " + server.serverIP);
             info.cancel();
         }
     }
 
     @Inject(method={"tryCompatibilityPing"}, at={@At(value="HEAD")}, cancellable=true)
     public void tryCompatibilityPingHook(ServerData server, CallbackInfo info) {
-        if (server.serverIP.equalsIgnoreCase(ServerModule.getInstance().ip.getValue())) {
+        if (server.serverIP.equalsIgnoreCase( PingBypass.getInstance().ip.getValue())) {
             info.cancel();
-        } else if (NoDDoS.getInstance().shouldntPing(server.serverIP)) {
-            Phobos.LOGGER.info("NoDDoS preventing Compatibility Ping to: " + server.serverIP);
+        } else if ( AntiDDoS.getInstance().shouldntPing(server.serverIP)) {
+            Phobos.LOGGER.info("AntiDDoS preventing Compatibility Ping to: " + server.serverIP);
             info.cancel();
         }
     }

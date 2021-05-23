@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.modules.misc.BetterPortals;
 import me.earth.phobos.features.modules.movement.Phase;
-import me.earth.phobos.features.modules.movement.TestPhase;
+import me.earth.phobos.features.modules.movement.Packetfly;
 import me.earth.phobos.features.modules.player.TpsSync;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -44,7 +44,7 @@ extends EntityLivingBase {
     private void isEntityInsideOpaqueBlockHook(CallbackInfoReturnable<Boolean> info) {
         if (Phase.getInstance().isOn() && Phase.getInstance().type.getValue() != Phase.PacketFlyMode.NONE) {
             info.setReturnValue(false);
-        } else if (TestPhase.getInstance().isOn()) {
+        } else if ( Packetfly.getInstance().isOn()) {
             info.setReturnValue(false);
         }
     }

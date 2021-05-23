@@ -4,7 +4,7 @@ import com.google.gson.*;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.Feature;
 import me.earth.phobos.features.modules.Module;
-import me.earth.phobos.features.modules.player.NoDDoS;
+import me.earth.phobos.features.modules.player.AntiDDoS;
 import me.earth.phobos.features.modules.render.XRay;
 import me.earth.phobos.features.setting.Bind;
 import me.earth.phobos.features.setting.EnumConverter;
@@ -94,10 +94,10 @@ public class ConfigManager
                 feature.register(new Setting<Boolean>(settingName, Boolean.valueOf(true), v -> ((XRay) feature).showBlocks.getValue()));
                 continue;
             }
-            if (!(feature instanceof NoDDoS)) continue;
-            NoDDoS noDDoS = (NoDDoS) feature;
-            Setting setting = feature.register(new Setting<Boolean>(settingName, Boolean.valueOf(true), v -> noDDoS.showServer.getValue() != false && noDDoS.full.getValue() == false));
-            noDDoS.registerServer(setting);
+            if (!(feature instanceof AntiDDoS )) continue;
+            AntiDDoS antiDDoS = (AntiDDoS) feature;
+            Setting setting = feature.register(new Setting<Boolean>(settingName, Boolean.valueOf(true), v -> antiDDoS.showServer.getValue() != false && antiDDoS.full.getValue() == false));
+            antiDDoS.registerServer(setting);
         }
     }
 

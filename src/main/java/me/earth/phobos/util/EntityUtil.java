@@ -818,7 +818,7 @@ public class EntityUtil implements Util {
             }
             final int hpRaw = (int) getHealth(player);
             final String hp = dfHealth.format(hpRaw);
-            healthSB.append("§");
+            healthSB.append( "\u00A7" );
             if (hpRaw >= 20) {
                 healthSB.append("a");
             } else if (hpRaw >= 10) {
@@ -831,7 +831,7 @@ public class EntityUtil implements Util {
             healthSB.append(hp);
             final int distanceInt = (int) EntityUtil.mc.player.getDistance(player);
             final String distance = dfDistance.format(distanceInt);
-            distanceSB.append("§");
+            distanceSB.append( "\u00A7" );
             if (distanceInt >= 25) {
                 distanceSB.append("a");
             } else if (distanceInt > 10) {
@@ -842,7 +842,7 @@ public class EntityUtil implements Util {
                 distanceSB.append("c");
             }
             distanceSB.append(distance);
-            output.put(healthSB.toString() + " " + (Phobos.friendManager.isFriend(player) ? "§b" : "§r") + player.getName() + " " + distanceSB.toString() + " " + "§f" + Phobos.totemPopManager.getTotemPopString(player) + Phobos.potionManager.getTextRadarPotion(player), (int) EntityUtil.mc.player.getDistance(player));
+            output.put(healthSB.toString() + " " + (Phobos.friendManager.isFriend(player) ? "\u00A7b" : "\u00A7r" ) + player.getName() + " " + distanceSB.toString() + " " + "\u00A7f" + Phobos.totemPopManager.getTotemPopString(player) + Phobos.potionManager.getTextRadarPotion(player), (int) EntityUtil.mc.player.getDistance(player));
             healthSB.setLength(0);
             distanceSB.setLength(0);
         }

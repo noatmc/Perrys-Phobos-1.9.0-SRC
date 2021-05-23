@@ -276,9 +276,9 @@ public class IRC
             IRC.handler.outputStream.writeUTF(IRC.mc.player.getName());
             IRC.handler.outputStream.flush();
             IRC.INSTANCE.status = true;
-            Command.sendMessage("§aIRC connected successfully!");
+            Command.sendMessage( "\u00A7aIRC connected successfully!" );
         } else {
-            Command.sendMessage("§cIRC is already connected!");
+            Command.sendMessage( "\u00A7cIRC is already connected!" );
         }
     }
 
@@ -289,7 +289,7 @@ public class IRC
                 IRC.handler.interrupt();
             }
         } else {
-            Command.sendMessage("§cIRC is not connected!");
+            Command.sendMessage( "\u00A7cIRC is not connected!" );
         }
     }
 
@@ -354,7 +354,7 @@ public class IRC
 
         @Override
         public void run() {
-            Command.sendMessage("§aSocket thread starting!");
+            Command.sendMessage( "\u00A7aSocket thread starting!" );
             Label_0005_Outer:
             while (true) {
                 while (true) {
@@ -364,14 +364,14 @@ public class IRC
                             if (input.equalsIgnoreCase("message")) {
                                 final String name = this.inputStream.readUTF();
                                 final String message = this.inputStream.readUTF();
-                                Command.sendMessage("§c[IRC] §r<" + name + ">: " + message);
+                                Command.sendMessage( "\u00A7c[IRC] \u00A7r<" + name + ">: " + message);
                             }
                             if (input.equalsIgnoreCase("list")) {
                                 final String f = this.inputStream.readUTF();
                                 final String[] split;
                                 final String[] friends = split = f.split("%%%");
                                 for (final String friend : split) {
-                                    Command.sendMessage("§b" + friend.replace("_&_", " ID: "));
+                                    Command.sendMessage( "\u00A7b" + friend.replace("_&_", " ID: "));
                                 }
                             } else if (input.equalsIgnoreCase("friendall")) {
                                 final String f = this.inputStream.readUTF();
@@ -380,7 +380,7 @@ public class IRC
                                 for (final String friend : split2) {
                                     if (!friend.equals(Util.mc.player.getName())) {
                                         Phobos.friendManager.addFriend(friend);
-                                        Command.sendMessage("§b" + friend + " has been friended");
+                                        Command.sendMessage( "\u00A7b" + friend + " has been friended");
                                     }
                                 }
                             } else if (input.equalsIgnoreCase("waypoint")) {
@@ -391,14 +391,14 @@ public class IRC
                                 final String dimension = inputs[1];
                                 final Color color = new Color(Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2]), Integer.parseInt(colors[3]));
                                 Phobos.waypointManager.waypoints.put(name, new WaypointManager.Waypoint(name, server, Integer.parseInt(dimension), Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]), Integer.parseInt(inputs[4]), color));
-                                Command.sendMessage("§c[IRC] §r" + name + " has set a waypoint at " + "§c" + "(" + Integer.parseInt(inputs[2]) + "," + Integer.parseInt(inputs[3]) + "," + Integer.parseInt(inputs[4]) + ")" + "§r" + " on the server " + "§c" + server + "§r" + " in the dimension " + "§c" + IRC.getDimension(Integer.parseInt(dimension)));
+                                Command.sendMessage( "\u00A7c[IRC] \u00A7r" + name + " has set a waypoint at " + "\u00A7c" + "(" + Integer.parseInt(inputs[2]) + "," + Integer.parseInt(inputs[3]) + "," + Integer.parseInt(inputs[4]) + ")" + "\u00A7r" + " on the server " + "\u00A7c" + server + "\u00A7r" + " in the dimension " + "\u00A7c" + IRC.getDimension(Integer.parseInt(dimension)));
                                 if (IRC.INSTANCE.ding.getValue()) {
                                     Util.mc.world.playSound(Util.mc.player.posX, Util.mc.player.posY, Util.mc.player.posZ, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 0.7f, false);
                                 }
                             } else if (input.equalsIgnoreCase("removewaypoint")) {
                                 final String name = this.inputStream.readUTF();
                                 Phobos.waypointManager.waypoints.remove(name);
-                                Command.sendMessage("§c[IRC] §r" + name + " has removed their waypoint");
+                                Command.sendMessage( "\u00A7c[IRC] \u00A7r" + name + " has removed their waypoint");
                                 if (IRC.INSTANCE.ding.getValue()) {
                                     Util.mc.world.playSound(Util.mc.player.posX, Util.mc.player.posY, Util.mc.player.posZ, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, -0.7f, false);
                                 }
@@ -414,7 +414,7 @@ public class IRC
                                 final byte[] inputBytes = readByteArrayLWithLength(this.inputStream);
                                 final ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(inputBytes));
                                 final List<String> players = (List<String>) stream.readObject();
-                                Command.sendMessage("§c[IRC]§r Active Users:");
+                                Command.sendMessage( "\u00A7c[IRC]\u00A7r Active Users:" );
                                 for (final String name2 : players) {
                                     Command.sendMessage(name2);
                                     if (!IRC.phobosUsers.contains(name2)) {

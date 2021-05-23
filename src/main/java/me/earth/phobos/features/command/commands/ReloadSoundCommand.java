@@ -20,7 +20,7 @@ public class ReloadSoundCommand
         } catch (Exception e) {
             System.out.println("Could not restart sound manager: " + e.toString());
             e.printStackTrace();
-            ReloadSoundCommand.sendMessage("\u00a7cCouldnt Reload Sound System!");
+            ReloadSoundCommand.sendMessage("\u00a7cCouldn't Reload Sound System!");
         }
     }
 }

@@ -1,13 +1,10 @@
 package me.earth.phobos.features.modules.client;
 
 import me.earth.phobos.features.modules.Module;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

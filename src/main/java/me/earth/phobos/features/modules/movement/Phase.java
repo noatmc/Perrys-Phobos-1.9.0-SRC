@@ -8,8 +8,6 @@ import me.earth.phobos.event.events.UpdateWalkingPlayerEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketConfirmTeleport;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;

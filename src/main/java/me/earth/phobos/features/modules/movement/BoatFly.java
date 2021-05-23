@@ -4,8 +4,6 @@ import me.earth.phobos.event.events.PacketEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketConfirmTeleport;
 import net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.network.play.client.CPacketPlayer;

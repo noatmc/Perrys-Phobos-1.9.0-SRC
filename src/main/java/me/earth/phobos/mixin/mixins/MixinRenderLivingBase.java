@@ -1,6 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.awt.Color;
 import me.earth.phobos.event.events.RenderEntityModelEvent;
 import me.earth.phobos.features.modules.client.Colors;
 import me.earth.phobos.features.modules.render.Chams;
@@ -22,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.awt.*;
 
 @Mixin(value={RenderLivingBase.class})
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase>

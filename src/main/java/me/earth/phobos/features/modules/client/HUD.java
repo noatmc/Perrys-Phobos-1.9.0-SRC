@@ -1,25 +1,13 @@
 
 package me.earth.phobos.features.modules.client;
 
-import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.event.events.ClientEvent;
 import me.earth.phobos.event.events.Render2DEvent;
 import me.earth.phobos.features.modules.Module;
-import me.earth.phobos.features.modules.client.Colors;
-import me.earth.phobos.features.modules.client.Managers;
-import me.earth.phobos.features.modules.client.ServerModule;
 import me.earth.phobos.features.modules.misc.ToolTips;
 import me.earth.phobos.features.setting.Setting;
-import me.earth.phobos.util.ColorUtil;
-import me.earth.phobos.util.EntityUtil;
-import me.earth.phobos.util.MathUtil;
-import me.earth.phobos.util.RenderUtil;
-import me.earth.phobos.util.Timer;
+import me.earth.phobos.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
@@ -32,6 +20,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HUD
         extends Module {

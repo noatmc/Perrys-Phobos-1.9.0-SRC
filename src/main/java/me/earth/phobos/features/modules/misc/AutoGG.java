@@ -11,10 +11,8 @@ import me.earth.phobos.manager.FileManager;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.network.play.client.CPacketUseEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

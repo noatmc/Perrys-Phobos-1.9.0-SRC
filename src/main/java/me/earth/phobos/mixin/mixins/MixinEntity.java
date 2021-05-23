@@ -1,8 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import me.earth.phobos.event.events.PushEvent;
 import me.earth.phobos.event.events.StepEvent;
 import me.earth.phobos.features.modules.misc.BetterPortals;
@@ -34,6 +31,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 @Mixin(value={Entity.class})
 public abstract class MixinEntity {

@@ -9,7 +9,6 @@ import me.earth.phobos.features.modules.player.Freecam;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.Timer;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

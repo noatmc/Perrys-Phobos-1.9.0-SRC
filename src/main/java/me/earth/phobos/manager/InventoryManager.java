@@ -2,7 +2,6 @@ package me.earth.phobos.manager;
 
 import me.earth.phobos.util.Util;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 
 import java.util.HashMap;

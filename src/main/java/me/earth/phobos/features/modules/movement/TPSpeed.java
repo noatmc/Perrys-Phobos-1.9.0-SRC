@@ -4,7 +4,6 @@ import me.earth.phobos.event.events.UpdateWalkingPlayerEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.MathUtil;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

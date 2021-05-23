@@ -1,7 +1,6 @@
 package me.earth.phobos.manager;
 
 import me.earth.phobos.features.Feature;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 public class PositionManager

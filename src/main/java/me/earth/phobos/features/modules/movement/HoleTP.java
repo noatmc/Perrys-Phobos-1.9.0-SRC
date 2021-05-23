@@ -5,7 +5,6 @@ import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.util.BlockUtil;
 import me.earth.phobos.util.EntityUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

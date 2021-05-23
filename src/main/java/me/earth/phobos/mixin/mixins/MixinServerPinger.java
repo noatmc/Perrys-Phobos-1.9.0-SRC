@@ -1,6 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.net.UnknownHostException;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.modules.client.ServerModule;
 import me.earth.phobos.features.modules.player.NoDDoS;
@@ -10,6 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.net.UnknownHostException;
 
 @Mixin(value={ServerPinger.class})
 public class MixinServerPinger {

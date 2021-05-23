@@ -5,7 +5,6 @@ import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.scoreboard.Team;
 
 public class ExtraTab
         extends Module {

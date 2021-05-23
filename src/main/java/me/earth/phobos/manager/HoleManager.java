@@ -9,10 +9,8 @@ import me.earth.phobos.util.BlockUtil;
 import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
 import java.util.Comparator;

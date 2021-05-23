@@ -3,7 +3,6 @@ package me.earth.phobos.features.setting;
 import me.earth.phobos.event.events.ClientEvent;
 import me.earth.phobos.features.Feature;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.function.Predicate;
 

@@ -12,7 +12,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemEndCrystal;
 import net.minecraft.item.ItemExpBottle;
 import net.minecraft.item.ItemMinecart;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;

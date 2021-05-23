@@ -9,7 +9,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
 import org.lwjgl.input.Mouse;
 
 public class MCP

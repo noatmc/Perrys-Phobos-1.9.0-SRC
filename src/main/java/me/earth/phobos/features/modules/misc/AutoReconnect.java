@@ -5,7 +5,6 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.client.gui.GuiDisconnected;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.event.GuiOpenEvent;

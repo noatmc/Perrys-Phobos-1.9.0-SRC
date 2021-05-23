@@ -7,11 +7,8 @@ import me.earth.phobos.features.modules.client.ClickGui;
 import me.earth.phobos.features.modules.client.ServerModule;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;

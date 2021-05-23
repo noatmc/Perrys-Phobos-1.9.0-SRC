@@ -5,7 +5,6 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.FileUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.util.StringUtils;
 

@@ -9,7 +9,6 @@ import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.Timer;
 import me.earth.phobos.util.Util;
 import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.Packet;

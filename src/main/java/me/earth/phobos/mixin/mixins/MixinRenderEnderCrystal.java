@@ -1,6 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.awt.Color;
 import me.earth.phobos.event.events.RenderEntityModelEvent;
 import me.earth.phobos.features.modules.client.Colors;
 import me.earth.phobos.features.modules.render.CrystalScale;
@@ -18,6 +17,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.awt.*;
 
 @Mixin(value={RenderEnderCrystal.class})
 public class MixinRenderEnderCrystal {

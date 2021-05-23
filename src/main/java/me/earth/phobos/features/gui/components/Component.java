@@ -11,11 +11,9 @@ import me.earth.phobos.features.modules.client.HUD;
 import me.earth.phobos.util.ColorUtil;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.RenderUtil;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;

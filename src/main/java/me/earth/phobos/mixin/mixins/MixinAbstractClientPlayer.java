@@ -1,7 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.util.UUID;
-import javax.annotation.Nullable;
 import me.earth.phobos.features.modules.client.Capes;
 import me.earth.phobos.features.modules.render.Chams;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -12,6 +10,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 @Mixin(value={AbstractClientPlayer.class})
 public abstract class MixinAbstractClientPlayer {

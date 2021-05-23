@@ -10,8 +10,6 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketConfirmTeleport;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;

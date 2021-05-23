@@ -3,7 +3,6 @@ package me.earth.phobos.manager;
 import me.earth.phobos.features.Feature;
 import me.earth.phobos.features.modules.client.Managers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
 

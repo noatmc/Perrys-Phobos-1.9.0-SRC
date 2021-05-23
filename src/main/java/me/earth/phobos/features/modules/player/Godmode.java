@@ -7,7 +7,6 @@ import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.network.play.client.CPacketPlayer;

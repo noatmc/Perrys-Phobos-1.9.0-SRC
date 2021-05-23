@@ -1,6 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import javax.annotation.Nullable;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.gui.custom.GuiCustomMainScreen;
 import me.earth.phobos.features.modules.client.Managers;
@@ -24,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import javax.annotation.Nullable;
 
 @Mixin(value={Minecraft.class})
 public abstract class MixinMinecraft {

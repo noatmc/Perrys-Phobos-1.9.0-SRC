@@ -9,7 +9,6 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.BlockUtil;
 import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.MathUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.MovementInput;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

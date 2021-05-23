@@ -1,9 +1,6 @@
 package me.earth.phobos.mixin.mixins;
 
 import com.google.common.base.Predicate;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nullable;
 import me.earth.phobos.features.modules.client.Notifications;
 import me.earth.phobos.features.modules.player.Speedmine;
 import me.earth.phobos.features.modules.render.CameraClip;
@@ -29,6 +26,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(value={EntityRenderer.class})
 public abstract class MixinEntityRenderer {

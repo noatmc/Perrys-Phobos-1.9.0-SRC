@@ -1,7 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import me.earth.phobos.features.modules.movement.Flight;
 import me.earth.phobos.features.modules.movement.Phase;
 import me.earth.phobos.features.modules.player.Freecam;
@@ -23,6 +21,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 @Mixin(value={Block.class})
 public abstract class MixinBlock {

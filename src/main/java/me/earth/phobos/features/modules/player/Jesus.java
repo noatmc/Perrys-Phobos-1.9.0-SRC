@@ -7,7 +7,6 @@ import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.EntityUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.server.SPacketMoveVehicle;
 import net.minecraft.util.math.AxisAlignedBB;

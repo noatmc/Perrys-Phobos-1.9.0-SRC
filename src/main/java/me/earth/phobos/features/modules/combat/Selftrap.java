@@ -13,7 +13,6 @@ import me.earth.phobos.util.InventoryUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.BlockWeb;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;

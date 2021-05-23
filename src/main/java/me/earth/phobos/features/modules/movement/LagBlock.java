@@ -9,12 +9,10 @@ import me.earth.phobos.util.RotationUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.block.BlockEnderChest;
 import net.minecraft.block.BlockObsidian;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LagBlock

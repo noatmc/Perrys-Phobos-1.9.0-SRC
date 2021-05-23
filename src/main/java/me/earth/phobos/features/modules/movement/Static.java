@@ -3,7 +3,6 @@ package me.earth.phobos.features.modules.movement;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;

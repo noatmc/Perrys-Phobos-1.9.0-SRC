@@ -2,7 +2,6 @@ package me.earth.phobos.features.modules.misc;
 
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.util.EnumHand;
 

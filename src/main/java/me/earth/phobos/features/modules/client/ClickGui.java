@@ -6,7 +6,6 @@ import me.earth.phobos.features.command.Command;
 import me.earth.phobos.features.gui.PhobosGui;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

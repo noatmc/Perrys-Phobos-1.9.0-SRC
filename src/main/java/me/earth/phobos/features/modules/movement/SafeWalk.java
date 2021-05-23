@@ -3,7 +3,6 @@ package me.earth.phobos.features.modules.movement;
 import me.earth.phobos.event.events.MoveEvent;
 import me.earth.phobos.features.modules.Module;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SafeWalk

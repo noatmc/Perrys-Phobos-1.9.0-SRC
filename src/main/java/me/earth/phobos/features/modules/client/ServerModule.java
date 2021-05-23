@@ -6,7 +6,6 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.mixin.mixins.accessors.IC00Handshake;
 import me.earth.phobos.util.TextUtil;
 import me.earth.phobos.util.Timer;
-import net.minecraft.network.Packet;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.network.play.client.CPacketKeepAlive;

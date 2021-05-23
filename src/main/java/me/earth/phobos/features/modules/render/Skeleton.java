@@ -9,7 +9,6 @@ import me.earth.phobos.util.EntityUtil;
 import me.earth.phobos.util.RenderUtil;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;

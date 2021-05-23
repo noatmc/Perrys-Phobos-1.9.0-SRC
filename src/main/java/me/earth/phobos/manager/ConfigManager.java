@@ -12,8 +12,9 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.Util;
 
 import java.io.*;
-import java.nio.file.*;
-import java.nio.file.attribute.FileAttribute;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 

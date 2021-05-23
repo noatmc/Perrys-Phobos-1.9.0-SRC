@@ -8,10 +8,8 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.ColorUtil;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.RenderUtil;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 public class UnlimitedSlider
         extends Button {

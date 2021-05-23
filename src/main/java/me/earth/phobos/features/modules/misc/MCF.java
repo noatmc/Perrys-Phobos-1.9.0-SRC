@@ -10,7 +10,6 @@ import me.earth.phobos.features.setting.Bind;
 import me.earth.phobos.features.setting.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;

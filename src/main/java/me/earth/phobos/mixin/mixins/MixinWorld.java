@@ -1,7 +1,6 @@
 package me.earth.phobos.mixin.mixins;
 
 import com.google.common.base.Predicate;
-import java.util.List;
 import me.earth.phobos.event.events.PushEvent;
 import me.earth.phobos.features.modules.misc.Tracker;
 import me.earth.phobos.features.modules.render.NoRender;
@@ -19,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(value={World.class})
 public class MixinWorld {

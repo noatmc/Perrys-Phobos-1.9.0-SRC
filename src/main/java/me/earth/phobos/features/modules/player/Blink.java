@@ -6,11 +6,9 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.MathUtil;
 import me.earth.phobos.util.Timer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Queue;

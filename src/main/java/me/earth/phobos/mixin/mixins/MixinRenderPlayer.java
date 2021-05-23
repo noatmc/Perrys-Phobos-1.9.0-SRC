@@ -1,6 +1,5 @@
 package me.earth.phobos.mixin.mixins;
 
-import java.awt.Color;
 import me.earth.phobos.features.modules.client.Colors;
 import me.earth.phobos.features.modules.render.HandColor;
 import me.earth.phobos.features.modules.render.Nametags;
@@ -14,6 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.awt.*;
 
 @Mixin(value={RenderPlayer.class})
 public class MixinRenderPlayer {

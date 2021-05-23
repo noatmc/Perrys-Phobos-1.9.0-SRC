@@ -7,10 +7,8 @@ import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.modules.client.ClickGui;
 import me.earth.phobos.features.setting.Bind;
 import me.earth.phobos.features.setting.Setting;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundEvent;
 
 import java.util.ArrayList;
 import java.util.List;

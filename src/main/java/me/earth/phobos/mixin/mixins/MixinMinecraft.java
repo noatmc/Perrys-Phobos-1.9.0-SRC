@@ -26,82 +26,94 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 
-@Mixin(value={Minecraft.class})
-public abstract class MixinMinecraft {
+@Mixin(value = {Minecraft.class})
+public abstract
+class MixinMinecraft {
     @Shadow
-    public abstract void displayGuiScreen(@Nullable GuiScreen var1);
+    public abstract
+    void displayGuiScreen ( @Nullable GuiScreen var1 );
 
-    @Inject(method={"runTickKeyboard"}, at={@At(value="FIELD", target="Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal=0)}, locals=LocalCapture.CAPTURE_FAILSOFT)
-    private void onRunTickKeyboard(CallbackInfo ci, int i) {
-        if (Keyboard.getEventKeyState() && Phobos.moduleManager != null) {
-            Phobos.moduleManager.onKeyPressed(i);
+    @Inject(method = {"runTickKeyboard"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 0)}, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private
+    void onRunTickKeyboard ( CallbackInfo ci , int i ) {
+        if ( Keyboard.getEventKeyState ( ) && Phobos.moduleManager != null ) {
+            Phobos.moduleManager.onKeyPressed ( i );
         }
     }
 
-    @Inject(method={"getLimitFramerate"}, at={@At(value="HEAD")}, cancellable=true)
-    public void getLimitFramerateHook(CallbackInfoReturnable<Integer> callbackInfoReturnable) {
+    @Inject(method = {"getLimitFramerate"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void getLimitFramerateHook ( CallbackInfoReturnable < Integer > callbackInfoReturnable ) {
         try {
-            if ( Management.getInstance().unfocusedCpu.getValue().booleanValue() && !Display.isActive()) {
-                callbackInfoReturnable.setReturnValue( Management.getInstance().cpuFPS.getValue());
+            if ( Management.getInstance ( ).unfocusedCpu.getValue ( ).booleanValue ( ) && ! Display.isActive ( ) ) {
+                callbackInfoReturnable.setReturnValue ( Management.getInstance ( ).cpuFPS.getValue ( ) );
             }
-        }
-        catch (NullPointerException nullPointerException) {
+        } catch ( NullPointerException nullPointerException ) {
             // empty catch block
         }
     }
 
-    @Redirect(method={"runGameLoop"}, at=@At(value="INVOKE", target="Lorg/lwjgl/opengl/Display;sync(I)V", remap=false))
-    public void syncHook(int maxFps) {
-        if ( Management.getInstance().betterFrames.getValue().booleanValue()) {
-            Display.sync((int) Management.getInstance().betterFPS.getValue());
+    @Redirect(method = {"runGameLoop"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;sync(I)V", remap = false))
+    public
+    void syncHook ( int maxFps ) {
+        if ( Management.getInstance ( ).betterFrames.getValue ( ).booleanValue ( ) ) {
+            Display.sync ( Management.getInstance ( ).betterFPS.getValue ( ) );
         } else {
-            Display.sync((int)maxFps);
+            Display.sync ( maxFps );
         }
     }
 
-    @Inject(method={"runTick()V"}, at={@At(value="RETURN")})
-    private void runTick(CallbackInfo callbackInfo) {
-        if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu && Screens.INSTANCE.mainScreen.getValue().booleanValue()) {
-            Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new GuiCustomMainScreen());
+    @Inject(method = {"runTick()V"}, at = {@At(value = "RETURN")})
+    private
+    void runTick ( CallbackInfo callbackInfo ) {
+        if ( Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu && Screens.INSTANCE.mainScreen.getValue ( ).booleanValue ( ) ) {
+            Minecraft.getMinecraft ( ).displayGuiScreen ( new GuiCustomMainScreen ( ) );
         }
     }
 
-    @Inject(method={"displayGuiScreen"}, at={@At(value="HEAD")})
-    private void displayGuiScreen(GuiScreen screen, CallbackInfo ci) {
-        if (screen instanceof GuiMainMenu) {
-            this.displayGuiScreen(new GuiCustomMainScreen());
+    @Inject(method = {"displayGuiScreen"}, at = {@At(value = "HEAD")})
+    private
+    void displayGuiScreen ( GuiScreen screen , CallbackInfo ci ) {
+        if ( screen instanceof GuiMainMenu ) {
+            this.displayGuiScreen ( new GuiCustomMainScreen ( ) );
         }
     }
 
-    @Redirect(method={"run"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/Minecraft;displayCrashReport(Lnet/minecraft/crash/CrashReport;)V"))
-    public void displayCrashReportHook(Minecraft minecraft, CrashReport crashReport) {
-        this.unload();
+    @Redirect(method = {"run"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayCrashReport(Lnet/minecraft/crash/CrashReport;)V"))
+    public
+    void displayCrashReportHook ( Minecraft minecraft , CrashReport crashReport ) {
+        this.unload ( );
     }
 
-    @Redirect(method={"runTick"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/multiplayer/WorldClient;doVoidFogParticles(III)V"))
-    public void doVoidFogParticlesHook(WorldClient world, int x, int y, int z) {
-        NoRender.getInstance().doVoidFogParticles(x, y, z);
+    @Redirect(method = {"runTick"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;doVoidFogParticles(III)V"))
+    public
+    void doVoidFogParticlesHook ( WorldClient world , int x , int y , int z ) {
+        NoRender.getInstance ( ).doVoidFogParticles ( x , y , z );
     }
 
-    @Inject(method={"shutdown"}, at={@At(value="HEAD")})
-    public void shutdownHook(CallbackInfo info) {
-        this.unload();
+    @Inject(method = {"shutdown"}, at = {@At(value = "HEAD")})
+    public
+    void shutdownHook ( CallbackInfo info ) {
+        this.unload ( );
     }
 
-    private void unload() {
-        System.out.println("Shutting down: saving configuration");
-        Phobos.onUnload();
-        System.out.println("Configuration saved.");
+    private
+    void unload ( ) {
+        System.out.println ( "Shutting down: saving configuration" );
+        Phobos.onUnload ( );
+        System.out.println ( "Configuration saved." );
     }
 
-    @Redirect(method={"sendClickBlockToController"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/entity/EntityPlayerSP;isHandActive()Z"))
-    private boolean isHandActiveWrapper(EntityPlayerSP playerSP) {
-        return !MultiTask.getInstance().isOn() && playerSP.isHandActive();
+    @Redirect(method = {"sendClickBlockToController"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isHandActive()Z"))
+    private
+    boolean isHandActiveWrapper ( EntityPlayerSP playerSP ) {
+        return ! MultiTask.getInstance ( ).isOn ( ) && playerSP.isHandActive ( );
     }
 
-    @Redirect(method={"rightClickMouse"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/multiplayer/PlayerControllerMP;getIsHittingBlock()Z", ordinal=0), require=1)
-    private boolean isHittingBlockHook(PlayerControllerMP playerControllerMP) {
-        return !MultiTask.getInstance().isOn() && playerControllerMP.getIsHittingBlock();
+    @Redirect(method = {"rightClickMouse"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;getIsHittingBlock()Z", ordinal = 0), require = 1)
+    private
+    boolean isHittingBlockHook ( PlayerControllerMP playerControllerMP ) {
+        return ! MultiTask.getInstance ( ).isOn ( ) && playerControllerMP.getIsHittingBlock ( );
     }
 }
 

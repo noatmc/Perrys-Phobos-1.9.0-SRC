@@ -11,25 +11,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value={ItemStack.class})
-public abstract class MixinItemStack {
+@Mixin(value = {ItemStack.class})
+public abstract
+class MixinItemStack {
     @Shadow
     private int itemDamage;
 
-    @Inject(method={"<init>(Lnet/minecraft/item/Item;IILnet/minecraft/nbt/NBTTagCompound;)V"}, at={@At(value="RETURN")})
+    @Inject(method = {"<init>(Lnet/minecraft/item/Item;IILnet/minecraft/nbt/NBTTagCompound;)V"}, at = {@At(value = "RETURN")})
     @Dynamic
-    private void initHook(Item item, int idkWhatDisIsIPastedThis, int dura, NBTTagCompound compound, CallbackInfo info) {
-        this.itemDamage = this.checkDurability((ItemStack)ItemStack.class.cast(this), this.itemDamage, dura);
+    private
+    void initHook ( Item item , int idkWhatDisIsIPastedThis , int dura , NBTTagCompound compound , CallbackInfo info ) {
+        this.itemDamage = this.checkDurability ( ItemStack.class.cast ( this ) , this.itemDamage , dura );
     }
 
-    @Inject(method={"<init>(Lnet/minecraft/nbt/NBTTagCompound;)V"}, at={@At(value="RETURN")})
-    private void initHook2(NBTTagCompound compound, CallbackInfo info) {
-        this.itemDamage = this.checkDurability((ItemStack)ItemStack.class.cast(this), this.itemDamage, compound.getShort("Damage"));
+    @Inject(method = {"<init>(Lnet/minecraft/nbt/NBTTagCompound;)V"}, at = {@At(value = "RETURN")})
+    private
+    void initHook2 ( NBTTagCompound compound , CallbackInfo info ) {
+        this.itemDamage = this.checkDurability ( ItemStack.class.cast ( this ) , this.itemDamage , compound.getShort ( "Damage" ) );
     }
 
-    private int checkDurability(ItemStack item, int damage, int dura) {
+    private
+    int checkDurability ( ItemStack item , int damage , int dura ) {
         int trueDura = damage;
-        if (TrueDurability.getInstance().isOn() && dura < 0) {
+        if ( TrueDurability.getInstance ( ).isOn ( ) && dura < 0 ) {
             trueDura = dura;
         }
         return trueDura;

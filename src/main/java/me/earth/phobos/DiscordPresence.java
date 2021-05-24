@@ -7,7 +7,8 @@ import me.earth.phobos.features.modules.misc.RPC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 
-public class DiscordPresence {
+public
+class DiscordPresence {
     private static final DiscordRPC rpc;
     public static DiscordRichPresence presence;
     private static Thread thread;
@@ -16,45 +17,47 @@ public class DiscordPresence {
     static {
         index = 1;
         rpc = DiscordRPC.INSTANCE;
-        presence = new DiscordRichPresence();
+        presence = new DiscordRichPresence ( );
     }
 
-    public static void start() {
-        DiscordEventHandlers handlers = new DiscordEventHandlers();
-        rpc.Discord_Initialize("737779695134834695", handlers, true, "");
-        DiscordPresence.presence.startTimestamp = System.currentTimeMillis() / 1000L;
-        DiscordPresence.presence.details = Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + (Minecraft.getMinecraft().currentServerData != null ? (RPC.INSTANCE.showIP.getValue().booleanValue() ? "on " + Minecraft.getMinecraft().currentServerData.serverIP + "." : " multiplayer.") : " singleplayer.");
-        DiscordPresence.presence.state = RPC.INSTANCE.state.getValue();
+    public static
+    void start ( ) {
+        DiscordEventHandlers handlers = new DiscordEventHandlers ( );
+        rpc.Discord_Initialize ( "737779695134834695" , handlers , true , "" );
+        DiscordPresence.presence.startTimestamp = System.currentTimeMillis ( ) / 1000L;
+        DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ).booleanValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
+        DiscordPresence.presence.state = RPC.INSTANCE.state.getValue ( );
         DiscordPresence.presence.largeImageKey = "phobos";
         DiscordPresence.presence.largeImageText = "Phobos 1.9.0";
-        rpc.Discord_UpdatePresence(presence);
-        thread = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                rpc.Discord_RunCallbacks();
-                DiscordPresence.presence.details = Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + (Minecraft.getMinecraft().currentServerData != null ? (RPC.INSTANCE.showIP.getValue().booleanValue() ? "on " + Minecraft.getMinecraft().currentServerData.serverIP + "." : " multiplayer.") : " singleplayer.");
-                DiscordPresence.presence.state = RPC.INSTANCE.state.getValue();
-                if (RPC.INSTANCE.catMode.getValue().booleanValue()) {
-                    if (index == 16) {
+        rpc.Discord_UpdatePresence ( presence );
+        thread = new Thread ( ( ) -> {
+            while ( ! Thread.currentThread ( ).isInterrupted ( ) ) {
+                rpc.Discord_RunCallbacks ( );
+                DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ).booleanValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
+                DiscordPresence.presence.state = RPC.INSTANCE.state.getValue ( );
+                if ( RPC.INSTANCE.catMode.getValue ( ).booleanValue ( ) ) {
+                    if ( index == 16 ) {
                         index = 1;
                     }
                     DiscordPresence.presence.largeImageKey = "cat" + index;
-                    ++index;
+                    ++ index;
                 }
-                rpc.Discord_UpdatePresence(presence);
+                rpc.Discord_UpdatePresence ( presence );
                 try {
-                    Thread.sleep(2000L);
-                } catch (InterruptedException interruptedException) {
+                    Thread.sleep ( 2000L );
+                } catch ( InterruptedException interruptedException ) {
                 }
             }
-        }, "RPC-Callback-Handler");
-        thread.start();
+        } , "RPC-Callback-Handler" );
+        thread.start ( );
     }
 
-    public static void stop() {
-        if (thread != null && !thread.isInterrupted()) {
-            thread.interrupt();
+    public static
+    void stop ( ) {
+        if ( thread != null && ! thread.isInterrupted ( ) ) {
+            thread.interrupt ( );
         }
-        rpc.Discord_Shutdown();
+        rpc.Discord_Shutdown ( );
     }
 }
 

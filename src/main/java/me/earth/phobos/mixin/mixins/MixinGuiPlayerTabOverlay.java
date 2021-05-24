@@ -12,18 +12,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(value={GuiPlayerTabOverlay.class})
-public class MixinGuiPlayerTabOverlay
-extends Gui {
-    @Redirect(method={"renderPlayerlist"}, at=@At(value="INVOKE", target="Ljava/util/List;subList(II)Ljava/util/List;", remap=false))
-    public List<NetworkPlayerInfo> subListHook(List<NetworkPlayerInfo> list, int fromIndex, int toIndex) {
-        return list.subList(fromIndex, ExtraTab.getINSTANCE().isEnabled() ? Math.min(ExtraTab.getINSTANCE().size.getValue(), list.size()) : toIndex);
+@Mixin(value = {GuiPlayerTabOverlay.class})
+public
+class MixinGuiPlayerTabOverlay
+        extends Gui {
+    @Redirect(method = {"renderPlayerlist"}, at = @At(value = "INVOKE", target = "Ljava/util/List;subList(II)Ljava/util/List;", remap = false))
+    public
+    List < NetworkPlayerInfo > subListHook ( List < NetworkPlayerInfo > list , int fromIndex , int toIndex ) {
+        return list.subList ( fromIndex , ExtraTab.getINSTANCE ( ).isEnabled ( ) ? Math.min ( ExtraTab.getINSTANCE ( ).size.getValue ( ) , list.size ( ) ) : toIndex );
     }
 
-    @Inject(method={"getPlayerName"}, at={@At(value="HEAD")}, cancellable=true)
-    public void getPlayerNameHook(NetworkPlayerInfo networkPlayerInfoIn, CallbackInfoReturnable<String> info) {
-        if (ExtraTab.getINSTANCE().isEnabled()) {
-            info.setReturnValue(ExtraTab.getPlayerName(networkPlayerInfoIn));
+    @Inject(method = {"getPlayerName"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void getPlayerNameHook ( NetworkPlayerInfo networkPlayerInfoIn , CallbackInfoReturnable < String > info ) {
+        if ( ExtraTab.getINSTANCE ( ).isEnabled ( ) ) {
+            info.setReturnValue ( ExtraTab.getPlayerName ( networkPlayerInfoIn ) );
         }
     }
 }

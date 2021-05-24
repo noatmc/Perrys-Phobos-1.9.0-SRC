@@ -17,35 +17,40 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value={EntityPlayer.class})
-public abstract class MixinEntityPlayer
-extends EntityLivingBase {
-    public MixinEntityPlayer(World worldIn, GameProfile gameProfileIn) {
-        super(worldIn);
+@Mixin(value = {EntityPlayer.class})
+public abstract
+class MixinEntityPlayer
+        extends EntityLivingBase {
+    public
+    MixinEntityPlayer ( World worldIn , GameProfile gameProfileIn ) {
+        super ( worldIn );
     }
 
-    @Inject(method={"getCooldownPeriod"}, at={@At(value="HEAD")}, cancellable=true)
-    private void getCooldownPeriodHook(CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        if (TpsSync.getInstance().isOn() && TpsSync.getInstance().attack.getValue().booleanValue()) {
-            callbackInfoReturnable.setReturnValue(Float.valueOf((float)(1.0 / ((EntityPlayer)EntityPlayer.class.cast((Object)this)).getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * 20.0 * (double)Phobos.serverManager.getTpsFactor())));
+    @Inject(method = {"getCooldownPeriod"}, at = {@At(value = "HEAD")}, cancellable = true)
+    private
+    void getCooldownPeriodHook ( CallbackInfoReturnable < Float > callbackInfoReturnable ) {
+        if ( TpsSync.getInstance ( ).isOn ( ) && TpsSync.getInstance ( ).attack.getValue ( ).booleanValue ( ) ) {
+            callbackInfoReturnable.setReturnValue ( Float.valueOf ( (float) ( 1.0 / this.getEntityAttribute ( SharedMonsterAttributes.ATTACK_SPEED ).getAttributeValue ( ) * 20.0 * (double) Phobos.serverManager.getTpsFactor ( ) ) ) );
         }
     }
 
-    @ModifyConstant(method={"getPortalCooldown"}, constant={@Constant(intValue=10)})
-    private int getPortalCooldownHook(int cooldown) {
+    @ModifyConstant(method = {"getPortalCooldown"}, constant = {@Constant(intValue = 10)})
+    private
+    int getPortalCooldownHook ( int cooldown ) {
         int time = cooldown;
-        if (BetterPortals.getInstance().isOn() && BetterPortals.getInstance().fastPortal.getValue().booleanValue()) {
-            time = BetterPortals.getInstance().cooldown.getValue();
+        if ( BetterPortals.getInstance ( ).isOn ( ) && BetterPortals.getInstance ( ).fastPortal.getValue ( ).booleanValue ( ) ) {
+            time = BetterPortals.getInstance ( ).cooldown.getValue ( );
         }
         return time;
     }
 
-    @Inject(method={"isEntityInsideOpaqueBlock"}, at={@At(value="HEAD")}, cancellable=true)
-    private void isEntityInsideOpaqueBlockHook(CallbackInfoReturnable<Boolean> info) {
-        if (Phase.getInstance().isOn() && Phase.getInstance().type.getValue() != Phase.PacketFlyMode.NONE) {
-            info.setReturnValue(false);
-        } else if ( Packetfly.getInstance().isOn()) {
-            info.setReturnValue(false);
+    @Inject(method = {"isEntityInsideOpaqueBlock"}, at = {@At(value = "HEAD")}, cancellable = true)
+    private
+    void isEntityInsideOpaqueBlockHook ( CallbackInfoReturnable < Boolean > info ) {
+        if ( Phase.getInstance ( ).isOn ( ) && Phase.getInstance ( ).type.getValue ( ) != Phase.PacketFlyMode.NONE ) {
+            info.setReturnValue ( false );
+        } else if ( Packetfly.getInstance ( ).isOn ( ) ) {
+            info.setReturnValue ( false );
         }
     }
 }

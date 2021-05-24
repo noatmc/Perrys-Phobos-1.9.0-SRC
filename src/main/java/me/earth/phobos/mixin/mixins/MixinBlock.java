@@ -25,40 +25,42 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@Mixin(value={Block.class})
-public abstract class MixinBlock {
+@Mixin(value = {Block.class})
+public abstract
+class MixinBlock {
     @Shadow
     @Deprecated
-    public abstract float getBlockHardness(IBlockState var1, World var2, BlockPos var3);
+    public abstract
+    float getBlockHardness ( IBlockState var1 , World var2 , BlockPos var3 );
 
-    @Inject(method={"addCollisionBoxToList(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/AxisAlignedBB;Ljava/util/List;Lnet/minecraft/entity/Entity;Z)V"}, at={@At(value="HEAD")}, cancellable=true)
-    public void addCollisionBoxToListHook(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState, CallbackInfo info) {
-        if (entityIn != null && Util.mc.player != null && (entityIn.equals((Object)Util.mc.player) || Util.mc.player.getRidingEntity() != null && entityIn.equals((Object)Util.mc.player.getRidingEntity())) && (Flight.getInstance().isOn() && (Flight.getInstance().mode.getValue() == Flight.Mode.PACKET && Flight.getInstance().better.getValue() != false && Flight.getInstance().phase.getValue() != false || Flight.getInstance().mode.getValue() == Flight.Mode.DAMAGE && Flight.getInstance().noClip.getValue() != false) || Phase.getInstance().isOn() && Phase.getInstance().mode.getValue() == Phase.Mode.PACKETFLY && Phase.getInstance().type.getValue() == Phase.PacketFlyMode.SETBACK && Phase.getInstance().boundingBox.getValue().booleanValue())) {
-            info.cancel();
+    @Inject(method = {"addCollisionBoxToList(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/AxisAlignedBB;Ljava/util/List;Lnet/minecraft/entity/Entity;Z)V"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void addCollisionBoxToListHook ( IBlockState state , World worldIn , BlockPos pos , AxisAlignedBB entityBox , List < AxisAlignedBB > collidingBoxes , @Nullable Entity entityIn , boolean isActualState , CallbackInfo info ) {
+        if ( entityIn != null && Util.mc.player != null && ( entityIn.equals ( Util.mc.player ) || Util.mc.player.getRidingEntity ( ) != null && entityIn.equals ( Util.mc.player.getRidingEntity ( ) ) ) && ( Flight.getInstance ( ).isOn ( ) && ( Flight.getInstance ( ).mode.getValue ( ) == Flight.Mode.PACKET && Flight.getInstance ( ).better.getValue ( ) != false && Flight.getInstance ( ).phase.getValue ( ) != false || Flight.getInstance ( ).mode.getValue ( ) == Flight.Mode.DAMAGE && Flight.getInstance ( ).noClip.getValue ( ) != false ) || Phase.getInstance ( ).isOn ( ) && Phase.getInstance ( ).mode.getValue ( ) == Phase.Mode.PACKETFLY && Phase.getInstance ( ).type.getValue ( ) == Phase.PacketFlyMode.SETBACK && Phase.getInstance ( ).boundingBox.getValue ( ).booleanValue ( ) ) ) {
+            info.cancel ( );
         }
         try {
-            if (Freecam.getInstance().isOff() && Jesus.getInstance().isOn() && Jesus.getInstance().mode.getValue() == Jesus.Mode.TRAMPOLINE && Util.mc.player != null && state != null && state.getBlock() instanceof BlockLiquid && !(entityIn instanceof EntityBoat) && !Util.mc.player.isSneaking() && Util.mc.player.fallDistance < 3.0f && !EntityUtil.isAboveLiquid((Entity)Util.mc.player) && EntityUtil.checkForLiquid((Entity)Util.mc.player, false) || EntityUtil.checkForLiquid((Entity)Util.mc.player, false) && Util.mc.player.getRidingEntity() != null && Util.mc.player.getRidingEntity().fallDistance < 3.0f && EntityUtil.isAboveBlock((Entity)Util.mc.player, pos)) {
-                AxisAlignedBB offset = Jesus.offset.offset(pos);
-                if (entityBox.intersects(offset)) {
-                    collidingBoxes.add(offset);
+            if ( Freecam.getInstance ( ).isOff ( ) && Jesus.getInstance ( ).isOn ( ) && Jesus.getInstance ( ).mode.getValue ( ) == Jesus.Mode.TRAMPOLINE && Util.mc.player != null && state != null && state.getBlock ( ) instanceof BlockLiquid && ! ( entityIn instanceof EntityBoat ) && ! Util.mc.player.isSneaking ( ) && Util.mc.player.fallDistance < 3.0f && ! EntityUtil.isAboveLiquid ( Util.mc.player ) && EntityUtil.checkForLiquid ( Util.mc.player , false ) || EntityUtil.checkForLiquid ( Util.mc.player , false ) && Util.mc.player.getRidingEntity ( ) != null && Util.mc.player.getRidingEntity ( ).fallDistance < 3.0f && EntityUtil.isAboveBlock ( Util.mc.player , pos ) ) {
+                AxisAlignedBB offset = Jesus.offset.offset ( pos );
+                if ( entityBox.intersects ( offset ) ) {
+                    collidingBoxes.add ( offset );
                 }
-                info.cancel();
+                info.cancel ( );
             }
-        }
-        catch (Exception exception) {
+        } catch ( Exception exception ) {
             // empty catch block
         }
     }
 
-    @Inject(method={"isFullCube"}, at={@At(value="HEAD")}, cancellable=true)
-    public void isFullCubeHook(IBlockState blockState, CallbackInfoReturnable<Boolean> info) {
+    @Inject(method = {"isFullCube"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void isFullCubeHook ( IBlockState blockState , CallbackInfoReturnable < Boolean > info ) {
         try {
-            if (XRay.getInstance().isOn()) {
-                info.setReturnValue(XRay.getInstance().shouldRender((Block)Block.class.cast(this)));
-                info.cancel();
+            if ( XRay.getInstance ( ).isOn ( ) ) {
+                info.setReturnValue ( XRay.getInstance ( ).shouldRender ( Block.class.cast ( this ) ) );
+                info.cancel ( );
             }
-        }
-        catch (Exception exception) {
+        } catch ( Exception exception ) {
             // empty catch block
         }
     }

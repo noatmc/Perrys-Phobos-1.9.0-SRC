@@ -12,25 +12,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.UnknownHostException;
 
-@Mixin(value={ServerPinger.class})
-public class MixinServerPinger {
-    @Inject(method={"ping"}, at={@At(value="HEAD")}, cancellable=true)
-    public void pingHook(ServerData server, CallbackInfo info) throws UnknownHostException {
-        if (server.serverIP.equalsIgnoreCase( PingBypass.getInstance().ip.getValue())) {
-            info.cancel();
-        } else if ( AntiDDoS.getInstance().shouldntPing(server.serverIP)) {
-            Phobos.LOGGER.info("AntiDDoS preventing Ping to: " + server.serverIP);
-            info.cancel();
+@Mixin(value = {ServerPinger.class})
+public
+class MixinServerPinger {
+    @Inject(method = {"ping"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void pingHook ( ServerData server , CallbackInfo info ) throws UnknownHostException {
+        if ( server.serverIP.equalsIgnoreCase ( PingBypass.getInstance ( ).ip.getValue ( ) ) ) {
+            info.cancel ( );
+        } else if ( AntiDDoS.getInstance ( ).shouldntPing ( server.serverIP ) ) {
+            Phobos.LOGGER.info ( "AntiDDoS preventing Ping to: " + server.serverIP );
+            info.cancel ( );
         }
     }
 
-    @Inject(method={"tryCompatibilityPing"}, at={@At(value="HEAD")}, cancellable=true)
-    public void tryCompatibilityPingHook(ServerData server, CallbackInfo info) {
-        if (server.serverIP.equalsIgnoreCase( PingBypass.getInstance().ip.getValue())) {
-            info.cancel();
-        } else if ( AntiDDoS.getInstance().shouldntPing(server.serverIP)) {
-            Phobos.LOGGER.info("AntiDDoS preventing Compatibility Ping to: " + server.serverIP);
-            info.cancel();
+    @Inject(method = {"tryCompatibilityPing"}, at = {@At(value = "HEAD")}, cancellable = true)
+    public
+    void tryCompatibilityPingHook ( ServerData server , CallbackInfo info ) {
+        if ( server.serverIP.equalsIgnoreCase ( PingBypass.getInstance ( ).ip.getValue ( ) ) ) {
+            info.cancel ( );
+        } else if ( AntiDDoS.getInstance ( ).shouldntPing ( server.serverIP ) ) {
+            Phobos.LOGGER.info ( "AntiDDoS preventing Compatibility Ping to: " + server.serverIP );
+            info.cancel ( );
         }
     }
 }

@@ -187,7 +187,8 @@ class MixinEntity {
     int getMaxInPortalTime ( );
 
     /**
-     * Gopro on top
+     * @author shut up gradle build
+     * @reason SHUT UP
      */
     @Overwrite
     public

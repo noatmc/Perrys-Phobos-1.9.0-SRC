@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 public
 class GuiCustomMainScreen
         extends GuiScreen {
-    private final String backgroundURL = "https://i.imgur.com/oc7PwaL.png";
+    private final String backgroundURL = "https://i.imgur.com/1eW2Dwf.png";
     private final ResourceLocation resourceLocation = new ResourceLocation ( "textures/background.png" );
     private int y;
     private int x;

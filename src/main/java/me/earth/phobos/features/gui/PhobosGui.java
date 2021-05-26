@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public
 class PhobosGui
         extends GuiScreen {
-    private static PhobosGui phobosGui;
     private static PhobosGui INSTANCE;
 
     static {

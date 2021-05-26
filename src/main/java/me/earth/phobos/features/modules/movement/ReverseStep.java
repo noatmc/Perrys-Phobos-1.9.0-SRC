@@ -13,6 +13,9 @@ class ReverseStep
     @Override
     public
     void onUpdate ( ) {
+        if ( mc.player == null || mc.world == null || mc.player.isInWater ( ) || mc.player.isInLava ( ) ) {
+            return;
+        }
         if ( ReverseStep.mc.player.onGround ) {
             ReverseStep.mc.player.motionY -= 1.0;
         }

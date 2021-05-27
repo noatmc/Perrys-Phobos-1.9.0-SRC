@@ -16,7 +16,7 @@ class VoidAlert extends Module {
     void onUpdate ( ) {
         double yLevel = mc.player.posY;
         if ( yLevel <= .5 ) {
-            Command.sendMessage ( ChatFormatting.GREEN + mc.player.getName ( ) + ChatFormatting.RED + " is in the void!" );
+            Command.sendMessage ( ChatFormatting.GREEN + mc.player.getName ( ) + ChatFormatting.RED + " Is in the void!" );
         }
     }
 }

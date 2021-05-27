@@ -8,7 +8,7 @@ class HelpCommand
         extends Command {
     public
     HelpCommand ( ) {
-        super ( "commands" );
+        super ( "help" );
     }
 
     @Override

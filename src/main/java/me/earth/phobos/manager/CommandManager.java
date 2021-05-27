@@ -67,7 +67,7 @@ class CommandManager
             c.execute ( parts );
             return;
         }
-        Command.sendMessage ( "Unknown command. try 'commands' for a list of commands." );
+        Command.sendMessage ( "Unknown command. try 'help' for a list of commands." );
     }
 
     public

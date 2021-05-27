@@ -10,7 +10,7 @@ class IRCCommand
         extends Command {
     public
     IRCCommand ( ) {
-        super ( "PhobosChat" );
+        super ( "irc" );
     }
 
     @Override

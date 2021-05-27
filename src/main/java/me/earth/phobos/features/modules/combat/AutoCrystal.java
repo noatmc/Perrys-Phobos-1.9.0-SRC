@@ -268,9 +268,9 @@ class AutoCrystal
             this.doAutoCrystal ( );
         }
         if ( this.attackOppositeHand.getValue ( ).booleanValue ( ) ) {
-        mc.player.swingingHand = EnumHand.OFF_HAND;
+            AutoCrystal.mc.player.swingArm ( EnumHand.OFF_HAND );
+        }
     }
-}
 
     @Override
     public
@@ -1391,4 +1391,3 @@ class AutoCrystal
         }
     }
 }
-

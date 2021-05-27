@@ -52,7 +52,6 @@ class NoRender
     public Setting < Float > scale = this.register ( new Setting < Object > ( "Scale" , Float.valueOf ( 0.0f ) , Float.valueOf ( 0.5f ) , Float.valueOf ( 1.0f ) , v -> this.boss.getValue ( ) == Boss.MINIMIZE || this.boss.getValue ( ) != Boss.STACK , "Scale of the bars." ) );
     public Setting < Boolean > bats = this.register ( new Setting < Boolean > ( "Bats" , Boolean.valueOf ( false ) , "Removes bats." ) );
     public Setting < NoArmor > noArmor = this.register ( new Setting < NoArmor > ( "NoArmor" , NoArmor.NONE , "Doesnt Render Armor on players." ) );
-    public Setting < Boolean > glint = this.register ( new Setting < Object > ( "Glint" , Boolean.valueOf ( false ) , v -> this.noArmor.getValue ( ) != NoArmor.NONE ) );
     public Setting < Skylight > skylight = this.register ( new Setting < Skylight > ( "Skylight" , Skylight.NONE ) );
     public Setting < Boolean > barriers = this.register ( new Setting < Boolean > ( "Barriers" , Boolean.valueOf ( false ) , "Barriers" ) );
     public Setting < Boolean > blocks = this.register ( new Setting < Boolean > ( "Blocks" , Boolean.valueOf ( false ) , "Blocks" ) );

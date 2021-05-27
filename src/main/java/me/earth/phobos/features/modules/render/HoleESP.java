@@ -28,7 +28,6 @@ class HoleESP
     private final Setting < Integer > minPulseAlpha = this.register ( new Setting < Object > ( "MinPulse" , Integer.valueOf ( 10 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.pulseAlpha.getValue ( ) ) );
     private final Setting < Integer > maxPulseAlpha = this.register ( new Setting < Object > ( "MaxPulse" , Integer.valueOf ( 40 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.pulseAlpha.getValue ( ) ) );
     private final Setting < Integer > pulseSpeed = this.register ( new Setting < Object > ( "PulseSpeed" , Integer.valueOf ( 10 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 50 ) , v -> this.pulseAlpha.getValue ( ) ) );
-    public Setting < Boolean > pulseOutline = this.register ( new Setting < Object > ( "PulseOutline" , Boolean.valueOf ( true ) , v -> this.gradientBox.getValue ( ) ) );
     public Setting < Boolean > invertGradientBox = this.register ( new Setting < Object > ( "InvertGradientBox" , Boolean.valueOf ( false ) , v -> this.gradientBox.getValue ( ) ) );
     public Setting < Boolean > outline = this.register ( new Setting < Boolean > ( "Outline" , true ) );
     private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.outline.getValue ( ) ) );

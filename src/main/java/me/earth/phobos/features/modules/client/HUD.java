@@ -71,7 +71,6 @@ class HUD
     public Setting < Boolean > rainbow = this.register ( new Setting < Boolean > ( "Rainbow" , Boolean.valueOf ( false ) , "Rainbow hud." ) );
     public Setting < Integer > factor = this.register ( new Setting < Object > ( "Factor" , Integer.valueOf ( 1 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 20 ) , v -> this.rainbow.getValue ( ) ) );
     public Setting < Boolean > rolling = this.register ( new Setting < Object > ( "Rolling" , Boolean.valueOf ( false ) , v -> this.rainbow.getValue ( ) ) );
-    public Setting < Boolean > staticRainbow = this.register ( new Setting < Object > ( "Static" , Boolean.valueOf ( false ) , v -> this.rainbow.getValue ( ) ) );
     public Setting < Integer > rainbowSpeed = this.register ( new Setting < Object > ( "RSpeed" , Integer.valueOf ( 20 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 100 ) , v -> this.rainbow.getValue ( ) ) );
     public Setting < Integer > rainbowSaturation = this.register ( new Setting < Object > ( "Saturation" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.rainbow.getValue ( ) ) );
     public Setting < Integer > rainbowBrightness = this.register ( new Setting < Object > ( "Brightness" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.rainbow.getValue ( ) ) );

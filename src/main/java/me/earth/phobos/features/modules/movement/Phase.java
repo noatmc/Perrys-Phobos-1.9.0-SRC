@@ -24,7 +24,6 @@ class Phase
     private final Set < CPacketPlayer > packets = new ConcurrentSet ( );
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.PACKETFLY ) );
     public Setting < PacketFlyMode > type = this.register ( new Setting < Object > ( "Type" , PacketFlyMode.SETBACK , v -> this.mode.getValue ( ) == Mode.PACKETFLY ) );
-    public Setting < Integer > xMove = this.register ( new Setting < Object > ( "HMove" , 625 , 1 , 1000 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK , "XMovement speed." ) );
     public Setting < Integer > yMove = this.register ( new Setting < Object > ( "YMove" , 625 , 1 , 1000 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK , "YMovement speed." ) );
     public Setting < Boolean > extra = this.register ( new Setting < Object > ( "ExtraPacket" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
     public Setting < Integer > offset = this.register ( new Setting < Object > ( "Offset" , 1337 , - 1337 , 1337 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.extra.getValue ( ) != false , "Up speed." ) );

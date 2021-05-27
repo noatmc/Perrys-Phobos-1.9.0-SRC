@@ -181,7 +181,6 @@ class AutoCrystal
     public Setting < Boolean > syncThreadBool = this.register ( new Setting < Object > ( "ThreadSync" , Boolean.valueOf ( true ) , v -> this.setting.getValue ( ) == Settings.DEV && this.threadMode.getValue ( ) != ThreadMode.NONE ) );
     public Setting < Integer > syncThreads = this.register ( new Setting < Object > ( "SyncThreads" , Integer.valueOf ( 1000 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 10000 ) , v -> this.setting.getValue ( ) == Settings.DEV && this.threadMode.getValue ( ) != ThreadMode.NONE && this.syncThreadBool.getValue ( ) != false ) );
     public Setting < Boolean > predictPos = this.register ( new Setting < Object > ( "PredictPos" , Boolean.valueOf ( false ) , v -> this.setting.getValue ( ) == Settings.DEV ) );
-    public Setting < Boolean > renderExtrapolation = this.register ( new Setting < Object > ( "RenderExtrapolation" , Boolean.valueOf ( false ) , v -> this.setting.getValue ( ) == Settings.DEV && this.predictPos.getValue ( ) != false ) );
     public Setting < Integer > predictTicks = this.register ( new Setting < Object > ( "ExtrapolationTicks" , Integer.valueOf ( 2 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 20 ) , v -> this.setting.getValue ( ) == Settings.DEV && this.predictPos.getValue ( ) != false ) );
     public Setting < Integer > rotations = this.register ( new Setting < Object > ( "Spoofs" , Integer.valueOf ( 1 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 20 ) , v -> this.setting.getValue ( ) == Settings.DEV ) );
     public Setting < Boolean > predictRotate = this.register ( new Setting < Object > ( "PredictRotate" , Boolean.valueOf ( false ) , v -> this.setting.getValue ( ) == Settings.DEV ) );
@@ -268,7 +267,10 @@ class AutoCrystal
         if ( this.threadMode.getValue ( ) == ThreadMode.NONE && this.eventMode.getValue ( ) == 1 ) {
             this.doAutoCrystal ( );
         }
+        if ( this.attackOppositeHand.getValue ( ).booleanValue ( ) ) {
+        mc.player.swingingHand = EnumHand.OFF_HAND;
     }
+}
 
     @Override
     public
@@ -332,6 +334,7 @@ class AutoCrystal
                 AutoCrystal.mc.world.removeEntityFromWorld ( packet.entityId );
             }
         }
+
         if ( event.getStage ( ) == 0 && event.getPacket ( ) instanceof CPacketUseEntity && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketUseEntity.Action.ATTACK && packet.getEntityFromWorld ( AutoCrystal.mc.world ) instanceof EntityEnderCrystal ) {
             EntityEnderCrystal crystal = (EntityEnderCrystal) packet.getEntityFromWorld ( AutoCrystal.mc.world );
             if ( this.antiBlock.getValue ( ).booleanValue ( ) && EntityUtil.isCrystalAtFeet ( crystal , this.range.getValue ( ).floatValue ( ) ) && pos != null ) {

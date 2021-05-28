@@ -28,7 +28,6 @@ class Management
     public Setting < Integer > holeSync = this.register ( new Setting < Integer > ( "HoleSync" , 10000 , 1 , 10000 ) );
     public Setting < Boolean > safety = this.register ( new Setting < Boolean > ( "SafetyPlayer" , false ) );
     public Setting < Integer > safetyCheck = this.register ( new Setting < Integer > ( "SafetyCheck" , 50 , 1 , 150 ) );
-    public Setting < Integer > safetySync = this.register ( new Setting < Integer > ( "SafetySync" , 250 , 1 , 10000 ) );
     public Setting < ThreadMode > holeThread = this.register ( new Setting < ThreadMode > ( "HoleThread" , ThreadMode.WHILE ) );
     public Setting < Boolean > speed = this.register ( new Setting < Boolean > ( "Speed" , true ) );
     public Setting < Boolean > oneDot15 = this.register ( new Setting < Boolean > ( "1.15" , false ) );

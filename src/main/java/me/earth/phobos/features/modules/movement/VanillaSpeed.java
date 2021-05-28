@@ -7,7 +7,7 @@ import me.earth.phobos.util.MathUtil;
 public
 class VanillaSpeed
         extends Module {
-    public Setting < Double > speed = this.register ( new Setting < Double > ( "Speed" , 1.0 , 1.0 , 10.0 ) );
+    public Setting < Double > speed = this.register ( new Setting < Double > ( "Speed" , 1.0 , 1.0 , 20.0 ) );
 
     public
     VanillaSpeed ( ) {

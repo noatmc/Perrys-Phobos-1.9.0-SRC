@@ -87,6 +87,18 @@ class EntityUtil implements Util {
     }
 
     public static
+    void attackEntity2 ( final Entity entity , final boolean packet , final boolean swingArm2 ) {
+        if ( packet ) {
+            EntityUtil.mc.player.connection.sendPacket ( new CPacketUseEntity ( entity ) );
+        } else {
+            EntityUtil.mc.playerController.attackEntity ( EntityUtil.mc.player , entity );
+        }
+        if ( swingArm2 ) {
+            EntityUtil.mc.player.swingArm ( EnumHand.OFF_HAND );
+        }
+    }
+
+    public static
     Vec3d interpolateEntity ( final Entity entity , final float time ) {
         return new Vec3d ( entity.lastTickPosX + ( entity.posX - entity.lastTickPosX ) * time , entity.lastTickPosY + ( entity.posY - entity.lastTickPosY ) * time , entity.lastTickPosZ + ( entity.posZ - entity.lastTickPosZ ) * time );
     }

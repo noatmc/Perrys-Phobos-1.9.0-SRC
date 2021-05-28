@@ -1,6 +1,7 @@
 package me.earth.phobos.features.modules.movement;
 
 import me.earth.phobos.features.modules.Module;
+import net.minecraft.block.material.Material;
 
 public
 class ReverseStep
@@ -13,7 +14,7 @@ class ReverseStep
     @Override
     public
     void onUpdate ( ) {
-        if ( mc.player == null || mc.world == null || mc.player.isInWater ( ) || mc.player.isInLava ( ) ) {
+        if ( mc.player == null || mc.world == null || mc.player.isInWater ( ) || mc.player.isInLava ( ) || mc.player.isInsideOfMaterial ( Material.GROUND ) ) {
             return;
         }
         if ( ReverseStep.mc.player.onGround ) {

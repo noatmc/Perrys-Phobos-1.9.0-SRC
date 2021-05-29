@@ -573,8 +573,10 @@ class Speed
                     float f = moveForward == 0.0f ? moveForward : ( moveForward = (double) moveForward > 0.0 ? 1.0f : - 1.0f );
                 }
                 moveStrafe = moveStrafe == 0.0f ? moveStrafe : ( (double) moveStrafe > 0.0 ? 1.0f : - 1.0f );
-                event.setX ( (double) moveForward * EntityUtil.getMaxSpeed ( ) * Math.cos ( Math.toRadians ( rotationYaw + 90.0f ) ) + (double) moveStrafe * EntityUtil.getMaxSpeed ( ) * Math.sin ( Math.toRadians ( rotationYaw + 90.0f ) ) );
-                event.setZ ( (double) moveForward * EntityUtil.getMaxSpeed ( ) * Math.sin ( Math.toRadians ( rotationYaw + 90.0f ) ) - (double) moveStrafe * EntityUtil.getMaxSpeed ( ) * Math.cos ( Math.toRadians ( rotationYaw + 90.0f ) ) );
+                final double cos = Math.cos ( Math.toRadians ( rotationYaw + 90.0f ) );
+                final double sin = Math.sin ( Math.toRadians ( rotationYaw + 90.0f ) );
+                event.setX ( (double) moveForward * EntityUtil.getMaxSpeed ( ) * cos + (double) moveStrafe * EntityUtil.getMaxSpeed ( ) * sin );
+                event.setZ ( (double) moveForward * EntityUtil.getMaxSpeed ( ) * sin - (double) moveStrafe * EntityUtil.getMaxSpeed ( ) * cos );
             }
         }
     }

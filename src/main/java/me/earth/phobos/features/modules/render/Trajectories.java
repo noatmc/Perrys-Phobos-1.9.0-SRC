@@ -117,9 +117,9 @@ class Trajectories
                 hasLanded = true;
             }
             AxisAlignedBB arrowBox = new AxisAlignedBB ( posX - (double) size , posY - (double) size , posZ - (double) size , posX + (double) size , posY + (double) size , posZ + (double) size );
-            List entities = this.getEntitiesWithinAABB ( arrowBox.offset ( motionX , motionY , motionZ ).expand ( 1.0 , 1.0 , 1.0 ) );
-            for (Object entity : entities) {
-                Entity boundingBox = (Entity) entity;
+            List < Entity > entities = this.getEntitiesWithinAABB ( arrowBox.offset ( motionX , motionY , motionZ ).expand ( 1.0 , 1.0 , 1.0 ) );
+            for (Entity entity : entities) {
+                Entity boundingBox = entity;
                 if ( ! boundingBox.canBeCollidedWith ( ) || boundingBox == player ) continue;
                 float var7 = 0.3f;
                 AxisAlignedBB var8 = boundingBox.getEntityBoundingBox ( ).expand ( var7 , var7 , var7 );
@@ -170,8 +170,8 @@ class Trajectories
     }
 
     private
-    List getEntitiesWithinAABB ( AxisAlignedBB bb ) {
-        ArrayList list = new ArrayList ( );
+    List < Entity > getEntitiesWithinAABB ( AxisAlignedBB bb ) {
+        ArrayList < Entity > list = new ArrayList < Entity > ( );
         int chunkMinX = MathHelper.floor ( ( bb.minX - 2.0 ) / 16.0 );
         int chunkMaxX = MathHelper.floor ( ( bb.maxX + 2.0 ) / 16.0 );
         int chunkMinZ = MathHelper.floor ( ( bb.minZ - 2.0 ) / 16.0 );

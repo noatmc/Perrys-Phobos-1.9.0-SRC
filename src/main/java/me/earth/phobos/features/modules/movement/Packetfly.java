@@ -131,14 +131,14 @@ class Packetfly
         if ( event.getPacket ( ) instanceof SPacketPlayerPosLook && ! Packetfly.fullNullCheck ( ) ) {
             BlockPos pos;
             SPacketPlayerPosLook packet = event.getPacket ( );
-            if ( Packetfly.mc.player.isEntityAlive ( ) && Packetfly.mc.world.isBlockLoaded ( pos = new BlockPos ( Packetfly.mc.player.posX , Packetfly.mc.player.posY , Packetfly.mc.player.posZ ) , false ) && ! ( Packetfly.mc.currentScreen instanceof GuiDownloadTerrain ) && this.clearIDs.getValue ( ).booleanValue ( ) ) {
+            if ( Packetfly.mc.player.isEntityAlive ( ) && Packetfly.mc.world.isBlockLoaded ( pos = new BlockPos ( Packetfly.mc.player.posX , Packetfly.mc.player.posY , Packetfly.mc.player.posZ ) , false ) && ! ( Packetfly.mc.currentScreen instanceof GuiDownloadTerrain ) && this.clearIDs.getValue ( ) ) {
                 this.teleportmap.remove ( packet.getTeleportId ( ) );
             }
-            if ( this.setYaw.getValue ( ).booleanValue ( ) ) {
+            if ( this.setYaw.getValue ( ) ) {
                 packet.yaw = Packetfly.mc.player.rotationYaw;
                 packet.pitch = Packetfly.mc.player.rotationPitch;
             }
-            if ( this.setID.getValue ( ).booleanValue ( ) ) {
+            if ( this.setID.getValue ( ) ) {
                 this.teleportID = packet.getTeleportId ( );
             }
         }

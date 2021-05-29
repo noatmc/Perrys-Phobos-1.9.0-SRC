@@ -39,11 +39,11 @@ class Freecam extends Module {
     public
     Freecam ( ) {
         super ( "Freecam" , "Look around freely." , Category.PLAYER , true , false , false );
-        this.speed = (Setting < Double >) this.register ( new Setting ( "Speed" , 0.5D , 0.1D , 5.0D ) );
-        this.view = (Setting < Boolean >) this.register ( new Setting ( "3D" , false ) );
-        this.packet = (Setting < Boolean >) this.register ( new Setting ( "Packet" , true ) );
-        this.disable = (Setting < Boolean >) this.register ( new Setting ( "Logout/Off" , true ) );
-        this.legit = (Setting < Boolean >) this.register ( new Setting ( "Legit" , false ) );
+        this.speed = (Setting < Double >) this.register ( new Setting <> ( "Speed" , 0.5D , 0.1D , 5.0D ) );
+        this.view = (Setting < Boolean >) this.register ( new Setting <> ( "3D" , false ) );
+        this.packet = (Setting < Boolean >) this.register ( new Setting <> ( "Packet" , true ) );
+        this.disable = (Setting < Boolean >) this.register ( new Setting <> ( "Logout/Off" , true ) );
+        this.legit = (Setting < Boolean >) this.register ( new Setting <> ( "Legit" , false ) );
         this.setInstance ( );
     }
 

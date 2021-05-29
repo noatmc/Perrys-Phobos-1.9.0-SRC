@@ -325,7 +325,7 @@ class AutoCrystal
         }
         BlockPos pos = null;
         if ( event.getStage ( ) == 0 && event.getPacket ( ) instanceof CPacketUseEntity && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketUseEntity.Action.ATTACK && packet.getEntityFromWorld ( AutoCrystal.mc.world ) instanceof EntityEnderCrystal ) {
-            pos = packet.getEntityFromWorld ( AutoCrystal.mc.world ).getPosition ( );
+            pos = Objects.requireNonNull ( packet.getEntityFromWorld ( AutoCrystal.mc.world ) ).getPosition ( );
             if ( this.removeAfterAttack.getValue ( ) ) {
                 Objects.requireNonNull ( packet.getEntityFromWorld ( AutoCrystal.mc.world ) ).setDead ( );
                 AutoCrystal.mc.world.removeEntityFromWorld ( packet.entityId );
@@ -1044,7 +1044,8 @@ class AutoCrystal
             return this.getTarget ( false );
         }
         if ( this.predictPos.getValue ( ) && currentTarget != null ) {
-            GameProfile profile = new GameProfile ( currentTarget.getUniqueID ( ) == null ? UUID.fromString ( "8af022c8-b926-41a0-8b79-2b544ff00fcf" ) : currentTarget.getUniqueID ( ) , currentTarget.getName ( ) );
+            currentTarget.getUniqueID ( );
+            GameProfile profile = new GameProfile ( currentTarget.getUniqueID ( ) , currentTarget.getName ( ) );
             EntityOtherPlayerMP newTarget = new EntityOtherPlayerMP ( AutoCrystal.mc.world , profile );
             Vec3d extrapolatePosition = MathUtil.extrapolatePlayerPosition ( currentTarget , this.predictTicks.getValue ( ) );
             newTarget.copyLocationAndAnglesFrom ( currentTarget );

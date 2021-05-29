@@ -87,7 +87,7 @@ class PhysicsCapes
         return rotation;
     }
 
-    public
+    public static
     class ModelPhyscisCapes
             extends ModelBase {
         public ModelRenderer shape1;

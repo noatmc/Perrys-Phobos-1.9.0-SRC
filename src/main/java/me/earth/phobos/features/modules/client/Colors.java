@@ -34,7 +34,7 @@ class Colors
     public
     void onTick ( ) {
         int colorSpeed = 101 - this.rainbowSpeed.getValue ( );
-        float tempHue = this.hue = (float) ( System.currentTimeMillis ( ) % (long) ( 360 * colorSpeed ) ) / ( 360.0f * (float) colorSpeed );
+        float tempHue = this.hue = (float) ( System.currentTimeMillis ( ) % (long) ( 360L * colorSpeed ) ) / ( 360.0f * (float) colorSpeed );
         for (int i = 0; i <= 510; ++ i) {
             this.colorHeightMap.put ( i , Color.HSBtoRGB ( tempHue , (float) this.rainbowSaturation.getValue ( ) / 255.0f , (float) this.rainbowBrightness.getValue ( ) / 255.0f ) );
             tempHue += 0.0013071896f;

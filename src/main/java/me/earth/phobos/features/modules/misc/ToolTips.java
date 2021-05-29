@@ -120,7 +120,7 @@ class ToolTips
             ToolTips.displayInv ( stack , null );
         }
         for (EntityPlayer player : ToolTips.mc.world.playerEntities) {
-            if ( player == null || player.getHeldItemMainhand ( ) == null || ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) || EntityUtil.isFakePlayer ( player ) || ! this.own.getValue ( ) && ToolTips.mc.player.equals ( player ) )
+            if ( player == null || ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) || EntityUtil.isFakePlayer ( player ) || ! this.own.getValue ( ) && ToolTips.mc.player.equals ( player ) )
                 continue;
             ItemStack stack2 = player.getHeldItemMainhand ( );
             this.spiedPlayers.put ( player , stack2 );
@@ -139,7 +139,8 @@ class ToolTips
         for (EntityPlayer player : ToolTips.mc.world.playerEntities) {
             Timer playerTimer;
             if ( this.spiedPlayers.get ( player ) == null ) continue;
-            if ( player.getHeldItemMainhand ( ) == null || ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) ) {
+            player.getHeldItemMainhand ( );
+            if ( ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) ) {
                 playerTimer = this.playerTimers.get ( player );
                 if ( playerTimer == null ) {
                     Timer timer = new Timer ( );

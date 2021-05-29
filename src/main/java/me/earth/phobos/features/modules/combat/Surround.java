@@ -216,10 +216,9 @@ class Surround
         if ( this.extendingBlocks.size ( ) == 2 && this.extenders < this.extender.getValue ( ) ) {
             Vec3d[] array = new Vec3d[2];
             int i = 0;
-            Iterator < Vec3d > iterator = this.extendingBlocks.iterator ( );
-            while ( iterator.hasNext ( ) ) {
+            for (Vec3d extendingBlock : this.extendingBlocks) {
                 Vec3d vec3d;
-                array[i] = vec3d = iterator.next ( );
+                array[i] = vec3d = extendingBlock;
                 ++ i;
             }
             int placementsBefore = this.placements;

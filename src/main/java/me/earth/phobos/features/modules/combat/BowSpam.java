@@ -110,7 +110,7 @@ class BowSpam
         this.offhand = BowSpam.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.BOW && this.allowOffhand.getValue ( );
         switch (this.mode.getValue ( )) {
             case AUTORELEASE: {
-                if ( ! this.offhand && ! ( BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) || ! this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ) * ( this.tpsSync.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) )
+                if ( ! this.offhand && ! ( BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) || ! this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ) * ( this.tpsSync.getValue ( ) ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) )
                     break;
                 BowSpam.mc.playerController.onStoppedUsingItem ( BowSpam.mc.player );
                 this.timer.reset ( );

@@ -17,10 +17,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public
@@ -124,7 +121,7 @@ class AutoGG
     public
     void onSendAttackPacket ( PacketEvent.Send event ) {
         CPacketUseEntity packet;
-        if ( event.getPacket ( ) instanceof CPacketUseEntity && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketUseEntity.Action.ATTACK && packet.getEntityFromWorld ( AutoGG.mc.world ) instanceof EntityPlayer && ! Phobos.friendManager.isFriend ( (EntityPlayer) packet.getEntityFromWorld ( AutoGG.mc.world ) ) ) {
+        if ( event.getPacket ( ) instanceof CPacketUseEntity && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketUseEntity.Action.ATTACK && packet.getEntityFromWorld ( AutoGG.mc.world ) instanceof EntityPlayer && ! Phobos.friendManager.isFriend ( (EntityPlayer) Objects.requireNonNull ( packet.getEntityFromWorld ( AutoGG.mc.world ) ) ) ) {
             this.targets.put ( (EntityPlayer) packet.getEntityFromWorld ( AutoGG.mc.world ) , 0 );
         }
     }

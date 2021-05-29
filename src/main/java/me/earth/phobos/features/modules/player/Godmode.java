@@ -50,7 +50,7 @@ class Godmode
             this.remount.setValue ( false );
         }
         this.mc.player.dismountRidingEntity ( );
-        this.mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( this.mc.player , CPacketEntityAction.Action.START_SNEAKING ) );
+        Objects.requireNonNull ( this.mc.getConnection ( ) ).sendPacket ( new CPacketEntityAction ( this.mc.player , CPacketEntityAction.Action.START_SNEAKING ) );
         this.mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( this.mc.player , CPacketEntityAction.Action.STOP_SNEAKING ) );
     }
 

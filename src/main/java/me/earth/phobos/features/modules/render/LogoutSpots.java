@@ -61,8 +61,7 @@ class LogoutSpots
     public
     void onRender3D ( Render3DEvent event ) {
         if ( ! this.spots.isEmpty ( ) ) {
-            List < LogoutPos > list = this.spots;
-            synchronized (list) {
+            synchronized (this.spots) {
                 this.spots.forEach ( spot -> {
                     if ( spot.getEntity ( ) != null ) {
                         AxisAlignedBB bb = RenderUtil.interpolateAxis ( spot.getEntity ( ).getEntityBoundingBox ( ) );

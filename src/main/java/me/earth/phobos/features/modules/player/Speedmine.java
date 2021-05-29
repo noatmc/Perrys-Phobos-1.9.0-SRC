@@ -135,7 +135,8 @@ class Speedmine
             if ( this.noSwing.getValue ( ) && event.getPacket ( ) instanceof CPacketAnimation ) {
                 event.setCanceled ( true );
             }
-            if ( this.noBreakAnim.getValue ( ) && event.getPacket ( ) instanceof CPacketPlayerDigging && ( packet = event.getPacket ( ) ) != null && packet.getPosition ( ) != null ) {
+            if ( this.noBreakAnim.getValue ( ) && event.getPacket ( ) instanceof CPacketPlayerDigging && ( packet = event.getPacket ( ) ) != null ) {
+                packet.getPosition ( );
                 try {
                     for (Entity entity : Speedmine.mc.world.getEntitiesWithinAABBExcludingEntity ( null , new AxisAlignedBB ( packet.getPosition ( ) ) )) {
                         if ( ! ( entity instanceof EntityEnderCrystal ) ) continue;

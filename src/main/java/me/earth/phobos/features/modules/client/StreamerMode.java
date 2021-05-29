@@ -129,7 +129,7 @@ class StreamerMode
         SecondScreen ( ) {
             this.B_WIDTH = StreamerMode.this.width.getValue ( );
             this.B_HEIGHT = StreamerMode.this.height.getValue ( );
-            this.font = new Font ( "Verdana" , 0 , 20 );
+            this.font = new Font ( "Verdana" , Font.PLAIN , 20 );
             this.toDraw = new ArrayList ( );
             this.initBoard ( );
         }
@@ -198,7 +198,7 @@ class StreamerMode
             this.pack ( );
             this.setTitle ( "Phobos - Info" );
             this.setLocationRelativeTo ( null );
-            this.setDefaultCloseOperation ( 2 );
+            this.setDefaultCloseOperation ( WindowConstants.DISPOSE_ON_CLOSE );
         }
 
         public
@@ -207,4 +207,3 @@ class StreamerMode
         }
     }
 }
-

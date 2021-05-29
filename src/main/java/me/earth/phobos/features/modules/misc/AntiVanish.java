@@ -7,6 +7,7 @@ import me.earth.phobos.util.PlayerUtil;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Objects;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -28,9 +29,7 @@ class AntiVanish
         if ( event.getPacket ( ) instanceof SPacketPlayerListItem && ( sPacketPlayerListItem = event.getPacket ( ) ).getAction ( ) == SPacketPlayerListItem.Action.UPDATE_LATENCY ) {
             for (SPacketPlayerListItem.AddPlayerData addPlayerData : sPacketPlayerListItem.getEntries ( )) {
                 try {
-                    if ( mc.getConnection ( ).getPlayerInfo ( addPlayerData.getProfile ( ).getId ( ) ) != null )
-                        continue;
-                    this.toLookUp.add ( addPlayerData.getProfile ( ).getId ( ) );
+                    Objects.requireNonNull ( mc.getConnection ( ) ).getPlayerInfo ( addPlayerData.getProfile ( ).getId ( ) );
                 } catch ( Exception e ) {
                     e.printStackTrace ( );
                     return;

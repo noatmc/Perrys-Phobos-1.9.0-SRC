@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public
@@ -135,7 +136,7 @@ class Flight
                     double motionY = 0.42f;
                     if ( Flight.mc.player.onGround ) {
                         if ( Flight.mc.player.isPotionActive ( MobEffects.JUMP_BOOST ) ) {
-                            motionY += (float) ( Flight.mc.player.getActivePotionEffect ( MobEffects.JUMP_BOOST ).getAmplifier ( ) + 1 ) * 0.1f;
+                            motionY += (float) ( Objects.requireNonNull ( Flight.mc.player.getActivePotionEffect ( MobEffects.JUMP_BOOST ) ).getAmplifier ( ) + 1 ) * 0.1f;
                         }
                         Flight.mc.player.motionY = motionY;
                         Phobos.positionManager.setPlayerPosition ( Flight.mc.player.posX , Flight.mc.player.motionY , Flight.mc.player.posZ );
@@ -153,7 +154,7 @@ class Flight
                 }
             }
             if ( this.format.getValue ( ) == Format.NORMAL ) {
-                Flight.mc.player.motionY = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? (double) this.speed.getValue ( ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? (double) ( - this.speed.getValue ( ).floatValue ( ) ) : 0.0 );
+                Flight.mc.player.motionY = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? (double) this.speed.getValue ( ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? (double) ( - this.speed.getValue ( ) ) : 0.0 );
                 if ( this.noKick.getValue ( ) && Flight.mc.player.ticksExisted % 5 == 0 ) {
                     Phobos.positionManager.setPlayerPosition ( Flight.mc.player.posX , Flight.mc.player.posY - 0.03125 , Flight.mc.player.posZ , true );
                 }

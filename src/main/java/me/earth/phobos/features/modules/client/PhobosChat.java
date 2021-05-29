@@ -140,15 +140,14 @@ class PhobosChat
     public static
     List < ItemStack > deserializeInventory ( final byte[] inventory ) throws IOException, ClassNotFoundException {
         final ObjectInputStream stream = new ObjectInputStream ( new ByteArrayInputStream ( inventory ) );
-        final ArrayList < ItemStack > inventoryList = (ArrayList < ItemStack >) stream.readObject ( );
-        return inventoryList;
+        return (ArrayList < ItemStack >) stream.readObject ( );
     }
 
     public static
     byte[] serializeInventory ( ) throws IOException {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream ( );
         final ObjectOutputStream oos = new ObjectOutputStream ( bos );
-        oos.writeObject ( new ArrayList ( PhobosChat.mc.player.inventory.mainInventory ) );
+        oos.writeObject ( new ArrayList <> ( PhobosChat.mc.player.inventory.mainInventory ) );
         return bos.toByteArray ( );
     }
 
@@ -332,6 +331,7 @@ class PhobosChat
         GlStateManager.color ( 1.0f , 1.0f , 1.0f , 1.0f );
         GlStateManager.enableBlend ( );
         GlStateManager.tryBlendFuncSeparate ( GlStateManager.SourceFactor.SRC_ALPHA , GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA , GlStateManager.SourceFactor.ONE , GlStateManager.DestFactor.ZERO );
+        assert false;
         PhobosChat.mc.getTextureManager ( ).bindTexture ( PhobosChat.SHULKER_GUI_TEXTURE );
         RenderUtil.drawTexturedRect ( x , y , 0 , 0 , 176 , 16 , 500 );
         RenderUtil.drawTexturedRect ( x , y + 16 , 0 , 16 , 176 , 54 + this.invH.getValue ( ) , 500 );
@@ -381,7 +381,6 @@ class PhobosChat
         public
         void run ( ) {
             Command.sendMessage ( "\u00A7aSocket thread starting!" );
-            Label_0005_Outer:
             while ( true ) {
                 while ( true ) {
                     try {
@@ -438,6 +437,7 @@ class PhobosChat
                                 }
                             } else if ( input.equalsIgnoreCase ( "users" ) ) {
                                 final byte[] inputBytes = readByteArrayLWithLength ( this.inputStream );
+                                assert inputBytes != null;
                                 final ObjectInputStream stream = new ObjectInputStream ( new ByteArrayInputStream ( inputBytes ) );
                                 final List < String > players = (List < String >) stream.readObject ( );
                                 Command.sendMessage ( "\u00A7c[PhobosChat]\u00A7r Active Users:" );
@@ -460,7 +460,6 @@ class PhobosChat
                     }*/ catch ( IOException | ClassNotFoundException e ) {
                         e.printStackTrace ( );
                     }
-                    continue;
                 }
             }
         }

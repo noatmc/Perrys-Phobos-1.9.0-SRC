@@ -37,6 +37,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public
 class Components
@@ -231,9 +232,15 @@ class Components
             int healthColor = health >= 16.0f ? ColorUtil.toRGBA ( 0 , 255 , 0 , 255 ) : ( health >= 10.0f ? ColorUtil.toRGBA ( 255 , 255 , 0 , 255 ) : ColorUtil.toRGBA ( 255 , 0 , 0 , 255 ) );
             DecimalFormat df = new DecimalFormat ( "##.#" );
             this.renderer.drawStringWithShadow ( df.format ( target.getHealth ( ) + target.getAbsorptionAmount ( ) ) , this.targetHudX.getValue ( ) + 60 + this.renderer.getStringWidth ( target.getName ( ) + "  " ) , this.targetHudY.getValue ( ) + 10 , healthColor );
-            Integer ping = EntityUtil.isFakePlayer ( target ) ? 0 : ( mc.getConnection ( ).getPlayerInfo ( target.getUniqueID ( ) ) == null ? 0 : mc.getConnection ( ).getPlayerInfo ( target.getUniqueID ( ) ).getResponseTime ( ) );
+            int ping;
+            if ( EntityUtil.isFakePlayer ( target ) ) {
+                ping = 0;
+            } else {
+                Objects.requireNonNull ( mc.getConnection ( ) ).getPlayerInfo ( target.getUniqueID ( ) );
+                ping = mc.getConnection ( ).getPlayerInfo ( target.getUniqueID ( ) ).getResponseTime ( );
+            }
             int color = ping >= 100 ? ColorUtil.toRGBA ( 0 , 255 , 0 , 255 ) : ( ping > 50 ? ColorUtil.toRGBA ( 255 , 255 , 0 , 255 ) : ColorUtil.toRGBA ( 255 , 0 , 0 , 255 ) );
-            this.renderer.drawStringWithShadow ( "Ping: " + ( ping == null ? 0 : ping ) , this.targetHudX.getValue ( ) + 60 , this.targetHudY.getValue ( ) + this.renderer.getFontHeight ( ) + 20 , color );
+            this.renderer.drawStringWithShadow ( "Ping: " + ping , this.targetHudX.getValue ( ) + 60 , this.targetHudY.getValue ( ) + this.renderer.getFontHeight ( ) + 20 , color );
             this.renderer.drawStringWithShadow ( "Pops: " + Phobos.totemPopManager.getTotemPops ( target ) , this.targetHudX.getValue ( ) + 60 , this.targetHudY.getValue ( ) + this.renderer.getFontHeight ( ) * 2 + 30 , ColorUtil.toRGBA ( 255 , 0 , 0 , 255 ) );
             GlStateManager.enableTexture2D ( );
             int iteration = 0;
@@ -263,9 +270,8 @@ class Components
             this.drawOverlay ( partialTicks , target , this.targetHudX.getValue ( ) + 150 , this.targetHudY.getValue ( ) + 6 );
             this.renderer.drawStringWithShadow ( "Strength" , this.targetHudX.getValue ( ) + 150 , this.targetHudY.getValue ( ) + 60 , target.isPotionActive ( MobEffects.STRENGTH ) ? ColorUtil.toRGBA ( 0 , 255 , 0 , 255 ) : ColorUtil.toRGBA ( 255 , 0 , 0 , 255 ) );
             this.renderer.drawStringWithShadow ( "Weakness" , this.targetHudX.getValue ( ) + 150 , this.targetHudY.getValue ( ) + this.renderer.getFontHeight ( ) + 70 , target.isPotionActive ( MobEffects.WEAKNESS ) ? ColorUtil.toRGBA ( 0 , 255 , 0 , 255 ) : ColorUtil.toRGBA ( 255 , 0 , 0 , 255 ) );
-        } else if ( this.design.getValue ( ) == TargetHudDesign.COMPACT ) {
-            // empty if block
         }
+
     }
 
     @SubscribeEvent
@@ -343,7 +349,6 @@ class Components
         try {
             rendermanager.renderEntity ( ent , 0.0 , 0.0 , 0.0 , 0.0f , 1.0f , false );
         } catch ( Exception exception ) {
-            // empty catch block
         }
         rendermanager.setRenderShadow ( true );
         GlStateManager.popMatrix ( );
@@ -385,7 +390,6 @@ class Components
         try {
             rendermanager.renderEntity ( ent , 0.0 , 0.0 , 0.0 , 0.0f , 1.0f , false );
         } catch ( Exception exception ) {
-            // empty catch block
         }
         rendermanager.setRenderShadow ( true );
         GlStateManager.popMatrix ( );
@@ -609,7 +613,7 @@ class Components
             for (i = 1; i < 5; ++ i) {
                 iX = x + ( i + 4 ) % 9 * 18 + 8;
                 ItemStack itemStack = Components.mc.player.inventoryContainer.inventorySlots.get ( i ).getStack ( );
-                if ( itemStack == null || itemStack.isEmpty ) continue;
+                if ( itemStack.isEmpty ) continue;
                 Components.preitemrender ( );
                 Components.mc.getRenderItem ( ).zLevel = 501.0f;
                 RenderUtil.itemRender.renderItemAndEffectIntoGUI ( itemStack , iX , y + 1 );

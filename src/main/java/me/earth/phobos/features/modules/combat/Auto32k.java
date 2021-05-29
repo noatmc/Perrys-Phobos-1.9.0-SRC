@@ -99,7 +99,6 @@ class Auto32k
     private boolean checkedThisTick = false;
     private boolean authSneakPacket = false;
     private boolean shouldDisable;
-    private boolean rotationprepared = false;
 
     public
     Auto32k ( ) {
@@ -555,7 +554,7 @@ class Auto32k
             case MOUSE: {
                 if ( Auto32k.mc.objectMouseOver != null && Auto32k.mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK ) {
                     BlockPos mousePos = Auto32k.mc.objectMouseOver.getBlockPos ( );
-                    if ( mousePos != null && ! this.canPlace ( mousePos ) ) {
+                    if ( ! this.canPlace ( mousePos ) ) {
                         BlockPos mousePosUp = mousePos.up ( );
                         if ( this.canPlace ( mousePosUp ) ) {
                             pos = mousePosUp;
@@ -685,12 +684,12 @@ class Auto32k
                     boolean quickCheck;
                     this.runDispenserStep ( );
                     boolean bl = quickCheck = ! Auto32k.mc.world.getBlockState ( this.finalDispenserData.getHelpingPos ( ) ).getMaterial ( ).isReplaceable ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.DISPENSER_HELPING && this.currentStep != Step.CLICK_DISPENSER || this.rotate.getValue ( ).booleanValue ( ) && quickCheck )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.DISPENSER_HELPING && this.currentStep != Step.CLICK_DISPENSER || this.rotate.getValue ( ) && quickCheck )
                         break;
                 }
                 case DISPENSER_HELPING: {
                     this.runDispenserStep ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.CLICK_DISPENSER && this.currentStep != Step.DISPENSER_HELPING || this.rotate.getValue ( ).booleanValue ( ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.CLICK_DISPENSER && this.currentStep != Step.DISPENSER_HELPING || this.rotate.getValue ( ) )
                         break;
                 }
                 case CLICK_DISPENSER: {
@@ -1256,7 +1255,7 @@ class Auto32k
         this.redstoneSlot = - 1;
         this.finalDispenserData = null;
         this.actionsThisTick = 0;
-        this.rotationprepared = false;
+        boolean rotationprepared = false;
     }
 
     private
@@ -1323,7 +1322,6 @@ class Auto32k
         private BlockPos redStonePos;
         private BlockPos hopperPos;
         private BlockPos helpingPos;
-        private boolean isPlaceable = false;
 
         public
         DispenserData ( ) {
@@ -1341,7 +1339,6 @@ class Auto32k
 
         public
         void setPlaceable ( boolean placeable ) {
-            this.isPlaceable = placeable;
         }
 
         public

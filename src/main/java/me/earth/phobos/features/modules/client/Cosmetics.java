@@ -189,7 +189,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class ModelBetterPhysicsCape
             extends ModelBase {
         public ModelRenderer segment1;
@@ -228,7 +228,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class ModelCloutGoggles
             extends ModelBase {
         public ModelRenderer leftGlass;
@@ -310,13 +310,13 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class ModelCosmetic
             extends ModelBase {
         public ResourceLocation texture;
     }
 
-    public
+    public static
     class ModelSquidLauncher
             extends ModelBase {
         public ModelRenderer barrel;
@@ -410,7 +410,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class ModelSquidFlag
             extends ModelBase {
         public ModelRenderer flag;
@@ -437,7 +437,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class ModelPhyscisCapes
             extends ModelBase {
         public ModelRenderer shape1;
@@ -555,7 +555,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class SantaHatModel
             extends ModelBase {
         public ModelRenderer baseLayer;
@@ -618,7 +618,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class HatGlassesModel
             extends ModelBase {
         public final ResourceLocation glassesTexture = new ResourceLocation ( "textures/sunglasses.png" );
@@ -676,7 +676,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class GlassesModel
             extends ModelBase {
         public final ResourceLocation glassesTexture = new ResourceLocation ( "textures/sunglasses.png" );
@@ -734,7 +734,7 @@ class Cosmetics
         }
     }
 
-    public
+    public static
     class TopHatModel
             extends ModelBase {
         public final ResourceLocation hatTexture = new ResourceLocation ( "textures/tophat.png" );

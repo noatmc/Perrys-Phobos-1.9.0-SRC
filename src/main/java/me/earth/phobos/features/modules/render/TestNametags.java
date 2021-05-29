@@ -17,7 +17,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagList;
@@ -25,6 +24,8 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public
@@ -130,9 +131,9 @@ class TestNametags
         }
         GlStateManager.enableAlpha ( );
         ItemStack renderMainHand = player.getHeldItemMainhand ( ).copy ( );
-        if ( ! renderMainHand.hasEffect ( ) || renderMainHand.getItem ( ) instanceof ItemTool || renderMainHand.getItem ( ) instanceof ItemArmor ) {
-            // empty if block
-        }
+        if ( renderMainHand.hasEffect ( ) && ! ( renderMainHand.getItem ( ) instanceof ItemTool ) ) {
+            renderMainHand.getItem ( );
+        }// empty if block
         if ( this.heldStackName.getValue ( ) && ! renderMainHand.isEmpty && renderMainHand.getItem ( ) != Items.AIR ) {
             String stackName = renderMainHand.getDisplayName ( );
             int stackNameWidth = this.renderer.getStringWidth ( stackName ) / 2;
@@ -142,24 +143,30 @@ class TestNametags
             GL11.glScalef ( 1.5f , 1.5f , 1.0f );
             GL11.glPopMatrix ( );
         }
+        ArrayList armorInventory = new ArrayList ( player.inventory.armorInventory );
         if ( this.reverseArmor.getValue ( ) ) {
+            Collections.reverse ( armorInventory );
         }
         GlStateManager.pushMatrix ( );
         int xOffset = - 8;
-        {
+        for (ItemStack stack : player.inventory.armorInventory) {
+            if ( stack == null ) continue;
             xOffset -= 8;
         }
         xOffset -= 8;
         ItemStack renderOffhand = player.getHeldItemOffhand ( ).copy ( );
-        if ( ! renderOffhand.hasEffect ( ) || renderOffhand.getItem ( ) instanceof ItemTool || renderOffhand.getItem ( ) instanceof ItemArmor ) {
-            // empty if block
-        }
+        if ( renderOffhand.hasEffect ( ) && ! ( renderOffhand.getItem ( ) instanceof ItemTool ) ) {
+            renderOffhand.getItem ( );
+        }// empty if block
         this.renderItemStack ( player , renderOffhand , xOffset , - 26 , this.armor.getValue ( ) );
         xOffset += 16;
-        {
-            {
-                // empty if block
-            }
+        for (ItemStack stack : player.inventory.armorInventory) {
+            if ( stack == null ) continue;
+            ItemStack armourStack = stack.copy ( );
+            if ( armourStack.hasEffect ( ) && ! ( armourStack.getItem ( ) instanceof ItemTool ) ) {
+                armourStack.getItem ( );
+            }// empty if block
+            this.renderItemStack ( player , armourStack , xOffset , - 26 , this.armor.getValue ( ) );
             xOffset += 16;
         }
         this.renderItemStack ( player , renderMainHand , xOffset , - 26 , this.armor.getValue ( ) );
@@ -214,19 +221,13 @@ class TestNametags
             xOffset = (int) ( (double) xOffset - changeValue / 2.0 * (double) player.inventory.armorInventory.size ( ) );
             xOffset = (int) ( (double) xOffset - changeValue / 2.0 );
             xOffset = (int) ( (double) xOffset - changeValue / 2.0 );
-            if ( ! player.getHeldItemMainhand ( ).isEmpty ( ) ) {
-                // empty if block
-            }
+            player.getHeldItemMainhand ( );// empty if block
             xOffset = (int) ( (double) xOffset + changeValue );
             for (ItemStack stack : player.inventory.armorInventory) {
-                if ( ! stack.isEmpty ( ) ) {
-                    // empty if block
-                }
+                // empty if block
                 xOffset = (int) ( (double) xOffset + changeValue );
             }
-            if ( ! player.getHeldItemOffhand ( ).isEmpty ( ) ) {
-                // empty if block
-            }
+            player.getHeldItemOffhand ( );// empty if block
             GlStateManager.popMatrix ( );
         }
         camera.posX = originalPositionX;
@@ -350,6 +351,7 @@ class TestNametags
                 encName = encName + level;
             }
             if ( ! this.altEnchantNames.getValue ( ) ) {
+                assert encName != null;
                 encName = encName.toLowerCase ( );
             }
             this.renderer.drawStringWithShadow ( encName , x * 2 , enchantmentY , - 1 );

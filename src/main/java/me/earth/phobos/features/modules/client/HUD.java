@@ -241,11 +241,10 @@ class HUD
                     final String text = module.getDisplayName ( ) + "\u00A77" + ( ( module.getDisplayInfo ( ) != null ) ? ( " [\u00A7f" + module.getDisplayInfo ( ) + "\u00A77" + "]" ) : "" );
                     final Color moduleColor = Phobos.moduleManager.moduleColorMap.get ( module );
                     final TextManager renderer = this.renderer;
-                    final String text5 = text;
                     final float x = width - 2 - this.renderer.getStringWidth ( text ) + ( ( this.animationHorizontalTime.getValue ( ) == 1 ) ? 0.0f : module.arrayListOffset );
                     final int n = height;
                     j += 10;
-                    renderer.drawString ( text5 , x , (float) ( n - j ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( MathUtil.clamp ( height - j , 0 , height ) ) : ( ( this.moduleColors.getValue ( ) && moduleColor != null ) ? moduleColor.getRGB ( ) : this.color ) , true );
+                    renderer.drawString ( text , x , (float) ( n - j ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( MathUtil.clamp ( height - j , 0 , height ) ) : ( ( this.moduleColors.getValue ( ) && moduleColor != null ) ? moduleColor.getRGB ( ) : this.color ) , true );
                 }
             }
         }
@@ -254,103 +253,93 @@ class HUD
             if ( this.serverBrand.getValue ( ) ) {
                 final String text2 = grayString + "Server brand " + "\u00A7f" + Phobos.serverManager.getServerBrand ( );
                 final TextManager renderer2 = this.renderer;
-                final String text6 = text2;
                 final float x2 = (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) );
                 final int n2 = height - 2;
                 k += 10;
-                renderer2.drawString ( text6 , x2 , (float) ( n2 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                renderer2.drawString ( text2 , x2 , (float) ( n2 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
             }
             if ( this.potions.getValue ( ) ) {
                 for (final PotionEffect effect : Phobos.potionManager.getOwnPotions ( )) {
                     final String text3 = this.altPotionsColors.getValue ( ) ? Phobos.potionManager.getPotionString ( effect ) : Phobos.potionManager.getColoredPotionString ( effect );
                     final TextManager renderer3 = this.renderer;
-                    final String text7 = text3;
                     final float x3 = (float) ( width - ( this.renderer.getStringWidth ( text3 ) + 2 ) );
                     final int n3 = height - 2;
                     k += 10;
-                    renderer3.drawString ( text7 , x3 , (float) ( n3 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : ( this.altPotionsColors.getValue ( ) ? this.potionColorMap.get ( effect.getPotion ( ) ).getRGB ( ) : this.color ) , true );
+                    renderer3.drawString ( text3 , x3 , (float) ( n3 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : ( this.altPotionsColors.getValue ( ) ? this.potionColorMap.get ( effect.getPotion ( ) ).getRGB ( ) : this.color ) , true );
                 }
             }
             if ( this.speed.getValue ( ) ) {
                 final String text2 = grayString + "Speed " + "\u00A7f" + Phobos.speedManager.getSpeedKpH ( ) + " km/h";
                 final TextManager renderer4 = this.renderer;
-                final String text8 = text2;
                 final float x4 = (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) );
                 final int n4 = height - 2;
                 k += 10;
-                renderer4.drawString ( text8 , x4 , (float) ( n4 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                renderer4.drawString ( text2 , x4 , (float) ( n4 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
             }
             if ( this.time.getValue ( ) ) {
                 final String text2 = grayString + "Time " + "\u00A7f" + new SimpleDateFormat ( "h:mm a" ).format ( new Date ( ) );
                 final TextManager renderer5 = this.renderer;
-                final String text9 = text2;
                 final float x5 = (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) );
                 final int n5 = height - 2;
                 k += 10;
-                renderer5.drawString ( text9 , x5 , (float) ( n5 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                renderer5.drawString ( text2 , x5 , (float) ( n5 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
             }
             if ( this.durability.getValue ( ) ) {
                 final int itemDamage = HUD.mc.player.getHeldItemMainhand ( ).getMaxDamage ( ) - HUD.mc.player.getHeldItemMainhand ( ).getItemDamage ( );
                 if ( itemDamage > 0 ) {
                     final String text = grayString + "Durability " + "\u00A7a" + itemDamage;
                     final TextManager renderer6 = this.renderer;
-                    final String text10 = text;
                     final float x6 = (float) ( width - ( this.renderer.getStringWidth ( text ) + 2 ) );
                     final int n6 = height - 2;
                     k += 10;
-                    renderer6.drawString ( text10 , x6 , (float) ( n6 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                    renderer6.drawString ( text , x6 , (float) ( n6 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
                 }
             }
             if ( this.tps.getValue ( ) ) {
                 final String text2 = grayString + "TPS " + "\u00A7f" + Phobos.serverManager.getTPS ( );
                 final TextManager renderer7 = this.renderer;
-                final String text11 = text2;
                 final float x7 = (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) );
                 final int n7 = height - 2;
                 k += 10;
-                renderer7.drawString ( text11 , x7 , (float) ( n7 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                renderer7.drawString ( text2 , x7 , (float) ( n7 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
             }
             final String fpsText = grayString + "FPS " + "\u00A7f" + Minecraft.debugFPS;
             final String text = grayString + "Ping " + "\u00A7f" + ( PingBypass.getInstance ( ).isConnected ( ) ? PingBypass.getInstance ( ).getServerPing ( ) : Phobos.serverManager.getPing ( ) ) + ( this.MS.getValue ( ) ? "ms" : "" );
             if ( this.renderer.getStringWidth ( text ) > this.renderer.getStringWidth ( fpsText ) ) {
                 if ( this.ping.getValue ( ) ) {
                     final TextManager renderer8 = this.renderer;
-                    final String text12 = text;
                     final float x8 = (float) ( width - ( this.renderer.getStringWidth ( text ) + 2 ) );
                     final int n8 = height - 2;
                     k += 10;
-                    renderer8.drawString ( text12 , x8 , (float) ( n8 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                    renderer8.drawString ( text , x8 , (float) ( n8 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
                 }
                 if ( this.fps.getValue ( ) ) {
                     final TextManager renderer9 = this.renderer;
-                    final String text13 = fpsText;
                     final float x9 = (float) ( width - ( this.renderer.getStringWidth ( fpsText ) + 2 ) );
                     final int n9 = height - 2;
                     k += 10;
-                    renderer9.drawString ( text13 , x9 , (float) ( n9 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                    renderer9.drawString ( fpsText , x9 , (float) ( n9 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
                 }
             } else {
                 if ( this.fps.getValue ( ) ) {
                     final TextManager renderer10 = this.renderer;
-                    final String text14 = fpsText;
                     final float x10 = (float) ( width - ( this.renderer.getStringWidth ( fpsText ) + 2 ) );
                     final int n10 = height - 2;
                     k += 10;
-                    renderer10.drawString ( text14 , x10 , (float) ( n10 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                    renderer10.drawString ( fpsText , x10 , (float) ( n10 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
                 }
                 if ( this.ping.getValue ( ) ) {
                     final TextManager renderer11 = this.renderer;
-                    final String text15 = text;
                     final float x11 = (float) ( width - ( this.renderer.getStringWidth ( text ) + 2 ) );
                     final int n11 = height - 2;
                     k += 10;
-                    renderer11.drawString ( text15 , x11 , (float) ( n11 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
+                    renderer11.drawString ( text , x11 , (float) ( n11 - k ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( height - k ) : this.color , true );
                 }
             }
         } else {
             if ( this.serverBrand.getValue ( ) ) {
                 final String text2 = grayString + "Server brand " + "\u00A7f" + Phobos.serverManager.getServerBrand ( );
-                this.renderer.drawString ( text2 , (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) ) , (float) ( 2 + k++ * 10 ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( 2 + k * 10 ) : this.color , true );
+                this.renderer.drawString ( text2 , (float) ( width - ( this.renderer.getStringWidth ( text2 ) + 2 ) ) , (float) ( 2 ) , ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) ? this.colorMap.get ( 2 ) : this.color , true );
             }
             if ( this.potions.getValue ( ) ) {
                 for (final PotionEffect effect : Phobos.potionManager.getOwnPotions ( )) {
@@ -411,21 +400,18 @@ class HUD
         final String coordinates = grayString + "XYZ " + "\u00A7f" + posX + ", " + posY + ", " + posZ + " " + "\u00A7r" + grayString + "[" + "\u00A7f" + hposX + ", " + hposZ + "\u00A7r" + grayString + "]";
         final String text4 = ( this.direction.getValue ( ) ? ( Phobos.rotationManager.getDirection4D ( false ) + " " ) : "" ) + ( this.coords.getValue ( ) ? coordinates : "" ) + "";
         final TextManager renderer12 = this.renderer;
-        final String text16 = text4;
         final float x12 = 2.0f;
-        final int n12 = height;
         k += 10;
-        final float y = (float) ( n12 - k );
+        final float y = (float) ( height - k );
         int color;
         if ( this.rolling.getValue ( ) && this.rainbow.getValue ( ) ) {
             final Map < Integer, Integer > colorMap = this.colorMap;
-            final int n13 = height;
             k += 10;
-            color = colorMap.get ( n13 - k );
+            color = colorMap.get ( height - k );
         } else {
             color = this.color;
         }
-        renderer12.drawString ( text16 , x12 , y , color , true );
+        renderer12.drawString ( text4 , x12 , y , color , true );
         if ( this.armor.getValue ( ) ) {
             this.renderArmorHUD ( this.percent.getValue ( ) );
         }
@@ -550,11 +536,7 @@ class HUD
             final int itemDurability = is.getMaxDamage ( ) - is.getItemDamage ( );
             final float green = ( is.getMaxDamage ( ) - (float) is.getItemDamage ( ) ) / is.getMaxDamage ( );
             final float red = 1.0f - green;
-            if ( percent ) {
-                dmg = 100 - (int) ( red * 100.0f );
-            } else {
-                dmg = itemDurability;
-            }
+            dmg = 100 - (int) ( red * 100.0f );
             this.renderer.drawStringWithShadow ( dmg + "" , (float) ( x + 8 - this.renderer.getStringWidth ( dmg + "" ) / 2 ) , (float) ( y - 11 ) , ColorUtil.toRGBA ( (int) ( red * 255.0f ) , (int) ( green * 255.0f ) , 0 ) );
         }
         GlStateManager.enableDepth ( );

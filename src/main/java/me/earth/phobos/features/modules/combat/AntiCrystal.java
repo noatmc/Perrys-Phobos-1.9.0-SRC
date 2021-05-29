@@ -58,7 +58,7 @@ class AntiCrystal
         float highestDamage = 0.0f;
         for (Entity crystal : AntiCrystal.mc.world.loadedEntityList) {
             float damage;
-            if ( ! ( crystal instanceof EntityEnderCrystal ) || AntiCrystal.mc.player.getDistanceSq ( crystal ) > 169.0 || ( damage = DamageUtil.calculateDamage ( crystal , AntiCrystal.mc.player ) ) < this.minDmg.getValue ( ).floatValue ( ) )
+            if ( ! ( crystal instanceof EntityEnderCrystal ) || AntiCrystal.mc.player.getDistanceSq ( crystal ) > 169.0 || ( damage = DamageUtil.calculateDamage ( crystal , AntiCrystal.mc.player ) ) < this.minDmg.getValue ( ) )
                 continue;
             if ( bestcrystal == null ) {
                 bestcrystal = crystal;

@@ -18,6 +18,8 @@ import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Objects;
+
 public
 class ElytraFlight
         extends Module {
@@ -92,8 +94,10 @@ class ElytraFlight
             double strafe = result[1];
             double yaw = result[2];
             if ( forwardInput != 0.0 || strafeInput != 0.0 ) {
-                ElytraFlight.mc.player.motionX = forward * (double) this.speed.getValue ( ) * Math.cos ( Math.toRadians ( yaw + 90.0 ) ) + strafe * (double) this.speed.getValue ( ) * Math.sin ( Math.toRadians ( yaw + 90.0 ) );
-                ElytraFlight.mc.player.motionZ = forward * (double) this.speed.getValue ( ) * Math.sin ( Math.toRadians ( yaw + 90.0 ) ) - strafe * (double) this.speed.getValue ( ) * Math.cos ( Math.toRadians ( yaw + 90.0 ) );
+                final double cos = Math.cos ( Math.toRadians ( yaw + 90.0 ) );
+                final double sin = Math.sin ( Math.toRadians ( yaw + 90.0 ) );
+                ElytraFlight.mc.player.motionX = forward * (double) this.speed.getValue ( ) * cos + strafe * (double) this.speed.getValue ( ) * sin;
+                ElytraFlight.mc.player.motionZ = forward * (double) this.speed.getValue ( ) * sin - strafe * (double) this.speed.getValue ( ) * cos;
             }
             if ( ElytraFlight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) {
                 ElytraFlight.mc.player.motionY = - 1.0;
@@ -107,15 +111,11 @@ class ElytraFlight
         CPacketPlayer packet;
         if ( event.getPacket ( ) instanceof CPacketPlayer && this.mode.getValue ( ) == Mode.TOOBEE ) {
             packet = event.getPacket ( );
-            if ( ElytraFlight.mc.player.isElytraFlying ( ) ) {
-                // empty if block
-            }
+            ElytraFlight.mc.player.isElytraFlying ( );// empty if block
         }
         if ( event.getPacket ( ) instanceof CPacketPlayer && this.mode.getValue ( ) == Mode.TOOBEEBYPASS ) {
             packet = event.getPacket ( );
-            if ( ElytraFlight.mc.player.isElytraFlying ( ) ) {
-                // empty if block
-            }
+            ElytraFlight.mc.player.isElytraFlying ( );// empty if block
         }
     }
 
@@ -169,8 +169,10 @@ class ElytraFlight
                 double strafe = result[1];
                 double yaw = result[2];
                 if ( forwardInput != 0.0 || strafeInput != 0.0 ) {
-                    event.setX ( forward * (double) this.speed.getValue ( ) * Math.cos ( Math.toRadians ( yaw + 90.0 ) ) + strafe * (double) this.speed.getValue ( ) * Math.sin ( Math.toRadians ( yaw + 90.0 ) ) );
-                    event.setY ( forward * (double) this.speed.getValue ( ) * Math.sin ( Math.toRadians ( yaw + 90.0 ) ) - strafe * (double) this.speed.getValue ( ) * Math.cos ( Math.toRadians ( yaw + 90.0 ) ) );
+                    final double cos = Math.cos ( Math.toRadians ( yaw + 90.0 ) );
+                    final double sin = Math.sin ( Math.toRadians ( yaw + 90.0 ) );
+                    event.setX ( forward * (double) this.speed.getValue ( ) * cos + strafe * (double) this.speed.getValue ( ) * sin );
+                    event.setY ( forward * (double) this.speed.getValue ( ) * sin - strafe * (double) this.speed.getValue ( ) * cos );
                 }
                 if ( ElytraFlight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) {
                     event.setY ( - 1.0 );
@@ -254,7 +256,7 @@ class ElytraFlight
         switch (this.mode.getValue ( )) {
             case BOOST: {
                 if ( ElytraFlight.mc.player.isInWater ( ) ) {
-                    mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
+                    Objects.requireNonNull ( mc.getConnection ( ) ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
                     return;
                 }
                 if ( ElytraFlight.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
@@ -290,12 +292,12 @@ class ElytraFlight
             case 0: {
                 if ( this.disableInLiquid.getValue ( ) && ( ElytraFlight.mc.player.isInWater ( ) || ElytraFlight.mc.player.isInLava ( ) ) ) {
                     if ( ElytraFlight.mc.player.isElytraFlying ( ) ) {
-                        mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
+                        Objects.requireNonNull ( mc.getConnection ( ) ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
                     }
                     return;
                 }
                 if ( this.autoStart.getValue ( ) && ElytraFlight.mc.gameSettings.keyBindJump.isKeyDown ( ) && ! ElytraFlight.mc.player.isElytraFlying ( ) && ElytraFlight.mc.player.motionY < 0.0 && this.timer.passedMs ( 250L ) ) {
-                    mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
+                    Objects.requireNonNull ( mc.getConnection ( ) ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
                     this.timer.reset ( );
                 }
                 if ( this.mode.getValue ( ) == Mode.BETTER ) {
@@ -412,7 +414,7 @@ class ElytraFlight
                                 ElytraFlight.mc.player.motionX = directionSpeedPacket[0];
                                 ElytraFlight.mc.player.motionZ = directionSpeedPacket[1];
                             }
-                            mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
+                            Objects.requireNonNull ( mc.getConnection ( ) ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
                             mc.getConnection ( ).sendPacket ( new CPacketEntityAction ( ElytraFlight.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
                             break;
                         }

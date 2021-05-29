@@ -108,7 +108,8 @@ class Spammer
                 }
                 case EVERYONE: {
                     String target = null;
-                    if ( mc.getConnection ( ) != null && mc.getConnection ( ).getPlayerInfoMap ( ) != null ) {
+                    if ( mc.getConnection ( ) != null ) {
+                        mc.getConnection ( ).getPlayerInfoMap ( );
                         for (NetworkPlayerInfo info : mc.getConnection ( ).getPlayerInfoMap ( )) {
                             if ( info == null || info.getDisplayName ( ) == null ) continue;
                             try {

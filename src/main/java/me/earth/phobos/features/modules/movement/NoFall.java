@@ -116,7 +116,7 @@ class NoFall
                 this.equipped = false;
                 this.gotElytra = false;
             } else if ( this.silent.getValue ( ) && InventoryUtil.getItemHotbar ( Items.ELYTRA ) == - 1 && ( slot = InventoryUtil.findStackInventory ( Items.ELYTRA ) ) != - 1 && ogslot != - 1 ) {
-                System.out.println ( String.format ( "Moving %d to hotbar %d" , slot , ogslot ) );
+                System.out.printf ( "Moving %d to hotbar %d%n" , slot , ogslot );
                 NoFall.mc.playerController.windowClick ( NoFall.mc.player.inventoryContainer.windowId , slot , ogslot , ClickType.SWAP , NoFall.mc.player );
                 NoFall.mc.playerController.updateController ( );
             }

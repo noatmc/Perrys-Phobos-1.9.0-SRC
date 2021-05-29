@@ -68,7 +68,7 @@ class NoteBot
     Map < Sound, BlockPos[] > setUpSoundMap ( ) {
         BlockPos var0 = NoteBot.mc.player.getPosition ( );
         LinkedHashMap < Sound, BlockPos[] > result = new LinkedHashMap < Sound, BlockPos[] > ( );
-        HashMap atomicSounds = new HashMap ( );
+        HashMap < Sound, AtomicInteger > atomicSounds = new HashMap <> ( );
         Arrays.asList ( Sound.values ( ) ).forEach ( sound -> {
             BlockPos[] var10002 = new BlockPos[25];
             result.put ( sound , var10002 );
@@ -81,7 +81,7 @@ class NoteBot
                     int soundByte;
                     BlockPos pos = NoteBot.mc.player.getPosition ( ).add ( x , y , z );
                     Block block = NoteBot.mc.world.getBlockState ( pos ).getBlock ( );
-                    if ( ! ( NoteBot.distanceSqToCenter ( pos ) < 27.040000000000003 ) || block != Blocks.NOTEBLOCK || ( soundByte = ( (AtomicInteger) atomicSounds.get ( sound2 = NoteBot.getSoundFromBlockState ( NoteBot.mc.world.getBlockState ( pos.down ( ) ) ) ) ).getAndIncrement ( ) ) >= 25 )
+                    if ( ! ( NoteBot.distanceSqToCenter ( pos ) < 27.040000000000003 ) || block != Blocks.NOTEBLOCK || ( soundByte = ( atomicSounds.get ( sound2 = NoteBot.getSoundFromBlockState ( NoteBot.mc.world.getBlockState ( pos.down ( ) ) ) ) ).getAndIncrement ( ) ) >= 25 )
                         continue;
                     result.get ( sound2 )[soundByte] = pos;
                 }
@@ -106,10 +106,9 @@ class NoteBot
         fileInputStream.read ( arrby );
         ArrayList < IRegister > arrayList = new ArrayList < IRegister > ( );
         boolean bl = true;
-        byte[] arrby2 = arrby;
-        int n4 = arrby2.length;
-        for (int i = 0; i < arrby2.length; ++ i) {
-            n2 = arrby2[i];
+        int n4 = arrby.length;
+        for (byte b : arrby) {
+            n2 = b;
             if ( n2 != 64 ) continue;
             bl = false;
             break;
@@ -120,16 +119,14 @@ class NoteBot
             n4 = arrby[n];
             if ( n4 == ( bl ? 5 : 64 ) ) {
                 byte[] arrby3 = new byte[]{arrby[++ n] , arrby[++ n]};
-                byte[] arrby4 = arrby3;
-                n2 = arrby3[0] & 0xFF | ( arrby4[1] & 0xFF ) << 8;
+                n2 = arrby3[0] & 0xFF | ( arrby3[1] & 0xFF ) << 8;
                 arrayList.add ( new SimpleRegister ( n2 ) );
             } else {
                 arrayList.add ( new SoundRegister ( Sound.values ( )[n4] , arrby[++ n] ) );
             }
             n6 = ++ n;
         }
-        ArrayList < IRegister > arrayList2 = arrayList;
-        return arrayList2.toArray ( new IRegister[arrayList2.size ( )] );
+        return arrayList.toArray ( new IRegister[arrayList.size ( )] );
     }
 
     public static
@@ -426,7 +423,7 @@ class NoteBot
                     byte soundByte;
                     BlockPos pos = NoteBot.mc.player.getPosition ( ).add ( x , y , z );
                     Block block = NoteBot.mc.world.getBlockState ( pos ).getBlock ( );
-                    if ( ! ( pos.distanceSqToCenter ( NoteBot.mc.player.posX , NoteBot.mc.player.posY + (double) NoteBot.mc.player.getEyeHeight ( ) , NoteBot.mc.player.posZ ) < 27.0 ) || block != Blocks.NOTEBLOCK || ( soundByte = this.soundBytes.get ( sound = NoteBot.getSoundFromBlockState ( NoteBot.mc.world.getBlockState ( pos.down ( ) ) ) ).byteValue ( ) ) > 25 )
+                    if ( ! ( pos.distanceSqToCenter ( NoteBot.mc.player.posX , NoteBot.mc.player.posY + (double) NoteBot.mc.player.getEyeHeight ( ) , NoteBot.mc.player.posZ ) < 27.0 ) || block != Blocks.NOTEBLOCK || ( soundByte = this.soundBytes.get ( sound = NoteBot.getSoundFromBlockState ( NoteBot.mc.world.getBlockState ( pos.down ( ) ) ) ) ) > 25 )
                         continue;
                     this.soundEntries.add ( new SoundEntry ( pos , new SoundRegister ( sound , soundByte ) ) );
                     this.soundBytes.replace ( sound , (byte) ( soundByte + 1 ) );

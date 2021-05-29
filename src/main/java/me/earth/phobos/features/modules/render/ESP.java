@@ -39,7 +39,7 @@ class ESP
     private final Setting < Integer > blue = this.register ( new Setting < Integer > ( "Blue" , 255 , 0 , 255 ) );
     private final Setting < Integer > boxAlpha = this.register ( new Setting < Integer > ( "BoxAlpha" , 120 , 0 , 255 ) );
     private final Setting < Integer > alpha = this.register ( new Setting < Integer > ( "Alpha" , 255 , 0 , 255 ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Float > ( "LineWidth" , Float.valueOf ( 2.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Float > ( "LineWidth" , 2.0f , 0.1f , 5.0f ) );
     private final Setting < Boolean > colorFriends = this.register ( new Setting < Boolean > ( "Friends" , true ) );
     private final Setting < Boolean > self = this.register ( new Setting < Boolean > ( "Self" , true ) );
     private final Setting < Boolean > onTop = this.register ( new Setting < Boolean > ( "onTop" , true ) );

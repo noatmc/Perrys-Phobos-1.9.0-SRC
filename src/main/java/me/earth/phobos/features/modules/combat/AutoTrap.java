@@ -176,7 +176,7 @@ class AutoTrap
             for (Vec3d vec : this.currentPlaceList) {
                 BlockPos pos = new BlockPos ( vec );
                 if ( ! ( AutoTrap.mc.world.getBlockState ( pos ).getBlock ( ) instanceof BlockAir ) ) continue;
-                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ).floatValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
+                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
             }
         }
     }

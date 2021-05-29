@@ -106,11 +106,8 @@ class LongJump
             this.disable ( );
             return;
         }
-        switch (this.mode.getValue ( )) {
-            case TICK: {
-                this.doNormal ( null );
-                break;
-            }
+        if ( this.mode.getValue ( ) == Mode.TICK ) {
+            this.doNormal ( null );
         }
     }
 
@@ -335,8 +332,10 @@ class LongJump
                     forward = - 1.0;
                 }
             }
-            event.setX ( forward * speed * Math.cos ( Math.toRadians ( yaw + 90.0f ) ) + strafe * speed * Math.sin ( Math.toRadians ( yaw + 90.0f ) ) );
-            event.setZ ( forward * speed * Math.sin ( Math.toRadians ( yaw + 90.0f ) ) - strafe * speed * Math.cos ( Math.toRadians ( yaw + 90.0f ) ) );
+            final double cos = Math.cos ( Math.toRadians ( yaw + 90.0f ) );
+            final double sin = Math.sin ( Math.toRadians ( yaw + 90.0f ) );
+            event.setX ( forward * speed * cos + strafe * speed * sin );
+            event.setZ ( forward * speed * sin - strafe * speed * cos );
         }
     }
 

@@ -20,7 +20,7 @@ class Jesus
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.NORMAL ) );
     public Setting < Boolean > cancelVehicle = this.register ( new Setting < Boolean > ( "NoVehicle" , false ) );
     public Setting < EventMode > eventMode = this.register ( new Setting < Object > ( "Jump" , EventMode.PRE , v -> this.mode.getValue ( ) == Mode.TRAMPOLINE ) );
-    public Setting < Boolean > fall = this.register ( new Setting < Object > ( "NoFall" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.TRAMPOLINE ) );
+    public Setting < Boolean > fall = this.register ( new Setting < Object > ( "NoFall" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.TRAMPOLINE ) );
     private boolean grounded = false;
 
     public
@@ -83,7 +83,7 @@ class Jesus
     @SubscribeEvent
     public
     void onPacketReceived ( PacketEvent.Receive event ) {
-        if ( this.cancelVehicle.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof SPacketMoveVehicle ) {
+        if ( this.cancelVehicle.getValue ( ) && event.getPacket ( ) instanceof SPacketMoveVehicle ) {
             event.setCanceled ( true );
         }
     }
@@ -128,7 +128,7 @@ class Jesus
         if ( this.grounded && Jesus.mc.player.motionY < 0.0 && Jesus.mc.player.motionY > - 0.3 ) {
             Jesus.mc.player.motionY += 0.045835;
         }
-        if ( ! this.fall.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.fall.getValue ( ) ) {
             Jesus.mc.player.fallDistance = 0.0f;
         }
         if ( ! EntityUtil.checkForLiquid ( Jesus.mc.player , true ) ) {

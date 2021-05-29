@@ -63,7 +63,7 @@ class FakePlayer
             FakePlayer.mc.player.connection.sendPacket ( new CPacketChatMessage ( "@Server" + ClickGui.getInstance ( ).prefix.getValue ( ) + "module FakePlayer set Enabled true" ) );
         }
         this.fakePlayerIdList = new ArrayList < Integer > ( );
-        if ( this.multi.getValue ( ).booleanValue ( ) ) {
+        if ( this.multi.getValue ( ) ) {
             int amount = 0;
             int entityId = - 101;
             for (String[] data : phobosInfo) {
@@ -108,7 +108,7 @@ class FakePlayer
         fakePlayer.copyLocationAndAnglesFrom ( FakePlayer.mc.player );
         fakePlayer.posX += offsetX;
         fakePlayer.posZ += offsetZ;
-        if ( this.copyInv.getValue ( ).booleanValue ( ) ) {
+        if ( this.copyInv.getValue ( ) ) {
             for (PotionEffect potionEffect : Phobos.potionManager.getOwnPotions ( )) {
                 fakePlayer.addPotionEffect ( potionEffect );
             }

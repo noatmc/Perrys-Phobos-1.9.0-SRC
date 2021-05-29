@@ -61,7 +61,7 @@ class ModuleButton
         super.drawScreen ( mouseX , mouseY , partialTicks );
         if ( ! this.items.isEmpty ( ) ) {
             ClickGui gui = Phobos.moduleManager.getModuleByClass ( ClickGui.class );
-            Phobos.textManager.drawStringWithShadow ( gui.openCloseChange.getValue ( ).booleanValue ( ) ? ( this.subOpen ? gui.close.getValue ( ) : gui.open.getValue ( ) ) : gui.moduleButton.getValue ( ) , this.x - 1.5f + (float) this.width - 7.4f , this.y - 2.0f - (float) PhobosGui.getClickGui ( ).getTextOffset ( ) , - 1 );
+            Phobos.textManager.drawStringWithShadow ( gui.openCloseChange.getValue ( ) ? ( this.subOpen ? gui.close.getValue ( ) : gui.open.getValue ( ) ) : gui.moduleButton.getValue ( ) , this.x - 1.5f + (float) this.width - 7.4f , this.y - 2.0f - (float) PhobosGui.getClickGui ( ).getTextOffset ( ) , - 1 );
             if ( this.subOpen ) {
                 float height = 1.0f;
                 for (Item item : this.items) {

@@ -138,7 +138,7 @@ class Tracker
         }
         String name = event.getName ( );
         if ( this.trackedPlayer != null && name != null && name.equals ( this.trackedPlayer.getName ( ) ) && this.autoDisable.getValue ( ).booleanValue ( ) ) {
-            Command.sendMessage ( name + " logged, Tracker disableing." );
+            Command.sendMessage ( name + " logged, Tracker disabling." );
             this.disable ( );
         }
     }

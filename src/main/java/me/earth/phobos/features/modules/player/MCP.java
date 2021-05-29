@@ -17,7 +17,7 @@ class MCP
     private final Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.MIDDLECLICK ) );
     private final Setting < Boolean > stopRotation = this.register ( new Setting < Boolean > ( "Rotation" , true ) );
     private final Setting < Boolean > antiFriend = this.register ( new Setting < Boolean > ( "AntiFriend" , true ) );
-    private final Setting < Integer > rotation = this.register ( new Setting < Object > ( "Delay" , Integer.valueOf ( 10 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 100 ) , v -> this.stopRotation.getValue ( ) ) );
+    private final Setting < Integer > rotation = this.register ( new Setting < Object > ( "Delay" , 10 , 0 , 100 , v -> this.stopRotation.getValue ( ) ) );
     private boolean clicked = false;
 
     public
@@ -54,7 +54,7 @@ class MCP
         boolean offhand;
         Entity entity;
         RayTraceResult result;
-        if ( this.antiFriend.getValue ( ).booleanValue ( ) && ( result = MCP.mc.objectMouseOver ) != null && result.typeOfHit == RayTraceResult.Type.ENTITY && ( entity = result.entityHit ) instanceof EntityPlayer ) {
+        if ( this.antiFriend.getValue ( ) && ( result = MCP.mc.objectMouseOver ) != null && result.typeOfHit == RayTraceResult.Type.ENTITY && ( entity = result.entityHit ) instanceof EntityPlayer ) {
             return;
         }
         int pearlSlot = InventoryUtil.findHotbarBlock ( ItemEnderPearl.class );

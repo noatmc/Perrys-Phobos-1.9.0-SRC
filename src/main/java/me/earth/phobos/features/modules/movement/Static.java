@@ -11,10 +11,10 @@ public
 class Static
         extends Module {
     private final Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.ROOF ) );
-    private final Setting < Boolean > disabler = this.register ( new Setting < Object > ( "Disable" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.ROOF ) );
-    private final Setting < Boolean > ySpeed = this.register ( new Setting < Object > ( "YSpeed" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.STATIC ) );
-    private final Setting < Float > speed = this.register ( new Setting < Object > ( "Speed" , Float.valueOf ( 0.1f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 10.0f ) , v -> this.ySpeed.getValue ( ) != false && this.mode.getValue ( ) == Mode.STATIC ) );
-    private final Setting < Float > height = this.register ( new Setting < Object > ( "Height" , Float.valueOf ( 3.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 256.0f ) , v -> this.mode.getValue ( ) == Mode.NOVOID ) );
+    private final Setting < Boolean > disabler = this.register ( new Setting < Object > ( "Disable" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.ROOF ) );
+    private final Setting < Boolean > ySpeed = this.register ( new Setting < Object > ( "YSpeed" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.STATIC ) );
+    private final Setting < Float > speed = this.register ( new Setting < Object > ( "Speed" , 0.1f , 0.0f , 10.0f , v -> this.ySpeed.getValue ( ) && this.mode.getValue ( ) == Mode.STATIC ) );
+    private final Setting < Float > height = this.register ( new Setting < Object > ( "Height" , 3.0f , 0.0f , 256.0f , v -> this.mode.getValue ( ) == Mode.NOVOID ) );
 
     public
     Static ( ) {
@@ -33,23 +33,23 @@ class Static
                 Static.mc.player.motionX = 0.0;
                 Static.mc.player.motionY = 0.0;
                 Static.mc.player.motionZ = 0.0;
-                if ( ! this.ySpeed.getValue ( ).booleanValue ( ) ) break;
-                Static.mc.player.jumpMovementFactor = this.speed.getValue ( ).floatValue ( );
+                if ( ! this.ySpeed.getValue ( ) ) break;
+                Static.mc.player.jumpMovementFactor = this.speed.getValue ( );
                 if ( Static.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
-                    Static.mc.player.motionY += this.speed.getValue ( ).floatValue ( );
+                    Static.mc.player.motionY += this.speed.getValue ( );
                 }
                 if ( ! Static.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) break;
-                Static.mc.player.motionY -= this.speed.getValue ( ).floatValue ( );
+                Static.mc.player.motionY -= this.speed.getValue ( );
                 break;
             }
             case ROOF: {
                 Static.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( Static.mc.player.posX , 10000.0 , Static.mc.player.posZ , Static.mc.player.onGround ) );
-                if ( ! this.disabler.getValue ( ).booleanValue ( ) ) break;
+                if ( ! this.disabler.getValue ( ) ) break;
                 this.disable ( );
                 break;
             }
             case NOVOID: {
-                if ( Static.mc.player.noClip || ! ( Static.mc.player.posY <= (double) this.height.getValue ( ).floatValue ( ) ) )
+                if ( Static.mc.player.noClip || ! ( Static.mc.player.posY <= (double) this.height.getValue ( ) ) )
                     break;
                 RayTraceResult trace = Static.mc.world.rayTraceBlocks ( Static.mc.player.getPositionVector ( ) , new Vec3d ( Static.mc.player.posX , 0.0 , Static.mc.player.posZ ) , false , false , false );
                 if ( trace != null && trace.typeOfHit == RayTraceResult.Type.BLOCK ) {

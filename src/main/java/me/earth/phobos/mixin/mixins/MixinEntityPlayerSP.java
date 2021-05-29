@@ -46,7 +46,7 @@ class MixinEntityPlayerSP
     @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;closeScreen()V"))
     public
     void closeScreenHook ( EntityPlayerSP entityPlayerSP ) {
-        if ( ! BetterPortals.getInstance ( ).isOn ( ) || ! BetterPortals.getInstance ( ).portalChat.getValue ( ).booleanValue ( ) ) {
+        if ( ! BetterPortals.getInstance ( ).isOn ( ) || ! BetterPortals.getInstance ( ).portalChat.getValue ( ) ) {
             entityPlayerSP.closeScreen ( );
         }
     }
@@ -54,7 +54,7 @@ class MixinEntityPlayerSP
     @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
     public
     void displayGuiScreenHook ( Minecraft mc , GuiScreen screen ) {
-        if ( ! BetterPortals.getInstance ( ).isOn ( ) || ! BetterPortals.getInstance ( ).portalChat.getValue ( ).booleanValue ( ) ) {
+        if ( ! BetterPortals.getInstance ( ).isOn ( ) || ! BetterPortals.getInstance ( ).portalChat.getValue ( ) ) {
             mc.displayGuiScreen ( screen );
         }
     }

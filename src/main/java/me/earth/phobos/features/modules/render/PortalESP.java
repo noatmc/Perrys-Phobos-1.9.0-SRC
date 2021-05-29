@@ -19,9 +19,9 @@ class PortalESP
     private final ArrayList < BlockPos > blockPosArrayList = new ArrayList ( );
     private final Setting < Integer > distance = this.register ( new Setting < Integer > ( "Distance" , 500 , 1 , 500 ) );
     private final Setting < Boolean > box = this.register ( new Setting < Boolean > ( "Box" , false ) );
-    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , Integer.valueOf ( 125 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.box.getValue ( ) ) );
+    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , 125 , 0 , 255 , v -> this.box.getValue ( ) ) );
     private final Setting < Boolean > outline = this.register ( new Setting < Boolean > ( "Outline" , true ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.outline.getValue ( ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getValue ( ) ) );
     private int cooldownTicks;
 
     public
@@ -50,7 +50,7 @@ class PortalESP
             return;
         }
         for (BlockPos pos : this.blockPosArrayList) {
-            RenderUtil.drawBoxESP ( pos , new Color ( 204 , 0 , 153 , 255 ) , false , new Color ( 204 , 0 , 153 , 255 ) , this.lineWidth.getValue ( ).floatValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
+            RenderUtil.drawBoxESP ( pos , new Color ( 204 , 0 , 153 , 255 ) , false , new Color ( 204 , 0 , 153 , 255 ) , this.lineWidth.getValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
         }
     }
 
@@ -61,8 +61,8 @@ class PortalESP
         }
         for (int x = (int) PortalESP.mc.player.posX - this.distance.getValue ( ); x <= (int) PortalESP.mc.player.posX + this.distance.getValue ( ); ++ x) {
             for (int y = (int) PortalESP.mc.player.posY - this.distance.getValue ( ); y <= (int) PortalESP.mc.player.posY + this.distance.getValue ( ); ++ y) {
-                int z = (int) Math.max ( PortalESP.mc.player.posZ - (double) this.distance.getValue ( ).intValue ( ) , 0.0 );
-                while ( (double) z <= Math.min ( PortalESP.mc.player.posZ + (double) this.distance.getValue ( ).intValue ( ) , 255.0 ) ) {
+                int z = (int) Math.max ( PortalESP.mc.player.posZ - (double) this.distance.getValue ( ) , 0.0 );
+                while ( (double) z <= Math.min ( PortalESP.mc.player.posZ + (double) this.distance.getValue ( ) , 255.0 ) ) {
                     BlockPos pos = new BlockPos ( x , y , z );
                     Block block = PortalESP.mc.world.getBlockState ( pos ).getBlock ( );
                     if ( block instanceof BlockPortal ) {

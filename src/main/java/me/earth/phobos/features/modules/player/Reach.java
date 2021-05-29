@@ -8,8 +8,8 @@ class Reach
         extends Module {
     private static Reach INSTANCE = new Reach ( );
     public Setting < Boolean > override = this.register ( new Setting < Boolean > ( "Override" , false ) );
-    public Setting < Float > add = this.register ( new Setting < Object > ( "Add" , Float.valueOf ( 3.0f ) , v -> this.override.getValue ( ) == false ) );
-    public Setting < Float > reach = this.register ( new Setting < Object > ( "Reach" , Float.valueOf ( 6.0f ) , v -> this.override.getValue ( ) ) );
+    public Setting < Float > add = this.register ( new Setting < Object > ( "Add" , 3.0f , v -> ! this.override.getValue ( ) ) );
+    public Setting < Float > reach = this.register ( new Setting < Object > ( "Reach" , 6.0f , v -> this.override.getValue ( ) ) );
 
     public
     Reach ( ) {
@@ -33,7 +33,7 @@ class Reach
     @Override
     public
     String getDisplayInfo ( ) {
-        return this.override.getValue ( ) != false ? this.reach.getValue ( ).toString ( ) : this.add.getValue ( ).toString ( );
+        return this.override.getValue ( ) ? this.reach.getValue ( ).toString ( ) : this.add.getValue ( ).toString ( );
     }
 }
 

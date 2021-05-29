@@ -21,13 +21,13 @@ class StepOld
     private final double[] threeBlockPositions = new double[]{0.42 , 0.78 , 0.63 , 0.51 , 0.9 , 1.21 , 1.45 , 1.43 , 1.78 , 1.63 , 1.51 , 1.9 , 2.21 , 2.45 , 2.43};
     private final double[] fourBlockPositions = new double[]{0.42 , 0.78 , 0.63 , 0.51 , 0.9 , 1.21 , 1.45 , 1.43 , 1.78 , 1.63 , 1.51 , 1.9 , 2.21 , 2.45 , 2.43 , 2.78 , 2.63 , 2.51 , 2.9 , 3.21 , 3.45 , 3.43};
     public Setting < Boolean > vanilla = this.register ( new Setting < Boolean > ( "Vanilla" , false ) );
-    public Setting < Float > stepHeightVanilla = this.register ( new Setting < Object > ( "VHeight" , Float.valueOf ( 2.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.vanilla.getValue ( ) ) );
-    public Setting < Integer > stepHeight = this.register ( new Setting < Object > ( "Height" , Integer.valueOf ( 2 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 5 ) , v -> this.vanilla.getValue ( ) == false ) );
-    public Setting < Boolean > spoof = this.register ( new Setting < Object > ( "Spoof" , Boolean.valueOf ( true ) , v -> this.vanilla.getValue ( ) == false ) );
-    public Setting < Integer > ticks = this.register ( new Setting < Object > ( "Delay" , Integer.valueOf ( 3 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 25 ) , v -> this.spoof.getValue ( ) != false && this.vanilla.getValue ( ) == false ) );
-    public Setting < Boolean > turnOff = this.register ( new Setting < Object > ( "Disable" , Boolean.valueOf ( false ) , v -> this.vanilla.getValue ( ) == false ) );
-    public Setting < Boolean > check = this.register ( new Setting < Object > ( "Check" , Boolean.valueOf ( true ) , v -> this.vanilla.getValue ( ) == false ) );
-    public Setting < Boolean > small = this.register ( new Setting < Object > ( "Offset" , Boolean.valueOf ( false ) , v -> this.stepHeight.getValue ( ) > 1 && this.vanilla.getValue ( ) == false ) );
+    public Setting < Float > stepHeightVanilla = this.register ( new Setting < Object > ( "VHeight" , 2.0f , 0.1f , 5.0f , v -> this.vanilla.getValue ( ) ) );
+    public Setting < Integer > stepHeight = this.register ( new Setting < Object > ( "Height" , 2 , 1 , 5 , v -> ! this.vanilla.getValue ( ) ) );
+    public Setting < Boolean > spoof = this.register ( new Setting < Object > ( "Spoof" , Boolean.TRUE , v -> ! this.vanilla.getValue ( ) ) );
+    public Setting < Integer > ticks = this.register ( new Setting < Object > ( "Delay" , 3 , 0 , 25 , v -> this.spoof.getValue ( ) && ! this.vanilla.getValue ( ) ) );
+    public Setting < Boolean > turnOff = this.register ( new Setting < Object > ( "Disable" , Boolean.FALSE , v -> ! this.vanilla.getValue ( ) ) );
+    public Setting < Boolean > check = this.register ( new Setting < Object > ( "Check" , Boolean.TRUE , v -> ! this.vanilla.getValue ( ) ) );
+    public Setting < Boolean > small = this.register ( new Setting < Object > ( "Offset" , Boolean.FALSE , v -> this.stepHeight.getValue ( ) > 1 && ! this.vanilla.getValue ( ) ) );
     private double[] selectedPositions = new double[0];
     private int packets;
 
@@ -54,8 +54,8 @@ class StepOld
     @Override
     public
     void onUpdate ( ) {
-        if ( this.vanilla.getValue ( ).booleanValue ( ) ) {
-            StepOld.mc.player.stepHeight = this.stepHeightVanilla.getValue ( ).floatValue ( );
+        if ( this.vanilla.getValue ( ) ) {
+            StepOld.mc.player.stepHeight = this.stepHeightVanilla.getValue ( );
             return;
         }
         switch (this.stepHeight.getValue ( )) {
@@ -64,7 +64,7 @@ class StepOld
                 break;
             }
             case 2: {
-                this.selectedPositions = this.small.getValue ( ) != false ? this.twoblockPositions : this.futurePositions;
+                this.selectedPositions = this.small.getValue ( ) ? this.twoblockPositions : this.futurePositions;
                 break;
             }
             case 3: {
@@ -78,7 +78,7 @@ class StepOld
             ++ this.packets;
         }
         AxisAlignedBB bb = StepOld.mc.player.getEntityBoundingBox ( );
-        if ( this.check.getValue ( ).booleanValue ( ) ) {
+        if ( this.check.getValue ( ) ) {
             for (int x = MathHelper.floor ( bb.minX ); x < MathHelper.floor ( bb.maxX + 1.0 ); ++ x) {
                 for (int z = MathHelper.floor ( bb.minZ ); z < MathHelper.floor ( bb.maxZ + 1.0 ); ++ z) {
                     Block block = StepOld.mc.world.getBlockState ( new BlockPos ( x , bb.maxY + 1.0 , z ) ).getBlock ( );
@@ -87,13 +87,13 @@ class StepOld
                 }
             }
         }
-        if ( StepOld.mc.player.onGround && ! StepOld.mc.player.isInsideOfMaterial ( Material.WATER ) && ! StepOld.mc.player.isInsideOfMaterial ( Material.LAVA ) && StepOld.mc.player.collidedVertically && StepOld.mc.player.fallDistance == 0.0f && ! StepOld.mc.gameSettings.keyBindJump.pressed && StepOld.mc.player.collidedHorizontally && ! StepOld.mc.player.isOnLadder ( ) && ( this.packets > this.selectedPositions.length - 2 || this.spoof.getValue ( ).booleanValue ( ) && this.packets > this.ticks.getValue ( ) ) ) {
+        if ( StepOld.mc.player.onGround && ! StepOld.mc.player.isInsideOfMaterial ( Material.WATER ) && ! StepOld.mc.player.isInsideOfMaterial ( Material.LAVA ) && StepOld.mc.player.collidedVertically && StepOld.mc.player.fallDistance == 0.0f && ! StepOld.mc.gameSettings.keyBindJump.pressed && StepOld.mc.player.collidedHorizontally && ! StepOld.mc.player.isOnLadder ( ) && ( this.packets > this.selectedPositions.length - 2 || this.spoof.getValue ( ) && this.packets > this.ticks.getValue ( ) ) ) {
             for (double position : this.selectedPositions) {
                 StepOld.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( StepOld.mc.player.posX , StepOld.mc.player.posY + position , StepOld.mc.player.posZ , true ) );
             }
             StepOld.mc.player.setPosition ( StepOld.mc.player.posX , StepOld.mc.player.posY + this.selectedPositions[this.selectedPositions.length - 1] , StepOld.mc.player.posZ );
             this.packets = 0;
-            if ( this.turnOff.getValue ( ).booleanValue ( ) ) {
+            if ( this.turnOff.getValue ( ) ) {
                 this.disable ( );
             }
         }

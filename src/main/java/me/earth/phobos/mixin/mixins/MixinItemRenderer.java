@@ -35,12 +35,12 @@ class MixinItemRenderer {
             this.injection = false;
             if ( hand == EnumHand.MAIN_HAND ) {
                 if ( offset.isOn ( ) && player.getHeldItemMainhand ( ) != ItemStack.EMPTY ) {
-                    xOffset = offset.mainX.getValue ( ).floatValue ( );
-                    yOffset = offset.mainY.getValue ( ).floatValue ( );
+                    xOffset = offset.mainX.getValue ( );
+                    yOffset = offset.mainY.getValue ( );
                 }
-            } else if ( ! offset.normalOffset.getValue ( ).booleanValue ( ) && offset.isOn ( ) && player.getHeldItemOffhand ( ) != ItemStack.EMPTY ) {
-                xOffset = offset.offX.getValue ( ).floatValue ( );
-                yOffset = offset.offY.getValue ( ).floatValue ( );
+            } else if ( ! offset.normalOffset.getValue ( ) && offset.isOn ( ) && player.getHeldItemOffhand ( ) != ItemStack.EMPTY ) {
+                xOffset = offset.offX.getValue ( );
+                yOffset = offset.offY.getValue ( );
             }
             this.renderItemInFirstPerson ( player , p_187457_2_ , p_187457_3_ , hand , p_187457_5_ + xOffset , stack , p_187457_7_ + yOffset );
             this.injection = true;
@@ -52,13 +52,13 @@ class MixinItemRenderer {
     void translateHook ( float x , float y , float z ) {
         SmallShield offset = SmallShield.getINSTANCE ( );
         boolean shiftPos = Minecraft.getMinecraft ( ).player != null && Minecraft.getMinecraft ( ).player.getHeldItemMainhand ( ) != ItemStack.EMPTY && offset.isOn ( );
-        GlStateManager.translate ( x + ( shiftPos ? offset.mainX.getValue ( ).floatValue ( ) : 0.0f ) , y + ( shiftPos ? offset.mainY.getValue ( ).floatValue ( ) : 0.0f ) , z );
+        GlStateManager.translate ( x + ( shiftPos ? offset.mainX.getValue ( ) : 0.0f ) , y + ( shiftPos ? offset.mainY.getValue ( ) : 0.0f ) , z );
     }
 
     @Inject(method = {"renderFireInFirstPerson"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void renderFireInFirstPersonHook ( CallbackInfo info ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).fire.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).fire.getValue ( ) ) {
             info.cancel ( );
         }
     }
@@ -66,7 +66,7 @@ class MixinItemRenderer {
     @Inject(method = {"renderSuffocationOverlay"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void renderSuffocationOverlay ( CallbackInfo ci ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).blocks.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).blocks.getValue ( ) ) {
             ci.cancel ( );
         }
     }

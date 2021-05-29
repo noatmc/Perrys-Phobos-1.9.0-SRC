@@ -35,7 +35,7 @@ class BlockTweaks
     public Setting < Boolean > noFriendAttack = this.register ( new Setting < Boolean > ( "NoFriendAttack" , false ) );
     public Setting < Boolean > noBlock = this.register ( new Setting < Boolean > ( "NoHitboxBlock" , true ) );
     public Setting < Boolean > noGhost = this.register ( new Setting < Boolean > ( "NoGlitchBlocks" , false ) );
-    public Setting < Boolean > destroy = this.register ( new Setting < Object > ( "Destroy" , Boolean.valueOf ( false ) , v -> this.noGhost.getValue ( ) ) );
+    public Setting < Boolean > destroy = this.register ( new Setting < Object > ( "Destroy" , Boolean.FALSE , v -> this.noGhost.getValue ( ) ) );
     private int lastHotbarSlot = - 1;
     private int currentTargetSlot = - 1;
     private boolean switched = false;
@@ -72,7 +72,7 @@ class BlockTweaks
     @SubscribeEvent
     public
     void onBreak ( BlockEvent.BreakEvent event ) {
-        if ( BlockTweaks.fullNullCheck ( ) || ! this.noGhost.getValue ( ).booleanValue ( ) || ! this.destroy.getValue ( ).booleanValue ( ) ) {
+        if ( BlockTweaks.fullNullCheck ( ) || ! this.noGhost.getValue ( ) || ! this.destroy.getValue ( ) ) {
             return;
         }
         if ( ! ( BlockTweaks.mc.player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemBlock ) ) {
@@ -84,7 +84,8 @@ class BlockTweaks
     @SubscribeEvent
     public
     void onBlockInteract ( PlayerInteractEvent.LeftClickBlock event ) {
-        if ( this.autoTool.getValue ( ).booleanValue ( ) && ( Speedmine.getInstance ( ).mode.getValue ( ) != Speedmine.Mode.PACKET || Speedmine.getInstance ( ).isOff ( ) || ! Speedmine.getInstance ( ).tweaks.getValue ( ).booleanValue ( ) ) && ! BlockTweaks.fullNullCheck ( ) && event.getPos ( ) != null ) {
+        if ( this.autoTool.getValue ( ) && ( Speedmine.getInstance ( ).mode.getValue ( ) != Speedmine.Mode.PACKET || Speedmine.getInstance ( ).isOff ( ) || ! Speedmine.getInstance ( ).tweaks.getValue ( ) ) && ! BlockTweaks.fullNullCheck ( ) ) {
+            event.getPos ( );
             this.equipBestTool ( BlockTweaks.mc.world.getBlockState ( event.getPos ( ) ) );
         }
     }
@@ -92,7 +93,7 @@ class BlockTweaks
     @SubscribeEvent
     public
     void onAttack ( AttackEntityEvent event ) {
-        if ( this.autoWeapon.getValue ( ).booleanValue ( ) && ! BlockTweaks.fullNullCheck ( ) && event.getTarget ( ) != null ) {
+        if ( this.autoWeapon.getValue ( ) && ! BlockTweaks.fullNullCheck ( ) && event.getTarget ( ) != null ) {
             this.equipBestWeapon ( event.getTarget ( ) );
         }
     }
@@ -105,7 +106,7 @@ class BlockTweaks
         if ( BlockTweaks.fullNullCheck ( ) ) {
             return;
         }
-        if ( this.noFriendAttack.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof CPacketUseEntity && ( entity = ( packet = event.getPacket ( ) ).getEntityFromWorld ( BlockTweaks.mc.world ) ) != null && Phobos.friendManager.isFriend ( entity.getName ( ) ) ) {
+        if ( this.noFriendAttack.getValue ( ) && event.getPacket ( ) instanceof CPacketUseEntity && ( entity = ( packet = event.getPacket ( ) ).getEntityFromWorld ( BlockTweaks.mc.world ) ) != null && Phobos.friendManager.isFriend ( entity.getName ( ) ) ) {
             event.setCanceled ( true );
         }
     }

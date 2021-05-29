@@ -32,17 +32,17 @@ class Flight
     private final List < CPacketPlayer > packets = new ArrayList < CPacketPlayer > ( );
     private final Timer delayTimer = new Timer ( );
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.PACKET ) );
-    public Setting < Boolean > better = this.register ( new Setting < Object > ( "Better" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKET ) );
+    public Setting < Boolean > better = this.register ( new Setting < Object > ( "Better" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKET ) );
     public Setting < Format > format = this.register ( new Setting < Object > ( "Format" , Format.DAMAGE , v -> this.mode.getValue ( ) == Mode.DAMAGE ) );
     public Setting < PacketMode > type = this.register ( new Setting < Object > ( "Type" , PacketMode.Y , v -> this.mode.getValue ( ) == Mode.PACKET ) );
-    public Setting < Boolean > phase = this.register ( new Setting < Object > ( "Phase" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ) != false ) );
-    public Setting < Float > speed = this.register ( new Setting < Object > ( "Speed" , Float.valueOf ( 0.1f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 10.0f ) , v -> this.mode.getValue ( ) == Mode.PACKET || this.mode.getValue ( ) == Mode.DESCEND || this.mode.getValue ( ) == Mode.DAMAGE , "The speed." ) );
-    public Setting < Boolean > noKick = this.register ( new Setting < Object > ( "NoKick" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKET || this.mode.getValue ( ) == Mode.DAMAGE ) );
-    public Setting < Boolean > noClip = this.register ( new Setting < Object > ( "NoClip" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.DAMAGE ) );
-    public Setting < Boolean > groundSpoof = this.register ( new Setting < Object > ( "GroundSpoof" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.SPOOF ) );
-    public Setting < Boolean > antiGround = this.register ( new Setting < Object > ( "AntiGround" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.SPOOF ) );
-    public Setting < Integer > cooldown = this.register ( new Setting < Object > ( "Cooldown" , Integer.valueOf ( 1 ) , v -> this.mode.getValue ( ) == Mode.DESCEND ) );
-    public Setting < Boolean > ascend = this.register ( new Setting < Object > ( "Ascend" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.DESCEND ) );
+    public Setting < Boolean > phase = this.register ( new Setting < Object > ( "Phase" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ) ) );
+    public Setting < Float > speed = this.register ( new Setting < Object > ( "Speed" , 0.1f , 0.0f , 10.0f , v -> this.mode.getValue ( ) == Mode.PACKET || this.mode.getValue ( ) == Mode.DESCEND || this.mode.getValue ( ) == Mode.DAMAGE , "The speed." ) );
+    public Setting < Boolean > noKick = this.register ( new Setting < Object > ( "NoKick" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKET || this.mode.getValue ( ) == Mode.DAMAGE ) );
+    public Setting < Boolean > noClip = this.register ( new Setting < Object > ( "NoClip" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.DAMAGE ) );
+    public Setting < Boolean > groundSpoof = this.register ( new Setting < Object > ( "GroundSpoof" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.SPOOF ) );
+    public Setting < Boolean > antiGround = this.register ( new Setting < Object > ( "AntiGround" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.SPOOF ) );
+    public Setting < Integer > cooldown = this.register ( new Setting < Object > ( "Cooldown" , 1 , v -> this.mode.getValue ( ) == Mode.DESCEND ) );
+    public Setting < Boolean > ascend = this.register ( new Setting < Object > ( "Ascend" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.DESCEND ) );
     private int teleportId = 0;
     private int counter = 0;
     private double moveSpeed;
@@ -77,7 +77,7 @@ class Flight
         if ( event.phase == TickEvent.Phase.END ) {
             if ( ! Flight.mc.player.isElytraFlying ( ) ) {
                 if ( this.counter < 1 ) {
-                    this.counter += this.cooldown.getValue ( ).intValue ( );
+                    this.counter += this.cooldown.getValue ( );
                     Flight.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( Flight.mc.player.posX , Flight.mc.player.posY , Flight.mc.player.posZ , false ) );
                     Flight.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( Flight.mc.player.posX , Flight.mc.player.posY - 0.03 , Flight.mc.player.posZ , true ) );
                 } else {
@@ -85,7 +85,7 @@ class Flight
                 }
             }
         } else {
-            Flight.mc.player.motionY = this.ascend.getValue ( ) != false ? (double) this.speed.getValue ( ).floatValue ( ) : (double) ( - this.speed.getValue ( ).floatValue ( ) );
+            Flight.mc.player.motionY = this.ascend.getValue ( ) ? (double) this.speed.getValue ( ) : (double) ( - this.speed.getValue ( ) );
         }
     }
 
@@ -146,18 +146,18 @@ class Flight
                     Flight.mc.player.setPosition ( Flight.mc.player.posX , Flight.mc.player.posY + MathUtil.getRandom ( 1.2354235325235235E-14 , 1.2354235325235233E-13 ) , Flight.mc.player.posZ );
                 }
                 if ( Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
-                    Flight.mc.player.motionY += this.speed.getValue ( ).floatValue ( ) / 2.0f;
+                    Flight.mc.player.motionY += this.speed.getValue ( ) / 2.0f;
                 }
                 if ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) {
-                    Flight.mc.player.motionY -= this.speed.getValue ( ).floatValue ( ) / 2.0f;
+                    Flight.mc.player.motionY -= this.speed.getValue ( ) / 2.0f;
                 }
             }
             if ( this.format.getValue ( ) == Format.NORMAL ) {
-                Flight.mc.player.motionY = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? (double) this.speed.getValue ( ).floatValue ( ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? (double) ( - this.speed.getValue ( ).floatValue ( ) ) : 0.0 );
-                if ( this.noKick.getValue ( ).booleanValue ( ) && Flight.mc.player.ticksExisted % 5 == 0 ) {
+                Flight.mc.player.motionY = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? (double) this.speed.getValue ( ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? (double) ( - this.speed.getValue ( ).floatValue ( ) ) : 0.0 );
+                if ( this.noKick.getValue ( ) && Flight.mc.player.ticksExisted % 5 == 0 ) {
                     Phobos.positionManager.setPlayerPosition ( Flight.mc.player.posX , Flight.mc.player.posY - 0.03125 , Flight.mc.player.posZ , true );
                 }
-                double[] dir = EntityUtil.forward ( this.speed.getValue ( ).floatValue ( ) );
+                double[] dir = EntityUtil.forward ( this.speed.getValue ( ) );
                 Flight.mc.player.motionX = dir[0];
                 Flight.mc.player.motionZ = dir[1];
             }
@@ -172,7 +172,7 @@ class Flight
                 double posY = - 1.0E-8;
                 if ( ! Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) && ! Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) {
                     if ( EntityUtil.isMoving ( ) ) {
-                        for (double x = 0.0625; x < (double) this.speed.getValue ( ).floatValue ( ); x += 0.262) {
+                        for (double x = 0.0625; x < (double) this.speed.getValue ( ); x += 0.262) {
                             double[] dir = EntityUtil.forward ( x );
                             Flight.mc.player.setVelocity ( dir[0] , posY , dir[1] );
                             this.move ( dir[0] , posY , dir[1] );
@@ -239,13 +239,13 @@ class Flight
                     this.move ( 0.0 , 0.0625 , 0.0 );
                 }
             }
-            if ( this.noClip.getValue ( ).booleanValue ( ) ) {
+            if ( this.noClip.getValue ( ) ) {
                 Flight.mc.player.noClip = true;
             }
         }
         if ( event.getStage ( ) == 0 ) {
             if ( this.mode.getValue ( ) == Mode.CREATIVE ) {
-                Flight.mc.player.capabilities.setFlySpeed ( this.speed.getValue ( ).floatValue ( ) );
+                Flight.mc.player.capabilities.setFlySpeed ( this.speed.getValue ( ) );
                 Flight.mc.player.capabilities.isFlying = true;
                 if ( Flight.mc.player.capabilities.isCreativeMode ) {
                     return;
@@ -254,11 +254,11 @@ class Flight
             }
             if ( this.mode.getValue ( ) == Mode.VANILLA ) {
                 Flight.mc.player.setVelocity ( 0.0 , 0.0 , 0.0 );
-                Flight.mc.player.jumpMovementFactor = this.speed.getValue ( ).floatValue ( );
-                if ( this.noKick.getValue ( ).booleanValue ( ) && Flight.mc.player.ticksExisted % 4 == 0 ) {
+                Flight.mc.player.jumpMovementFactor = this.speed.getValue ( );
+                if ( this.noKick.getValue ( ) && Flight.mc.player.ticksExisted % 4 == 0 ) {
                     Flight.mc.player.motionY = - 0.04f;
                 }
-                double[] dir = MathUtil.directionSpeed ( this.speed.getValue ( ).floatValue ( ) );
+                double[] dir = MathUtil.directionSpeed ( this.speed.getValue ( ) );
                 if ( Flight.mc.player.movementInput.moveStrafe != 0.0f || Flight.mc.player.movementInput.moveForward != 0.0f ) {
                     Flight.mc.player.motionX = dir[0];
                     Flight.mc.player.motionZ = dir[1];
@@ -267,16 +267,15 @@ class Flight
                     Flight.mc.player.motionZ = 0.0;
                 }
                 if ( Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
-                    Flight.mc.player.motionY = this.noKick.getValue ( ).booleanValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) this.speed.getValue ( ).floatValue ( ) ) : ( Flight.mc.player.motionY += this.speed.getValue ( ).floatValue ( ) );
+                    Flight.mc.player.motionY = this.noKick.getValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) this.speed.getValue ( ) ) : ( Flight.mc.player.motionY += this.speed.getValue ( ) );
                 }
-                if ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ) {
-                    Flight.mc.player.motionY -= this.speed.getValue ( ).floatValue ( );
-                }
+                if ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) )
+                    Flight.mc.player.motionY -= this.speed.getValue ( );
             }
-            if ( this.mode.getValue ( ) == Mode.PACKET && ! this.better.getValue ( ).booleanValue ( ) ) {
+            if ( this.mode.getValue ( ) == Mode.PACKET && ! this.better.getValue ( ) ) {
                 this.doNormalPacketFly ( );
             }
-            if ( this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ).booleanValue ( ) ) {
+            if ( this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ) ) {
                 this.doBetterPacketFly ( );
             }
         }
@@ -293,8 +292,8 @@ class Flight
         Flight.mc.player.setVelocity ( 0.0 , 0.0 , 0.0 );
         if ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , 0.0 , - 0.0625 ) ).isEmpty ( ) ) {
             double ySpeed = 0.0;
-            ySpeed = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.noKick.getValue ( ).booleanValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) 0.062f ) : (double) 0.062f ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? - 0.062 : ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ? ( Flight.mc.player.ticksExisted % 4 == 0 ? (double) ( this.noKick.getValue ( ) != false ? - 0.04f : 0.0f ) : 0.0 ) : 0.0 ) );
-            double[] directionalSpeed = MathUtil.directionSpeed ( this.speed.getValue ( ).floatValue ( ) );
+            ySpeed = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.noKick.getValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) 0.062f ) : (double) 0.062f ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? - 0.062 : ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ? ( Flight.mc.player.ticksExisted % 4 == 0 ? (double) ( this.noKick.getValue ( ) ? - 0.04f : 0.0f ) : 0.0 ) : 0.0 ) );
+            double[] directionalSpeed = MathUtil.directionSpeed ( this.speed.getValue ( ) );
             if ( Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) || Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) || Flight.mc.gameSettings.keyBindForward.isKeyDown ( ) || Flight.mc.gameSettings.keyBindBack.isKeyDown ( ) || Flight.mc.gameSettings.keyBindRight.isKeyDown ( ) || Flight.mc.gameSettings.keyBindLeft.isKeyDown ( ) ) {
                 if ( directionalSpeed[0] != 0.0 || directionalSpeed[1] != 0.0 ) {
                     if ( Flight.mc.player.movementInput.jump && ( Flight.mc.player.moveStrafing != 0.0f || Flight.mc.player.moveForward != 0.0f ) ) {
@@ -318,7 +317,7 @@ class Flight
                         }
                     }
                 }
-            } else if ( this.noKick.getValue ( ).booleanValue ( ) && Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ) {
+            } else if ( this.noKick.getValue ( ) && Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ) {
                 Flight.mc.player.setVelocity ( 0.0 , Flight.mc.player.ticksExisted % 2 == 0 ? (double) 0.04f : (double) - 0.04f , 0.0 );
                 this.move ( 0.0 , Flight.mc.player.ticksExisted % 2 == 0 ? (double) 0.04f : (double) - 0.04f , 0.0 );
             }
@@ -336,8 +335,8 @@ class Flight
         Flight.mc.player.setVelocity ( 0.0 , 0.0 , 0.0 );
         if ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , 0.0 , - 0.0625 ) ).isEmpty ( ) ) {
             double ySpeed = 0.0;
-            ySpeed = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.noKick.getValue ( ).booleanValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) 0.062f ) : (double) 0.062f ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? - 0.062 : ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ? ( Flight.mc.player.ticksExisted % 4 == 0 ? (double) ( this.noKick.getValue ( ) != false ? - 0.04f : 0.0f ) : 0.0 ) : 0.0 ) );
-            double[] directionalSpeed = MathUtil.directionSpeed ( this.speed.getValue ( ).floatValue ( ) );
+            ySpeed = Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.noKick.getValue ( ) ? ( Flight.mc.player.ticksExisted % 20 == 0 ? (double) - 0.04f : (double) 0.062f ) : (double) 0.062f ) : ( Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? - 0.062 : ( Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ? ( Flight.mc.player.ticksExisted % 4 == 0 ? (double) ( this.noKick.getValue ( ) ? - 0.04f : 0.0f ) : 0.0 ) : 0.0 ) );
+            double[] directionalSpeed = MathUtil.directionSpeed ( this.speed.getValue ( ) );
             if ( Flight.mc.gameSettings.keyBindJump.isKeyDown ( ) || Flight.mc.gameSettings.keyBindSneak.isKeyDown ( ) || Flight.mc.gameSettings.keyBindForward.isKeyDown ( ) || Flight.mc.gameSettings.keyBindBack.isKeyDown ( ) || Flight.mc.gameSettings.keyBindRight.isKeyDown ( ) || Flight.mc.gameSettings.keyBindLeft.isKeyDown ( ) ) {
                 if ( directionalSpeed[0] != 0.0 || directionalSpeed[1] != 0.0 ) {
                     if ( Flight.mc.player.movementInput.jump && ( Flight.mc.player.moveStrafing != 0.0f || Flight.mc.player.moveForward != 0.0f ) ) {
@@ -361,7 +360,7 @@ class Flight
                         }
                     }
                 }
-            } else if ( this.noKick.getValue ( ).booleanValue ( ) && Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ) {
+            } else if ( this.noKick.getValue ( ) && Flight.mc.world.getCollisionBoxes ( Flight.mc.player , Flight.mc.player.getEntityBoundingBox ( ).expand ( - 0.0625 , - 0.0625 , - 0.0625 ) ).isEmpty ( ) ) {
                 Flight.mc.player.setVelocity ( 0.0 , Flight.mc.player.ticksExisted % 2 == 0 ? (double) 0.04f : (double) - 0.04f , 0.0 );
                 this.move ( 0.0 , Flight.mc.player.ticksExisted % 2 == 0 ? (double) 0.04f : (double) - 0.04f , 0.0 );
             }
@@ -380,7 +379,7 @@ class Flight
                 this.flySwitch.enable ( );
                 Flight.mc.player.capabilities.isFlying = false;
             }
-            Flight.mc.player.capabilities.setFlySpeed ( 0.05f * this.speed.getValue ( ).floatValue ( ) );
+            Flight.mc.player.capabilities.setFlySpeed ( 0.05f * this.speed.getValue ( ) );
         }
     }
 
@@ -403,7 +402,7 @@ class Flight
             Flight.mc.player.setVelocity ( 0.0 , 0.0 , 0.0 );
             this.moveSpeed = Strafe.getBaseMoveSpeed ( );
             this.lastDist = 0.0;
-            if ( this.noClip.getValue ( ).booleanValue ( ) ) {
+            if ( this.noClip.getValue ( ) ) {
                 Flight.mc.player.noClip = false;
             }
         }
@@ -489,7 +488,7 @@ class Flight
                 if ( Flight.fullNullCheck ( ) ) {
                     return;
                 }
-                if ( ! ( this.groundSpoof.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof CPacketPlayer && Flight.mc.player.capabilities.isFlying ) ) {
+                if ( ! ( this.groundSpoof.getValue ( ) && event.getPacket ( ) instanceof CPacketPlayer && Flight.mc.player.capabilities.isFlying ) ) {
                     return;
                 }
                 packet = event.getPacket ( );
@@ -543,7 +542,7 @@ class Flight
                 if ( Flight.fullNullCheck ( ) ) {
                     return;
                 }
-                if ( ! ( this.antiGround.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof SPacketPlayerPosLook && Flight.mc.player.capabilities.isFlying ) ) {
+                if ( ! ( this.antiGround.getValue ( ) && event.getPacket ( ) instanceof SPacketPlayerPosLook && Flight.mc.player.capabilities.isFlying ) ) {
                     return;
                 }
                 packet = event.getPacket ( );
@@ -579,7 +578,7 @@ class Flight
     @SubscribeEvent
     public
     void onPush ( PushEvent event ) {
-        if ( event.getStage ( ) == 1 && this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ).booleanValue ( ) && this.phase.getValue ( ).booleanValue ( ) ) {
+        if ( event.getStage ( ) == 1 && this.mode.getValue ( ) == Mode.PACKET && this.better.getValue ( ) && this.phase.getValue ( ) ) {
             event.setCanceled ( true );
         }
     }
@@ -589,7 +588,7 @@ class Flight
         CPacketPlayer.Position pos = new CPacketPlayer.Position ( Flight.mc.player.posX + x , Flight.mc.player.posY + y , Flight.mc.player.posZ + z , Flight.mc.player.onGround );
         this.packets.add ( pos );
         Flight.mc.player.connection.sendPacket ( pos );
-        Object bounds = this.better.getValue ( ) != false ? this.createBoundsPacket ( x , y , z ) : new CPacketPlayer.Position ( Flight.mc.player.posX + x , 0.0 , Flight.mc.player.posZ + z , Flight.mc.player.onGround );
+        Object bounds = this.better.getValue ( ) ? this.createBoundsPacket ( x , y , z ) : new CPacketPlayer.Position ( Flight.mc.player.posX + x , 0.0 , Flight.mc.player.posZ + z , Flight.mc.player.onGround );
         this.packets.add ( (CPacketPlayer) bounds );
         Flight.mc.player.connection.sendPacket ( (Packet) bounds );
         ++ this.teleportId;

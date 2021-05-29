@@ -39,26 +39,26 @@ class NoRender
         NoRender.INSTANCE = new NoRender ( );
     }
 
-    public Setting < Boolean > fire = this.register ( new Setting < Boolean > ( "Fire" , Boolean.valueOf ( false ) , "Removes the portal overlay." ) );
-    public Setting < Boolean > portal = this.register ( new Setting < Boolean > ( "Portal" , Boolean.valueOf ( false ) , "Removes the portal overlay." ) );
-    public Setting < Boolean > pumpkin = this.register ( new Setting < Boolean > ( "Pumpkin" , Boolean.valueOf ( false ) , "Removes the pumpkin overlay." ) );
-    public Setting < Boolean > totemPops = this.register ( new Setting < Boolean > ( "TotemPop" , Boolean.valueOf ( false ) , "Removes the Totem overlay." ) );
-    public Setting < Boolean > items = this.register ( new Setting < Boolean > ( "Items" , Boolean.valueOf ( false ) , "Removes items on the ground." ) );
-    public Setting < Boolean > nausea = this.register ( new Setting < Boolean > ( "Nausea" , Boolean.valueOf ( false ) , "Removes Portal Nausea." ) );
-    public Setting < Boolean > hurtcam = this.register ( new Setting < Boolean > ( "HurtCam" , Boolean.valueOf ( false ) , "Removes shaking after taking damage." ) );
+    public Setting < Boolean > fire = this.register ( new Setting < Boolean > ( "Fire" , Boolean.FALSE , "Removes the portal overlay." ) );
+    public Setting < Boolean > portal = this.register ( new Setting < Boolean > ( "Portal" , Boolean.FALSE , "Removes the portal overlay." ) );
+    public Setting < Boolean > pumpkin = this.register ( new Setting < Boolean > ( "Pumpkin" , Boolean.FALSE , "Removes the pumpkin overlay." ) );
+    public Setting < Boolean > totemPops = this.register ( new Setting < Boolean > ( "TotemPop" , Boolean.FALSE , "Removes the Totem overlay." ) );
+    public Setting < Boolean > items = this.register ( new Setting < Boolean > ( "Items" , Boolean.FALSE , "Removes items on the ground." ) );
+    public Setting < Boolean > nausea = this.register ( new Setting < Boolean > ( "Nausea" , Boolean.FALSE , "Removes Portal Nausea." ) );
+    public Setting < Boolean > hurtcam = this.register ( new Setting < Boolean > ( "HurtCam" , Boolean.FALSE , "Removes shaking after taking damage." ) );
     public Setting < Fog > fog = this.register ( new Setting < Fog > ( "Fog" , Fog.NONE , "Removes Fog." ) );
-    public Setting < Boolean > noWeather = this.register ( new Setting < Boolean > ( "Weather" , Boolean.valueOf ( false ) , "AntiWeather" ) );
+    public Setting < Boolean > noWeather = this.register ( new Setting < Boolean > ( "Weather" , Boolean.FALSE , "AntiWeather" ) );
     public Setting < Boss > boss = this.register ( new Setting < Boss > ( "BossBars" , Boss.NONE , "Modifies the bossbars." ) );
-    public Setting < Float > scale = this.register ( new Setting < Object > ( "Scale" , Float.valueOf ( 0.0f ) , Float.valueOf ( 0.5f ) , Float.valueOf ( 1.0f ) , v -> this.boss.getValue ( ) == Boss.MINIMIZE || this.boss.getValue ( ) != Boss.STACK , "Scale of the bars." ) );
-    public Setting < Boolean > bats = this.register ( new Setting < Boolean > ( "Bats" , Boolean.valueOf ( false ) , "Removes bats." ) );
+    public Setting < Float > scale = this.register ( new Setting < Object > ( "Scale" , 0.0f , 0.5f , 1.0f , v -> this.boss.getValue ( ) == Boss.MINIMIZE || this.boss.getValue ( ) != Boss.STACK , "Scale of the bars." ) );
+    public Setting < Boolean > bats = this.register ( new Setting < Boolean > ( "Bats" , Boolean.FALSE , "Removes bats." ) );
     public Setting < NoArmor > noArmor = this.register ( new Setting < NoArmor > ( "NoArmor" , NoArmor.NONE , "Doesnt Render Armor on players." ) );
     public Setting < Skylight > skylight = this.register ( new Setting < Skylight > ( "Skylight" , Skylight.NONE ) );
-    public Setting < Boolean > barriers = this.register ( new Setting < Boolean > ( "Barriers" , Boolean.valueOf ( false ) , "Barriers" ) );
-    public Setting < Boolean > blocks = this.register ( new Setting < Boolean > ( "Blocks" , Boolean.valueOf ( false ) , "Blocks" ) );
+    public Setting < Boolean > barriers = this.register ( new Setting < Boolean > ( "Barriers" , Boolean.FALSE , "Barriers" ) );
+    public Setting < Boolean > blocks = this.register ( new Setting < Boolean > ( "Blocks" , Boolean.FALSE , "Blocks" ) );
     public Setting < Boolean > advancements = this.register ( new Setting < Boolean > ( "Advancements" , false ) );
     public Setting < Boolean > pigmen = this.register ( new Setting < Boolean > ( "Pigmen" , false ) );
     public Setting < Boolean > timeChange = this.register ( new Setting < Boolean > ( "TimeChange" , false ) );
-    public Setting < Integer > time = this.register ( new Setting < Object > ( "Time" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 23000 ) , v -> this.timeChange.getValue ( ) ) );
+    public Setting < Integer > time = this.register ( new Setting < Object > ( "Time" , 0 , 0 , 23000 , v -> this.timeChange.getValue ( ) ) );
 
     public
     NoRender ( ) {

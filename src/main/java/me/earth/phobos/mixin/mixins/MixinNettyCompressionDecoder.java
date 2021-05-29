@@ -12,7 +12,7 @@ class MixinNettyCompressionDecoder {
     @ModifyConstant(method = {"decode"}, constant = {@Constant(intValue = 0x200000)})
     private
     int decodeHook ( int n ) {
-        if ( Bypass.getInstance ( ).isOn ( ) && Bypass.getInstance ( ).packets.getValue ( ).booleanValue ( ) && Bypass.getInstance ( ).noLimit.getValue ( ).booleanValue ( ) ) {
+        if ( Bypass.getInstance ( ).isOn ( ) && Bypass.getInstance ( ).packets.getValue ( ) && Bypass.getInstance ( ).noLimit.getValue ( ) ) {
             return Integer.MAX_VALUE;
         }
         return n;

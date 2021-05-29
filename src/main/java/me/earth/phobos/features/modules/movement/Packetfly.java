@@ -70,7 +70,7 @@ class Packetfly
     @Override
     public
     void onTick ( ) {
-        this.teleportmap.entrySet ( ).removeIf ( idTime -> this.clearTeleMap.getValue ( ) != false && idTime.getValue ( ).getTimer ( ).passedS ( this.mapTime.getValue ( ).intValue ( ) ) );
+        this.teleportmap.entrySet ( ).removeIf ( idTime -> this.clearTeleMap.getValue ( ) && idTime.getValue ( ).getTimer ( ).passedS ( this.mapTime.getValue ( ) ) );
     }
 
     @SubscribeEvent
@@ -82,11 +82,11 @@ class Packetfly
         Packetfly.mc.player.setVelocity ( 0.0 , 0.0 , 0.0 );
         double speed = 0.0;
         boolean checkCollisionBoxes = this.checkHitBoxes ( );
-        speed = Packetfly.mc.player.movementInput.jump && ( checkCollisionBoxes || ! EntityUtil.isMoving ( ) ) ? ( this.flight.getValue ( ).booleanValue ( ) && ! checkCollisionBoxes ? ( this.flightMode.getValue ( ) == 0 ? ( this.resetCounter ( 10 ) ? - 0.032 : 0.062 ) : ( this.resetCounter ( 20 ) ? - 0.032 : 0.062 ) ) : 0.062 ) : ( Packetfly.mc.player.movementInput.sneak ? - 0.062 : ( ! checkCollisionBoxes ? ( this.resetCounter ( 4 ) ? ( this.flight.getValue ( ).booleanValue ( ) ? - 0.04 : 0.0 ) : 0.0 ) : 0.0 ) );
-        if ( this.doAntiFactor.getValue ( ).booleanValue ( ) && checkCollisionBoxes && EntityUtil.isMoving ( ) && speed != 0.0 ) {
-            speed /= this.antiFactor.getValue ( ).doubleValue ( );
+        speed = Packetfly.mc.player.movementInput.jump && ( checkCollisionBoxes || ! EntityUtil.isMoving ( ) ) ? ( this.flight.getValue ( ) && ! checkCollisionBoxes ? ( this.flightMode.getValue ( ) == 0 ? ( this.resetCounter ( 10 ) ? - 0.032 : 0.062 ) : ( this.resetCounter ( 20 ) ? - 0.032 : 0.062 ) ) : 0.062 ) : ( Packetfly.mc.player.movementInput.sneak ? - 0.062 : ( ! checkCollisionBoxes ? ( this.resetCounter ( 4 ) ? ( this.flight.getValue ( ) ? - 0.04 : 0.0 ) : 0.0 ) : 0.0 ) );
+        if ( this.doAntiFactor.getValue ( ) && checkCollisionBoxes && EntityUtil.isMoving ( ) && speed != 0.0 ) {
+            speed /= this.antiFactor.getValue ( );
         }
-        double[] strafing = this.getMotion ( this.strafeFactor.getValue ( ) != false && checkCollisionBoxes ? 0.031 : 0.26 );
+        double[] strafing = this.getMotion ( this.strafeFactor.getValue ( ) && checkCollisionBoxes ? 0.031 : 0.26 );
         for (int i = 1; i < this.loops.getValue ( ) + 1; ++ i) {
             Packetfly.mc.player.motionX = strafing[0] * (double) i * this.extraFactor.getValue ( );
             Packetfly.mc.player.motionY = speed * (double) i;
@@ -98,11 +98,11 @@ class Packetfly
     @SubscribeEvent
     public
     void onMove ( MoveEvent event ) {
-        if ( this.setMove.getValue ( ).booleanValue ( ) && this.flightCounter != 0 ) {
+        if ( this.setMove.getValue ( ) && this.flightCounter != 0 ) {
             event.setX ( Packetfly.mc.player.motionX );
             event.setY ( Packetfly.mc.player.motionY );
             event.setZ ( Packetfly.mc.player.motionZ );
-            if ( this.nocliperino.getValue ( ).booleanValue ( ) && this.checkHitBoxes ( ) ) {
+            if ( this.nocliperino.getValue ( ) && this.checkHitBoxes ( ) ) {
                 Packetfly.mc.player.noClip = true;
             }
         }
@@ -187,10 +187,10 @@ class Packetfly
         Vec3d position = Packetfly.mc.player.getPositionVector ( ).add ( vec );
         Vec3d outOfBoundsVec = this.outOfBoundsVec ( vec , position );
         this.packetSender ( new CPacketPlayer.Position ( position.x , position.y , position.z , Packetfly.mc.player.onGround ) );
-        if ( this.invalidPacket.getValue ( ).booleanValue ( ) ) {
+        if ( this.invalidPacket.getValue ( ) ) {
             this.packetSender ( new CPacketPlayer.Position ( outOfBoundsVec.x , outOfBoundsVec.y , outOfBoundsVec.z , Packetfly.mc.player.onGround ) );
         }
-        if ( this.setPos.getValue ( ).booleanValue ( ) ) {
+        if ( this.setPos.getValue ( ) ) {
             Packetfly.mc.player.setPosition ( position.x , position.y , position.z );
         }
         this.teleportPacket ( position , teleport );
@@ -219,7 +219,7 @@ class Packetfly
     void clean ( ) {
         this.teleportmap.clear ( );
         this.flightCounter = 0;
-        if ( this.resetID.getValue ( ).booleanValue ( ) ) {
+        if ( this.resetID.getValue ( ) ) {
             this.teleportID = 0;
         }
         this.packets.clear ( );

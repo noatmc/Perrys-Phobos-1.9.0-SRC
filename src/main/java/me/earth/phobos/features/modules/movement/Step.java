@@ -33,13 +33,13 @@ class Step
     public
     void onStep ( StepEvent event ) {
         if ( Step.mc.player.onGround && ! Step.mc.player.isInsideOfMaterial ( Material.WATER ) && ! Step.mc.player.isInsideOfMaterial ( Material.LAVA ) && Step.mc.player.collidedVertically && Step.mc.player.fallDistance == 0.0f && ! Step.mc.gameSettings.keyBindJump.pressed && ! Step.mc.player.isOnLadder ( ) ) {
-            event.setHeight ( this.stepHeight.getValue ( ).intValue ( ) );
+            event.setHeight ( this.stepHeight.getValue ( ) );
             double rheight = Step.mc.player.getEntityBoundingBox ( ).minY - Step.mc.player.posY;
             if ( rheight >= 0.625 ) {
-                if ( ! this.vanilla.getValue ( ).booleanValue ( ) ) {
+                if ( ! this.vanilla.getValue ( ) ) {
                     this.ncpStep ( rheight );
                 }
-                if ( this.turnOff.getValue ( ).booleanValue ( ) ) {
+                if ( this.turnOff.getValue ( ) ) {
                     this.disable ( );
                 }
             }

@@ -22,7 +22,7 @@ class BoatFly
     public Setting < Double > verticalSpeed = this.register ( new Setting < Double > ( "VerticalSpeed" , 3.0 , 1.0 , 10.0 ) );
     public Setting < Boolean > noKick = this.register ( new Setting < Boolean > ( "No-Kick" , true ) );
     public Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , true ) );
-    public Setting < Integer > packets = this.register ( new Setting < Object > ( "Packets" , Integer.valueOf ( 3 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 5 ) , v -> this.packet.getValue ( ) ) );
+    public Setting < Integer > packets = this.register ( new Setting < Object > ( "Packets" , 3 , 1 , 5 , v -> this.packet.getValue ( ) ) );
     public Setting < Integer > interact = this.register ( new Setting < Integer > ( "Delay" , 2 , 1 , 20 ) );
     private EntityBoat target;
     private int teleportID;
@@ -63,7 +63,7 @@ class BoatFly
             BoatFly.mc.player.getRidingEntity ( ).motionX = 0.0;
             BoatFly.mc.player.getRidingEntity ( ).motionZ = 0.0;
         }
-        if ( this.noKick.getValue ( ).booleanValue ( ) ) {
+        if ( this.noKick.getValue ( ) ) {
             if ( BoatFly.mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
                 if ( BoatFly.mc.player.ticksExisted % 8 < 2 ) {
                     BoatFly.mc.player.getRidingEntity ( ).motionY = - 0.04f;
@@ -77,7 +77,7 @@ class BoatFly
 
     public
     void handlePackets ( double x , double y , double z ) {
-        if ( this.packet.getValue ( ).booleanValue ( ) ) {
+        if ( this.packet.getValue ( ) ) {
             Vec3d vec = new Vec3d ( x , y , z );
             if ( BoatFly.mc.player.getRidingEntity ( ) == null ) {
                 return;

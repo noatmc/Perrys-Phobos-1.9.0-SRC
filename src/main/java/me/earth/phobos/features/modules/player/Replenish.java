@@ -38,16 +38,16 @@ class Replenish
     @Override
     public
     void onUpdate ( ) {
-        if ( Auto32k.getInstance ( ).isOn ( ) && ( ! Auto32k.getInstance ( ).autoSwitch.getValue ( ).booleanValue ( ) || Auto32k.getInstance ( ).switching ) ) {
+        if ( Auto32k.getInstance ( ).isOn ( ) && ( ! Auto32k.getInstance ( ).autoSwitch.getValue ( ) || Auto32k.getInstance ( ).switching ) ) {
             return;
         }
-        if ( Replenish.mc.currentScreen instanceof GuiContainer && ( ! ( Replenish.mc.currentScreen instanceof GuiInventory ) || this.pauseInv.getValue ( ).booleanValue ( ) ) ) {
+        if ( Replenish.mc.currentScreen instanceof GuiContainer && ( ! ( Replenish.mc.currentScreen instanceof GuiInventory ) || this.pauseInv.getValue ( ) ) ) {
             return;
         }
-        if ( this.timer.passedMs ( this.updates.getValue ( ).intValue ( ) ) ) {
+        if ( this.timer.passedMs ( this.updates.getValue ( ) ) ) {
             this.mapHotbar ( );
         }
-        if ( this.replenishTimer.passedMs ( this.replenishments.getValue ( ).intValue ( ) ) ) {
+        if ( this.replenishTimer.passedMs ( this.replenishments.getValue ( ) ) ) {
             for (int i = 0; i < this.actions.getValue ( ); ++ i) {
                 InventoryUtil.Task task = this.taskList.poll ( );
                 if ( task == null ) continue;

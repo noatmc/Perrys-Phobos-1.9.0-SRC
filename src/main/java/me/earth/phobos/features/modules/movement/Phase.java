@@ -25,23 +25,23 @@ class Phase
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.PACKETFLY ) );
     public Setting < PacketFlyMode > type = this.register ( new Setting < Object > ( "Type" , PacketFlyMode.SETBACK , v -> this.mode.getValue ( ) == Mode.PACKETFLY ) );
     public Setting < Integer > yMove = this.register ( new Setting < Object > ( "YMove" , 625 , 1 , 1000 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK , "YMovement speed." ) );
-    public Setting < Boolean > extra = this.register ( new Setting < Object > ( "ExtraPacket" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Integer > offset = this.register ( new Setting < Object > ( "Offset" , 1337 , - 1337 , 1337 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.extra.getValue ( ) != false , "Up speed." ) );
-    public Setting < Boolean > fallPacket = this.register ( new Setting < Object > ( "FallPacket" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > teleporter = this.register ( new Setting < Object > ( "Teleport" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > boundingBox = this.register ( new Setting < Object > ( "BoundingBox" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Integer > teleportConfirm = this.register ( new Setting < Object > ( "Confirm" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 4 ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > ultraPacket = this.register ( new Setting < Object > ( "DoublePacket" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > updates = this.register ( new Setting < Object > ( "Update" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > setOnMove = this.register ( new Setting < Object > ( "SetMove" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > cliperino = this.register ( new Setting < Object > ( "NoClip" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.setOnMove.getValue ( ) != false ) );
-    public Setting < Boolean > scanPackets = this.register ( new Setting < Object > ( "ScanPackets" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > resetConfirm = this.register ( new Setting < Object > ( "Reset" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > posLook = this.register ( new Setting < Object > ( "PosLook" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
-    public Setting < Boolean > cancel = this.register ( new Setting < Object > ( "Cancel" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) != false ) );
-    public Setting < Boolean > cancelType = this.register ( new Setting < Object > ( "SetYaw" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) != false && this.cancel.getValue ( ) != false ) );
-    public Setting < Boolean > onlyY = this.register ( new Setting < Object > ( "OnlyY" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) != false ) );
-    public Setting < Integer > cancelPacket = this.register ( new Setting < Object > ( "Packets" , Integer.valueOf ( 20 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 20 ) , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) != false ) );
+    public Setting < Boolean > extra = this.register ( new Setting < Object > ( "ExtraPacket" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Integer > offset = this.register ( new Setting < Object > ( "Offset" , 1337 , - 1337 , 1337 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.extra.getValue ( ) , "Up speed." ) );
+    public Setting < Boolean > fallPacket = this.register ( new Setting < Object > ( "FallPacket" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > teleporter = this.register ( new Setting < Object > ( "Teleport" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > boundingBox = this.register ( new Setting < Object > ( "BoundingBox" , Boolean.TRUE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Integer > teleportConfirm = this.register ( new Setting < Object > ( "Confirm" , 2 , 0 , 4 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > ultraPacket = this.register ( new Setting < Object > ( "DoublePacket" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > updates = this.register ( new Setting < Object > ( "Update" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > setOnMove = this.register ( new Setting < Object > ( "SetMove" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > cliperino = this.register ( new Setting < Object > ( "NoClip" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.setOnMove.getValue ( ) ) );
+    public Setting < Boolean > scanPackets = this.register ( new Setting < Object > ( "ScanPackets" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > resetConfirm = this.register ( new Setting < Object > ( "Reset" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > posLook = this.register ( new Setting < Object > ( "PosLook" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK ) );
+    public Setting < Boolean > cancel = this.register ( new Setting < Object > ( "Cancel" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) ) );
+    public Setting < Boolean > cancelType = this.register ( new Setting < Object > ( "SetYaw" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) && this.cancel.getValue ( ) ) );
+    public Setting < Boolean > onlyY = this.register ( new Setting < Object > ( "OnlyY" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) ) );
+    public Setting < Integer > cancelPacket = this.register ( new Setting < Object > ( "Packets" , 20 , 0 , 20 , v -> this.mode.getValue ( ) == Mode.PACKETFLY && this.type.getValue ( ) == PacketFlyMode.SETBACK && this.posLook.getValue ( ) ) );
     private boolean teleport = true;
     private int teleportIds = 0;
     private int posLookPackets;
@@ -71,7 +71,7 @@ class Phase
         this.packets.clear ( );
         this.posLookPackets = 0;
         if ( Phase.mc.player != null ) {
-            if ( this.resetConfirm.getValue ( ).booleanValue ( ) ) {
+            if ( this.resetConfirm.getValue ( ) ) {
                 this.teleportIds = 0;
             }
             Phase.mc.player.noClip = false;
@@ -87,18 +87,18 @@ class Phase
     @SubscribeEvent
     public
     void onMove ( MoveEvent event ) {
-        if ( this.setOnMove.getValue ( ).booleanValue ( ) && this.type.getValue ( ) == PacketFlyMode.SETBACK && event.getStage ( ) == 0 && ! mc.isSingleplayer ( ) && this.mode.getValue ( ) == Mode.PACKETFLY ) {
+        if ( this.setOnMove.getValue ( ) && this.type.getValue ( ) == PacketFlyMode.SETBACK && event.getStage ( ) == 0 && ! mc.isSingleplayer ( ) && this.mode.getValue ( ) == Mode.PACKETFLY ) {
             event.setX ( Phase.mc.player.motionX );
             event.setY ( Phase.mc.player.motionY );
             event.setZ ( Phase.mc.player.motionZ );
-            if ( this.cliperino.getValue ( ).booleanValue ( ) ) {
+            if ( this.cliperino.getValue ( ) ) {
                 Phase.mc.player.noClip = true;
             }
         }
         if ( this.type.getValue ( ) == PacketFlyMode.NONE || event.getStage ( ) != 0 || mc.isSingleplayer ( ) || this.mode.getValue ( ) != Mode.PACKETFLY ) {
             return;
         }
-        if ( ! this.boundingBox.getValue ( ).booleanValue ( ) && ! this.updates.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.boundingBox.getValue ( ) && ! this.updates.getValue ( ) ) {
             this.doPhase ( event );
         }
     }
@@ -117,19 +117,19 @@ class Phase
         if ( Phase.fullNullCheck ( ) || event.getStage ( ) != 0 || this.type.getValue ( ) != PacketFlyMode.SETBACK || this.mode.getValue ( ) != Mode.PACKETFLY ) {
             return;
         }
-        if ( this.boundingBox.getValue ( ).booleanValue ( ) ) {
+        if ( this.boundingBox.getValue ( ) ) {
             this.doBoundingBox ( );
-        } else if ( this.updates.getValue ( ).booleanValue ( ) ) {
+        } else if ( this.updates.getValue ( ) ) {
             this.doPhase ( null );
         }
     }
 
     private
     void doPhase ( MoveEvent event ) {
-        if ( this.type.getValue ( ) == PacketFlyMode.SETBACK && ! this.boundingBox.getValue ( ).booleanValue ( ) ) {
-            double[] dirSpeed = this.getMotion ( this.teleport ? (double) this.yMove.getValue ( ).intValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 );
+        if ( this.type.getValue ( ) == PacketFlyMode.SETBACK && ! this.boundingBox.getValue ( ) ) {
+            double[] dirSpeed = this.getMotion ( this.teleport ? (double) this.yMove.getValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 );
             double posX = Phase.mc.player.posX + dirSpeed[0];
-            double posY = Phase.mc.player.posY + ( Phase.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.teleport ? (double) this.yMove.getValue ( ).intValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 ) : 1.0E-8 ) - ( Phase.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? ( this.teleport ? (double) this.yMove.getValue ( ).intValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 ) : 2.0E-8 );
+            double posY = Phase.mc.player.posY + ( Phase.mc.gameSettings.keyBindJump.isKeyDown ( ) ? ( this.teleport ? (double) this.yMove.getValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 ) : 1.0E-8 ) - ( Phase.mc.gameSettings.keyBindSneak.isKeyDown ( ) ? ( this.teleport ? (double) this.yMove.getValue ( ) / 10000.0 : (double) ( this.yMove.getValue ( ) - 1 ) / 10000.0 ) : 2.0E-8 );
             double posZ = Phase.mc.player.posZ + dirSpeed[1];
             CPacketPlayer.PositionRotation packetPlayer = new CPacketPlayer.PositionRotation ( posX , posY , posZ , Phase.mc.player.rotationYaw , Phase.mc.player.rotationPitch , false );
             this.packets.add ( packetPlayer );
@@ -138,8 +138,8 @@ class Phase
                 Phase.mc.player.connection.sendPacket ( new CPacketConfirmTeleport ( this.teleportIds - 1 ) );
                 ++ this.teleportIds;
             }
-            if ( this.extra.getValue ( ).booleanValue ( ) ) {
-                CPacketPlayer.PositionRotation packet = new CPacketPlayer.PositionRotation ( Phase.mc.player.posX , (double) this.offset.getValue ( ).intValue ( ) + Phase.mc.player.posY , Phase.mc.player.posZ , Phase.mc.player.rotationYaw , Phase.mc.player.rotationPitch , true );
+            if ( this.extra.getValue ( ) ) {
+                CPacketPlayer.PositionRotation packet = new CPacketPlayer.PositionRotation ( Phase.mc.player.posX , (double) this.offset.getValue ( ) + Phase.mc.player.posY , Phase.mc.player.posZ , Phase.mc.player.rotationYaw , Phase.mc.player.rotationPitch , true );
                 this.packets.add ( packet );
                 Phase.mc.player.connection.sendPacket ( packet );
             }
@@ -147,7 +147,7 @@ class Phase
                 Phase.mc.player.connection.sendPacket ( new CPacketConfirmTeleport ( this.teleportIds + 1 ) );
                 ++ this.teleportIds;
             }
-            if ( this.ultraPacket.getValue ( ).booleanValue ( ) ) {
+            if ( this.ultraPacket.getValue ( ) ) {
                 CPacketPlayer.PositionRotation packet2 = new CPacketPlayer.PositionRotation ( posX , posY , posZ , Phase.mc.player.rotationYaw , Phase.mc.player.rotationPitch , false );
                 this.packets.add ( packet2 );
                 Phase.mc.player.connection.sendPacket ( packet2 );
@@ -156,11 +156,11 @@ class Phase
                 Phase.mc.player.connection.sendPacket ( new CPacketConfirmTeleport ( this.teleportIds ) );
                 ++ this.teleportIds;
             }
-            if ( this.fallPacket.getValue ( ).booleanValue ( ) ) {
+            if ( this.fallPacket.getValue ( ) ) {
                 Phase.mc.player.connection.sendPacket ( new CPacketEntityAction ( Phase.mc.player , CPacketEntityAction.Action.START_FALL_FLYING ) );
             }
             Phase.mc.player.setPosition ( posX , posY , posZ );
-            boolean bl = this.teleport = this.teleporter.getValue ( ) == false || ! this.teleport;
+            boolean bl = this.teleport = ! this.teleporter.getValue ( ) || ! this.teleport;
             if ( event != null ) {
                 event.setX ( 0.0 );
                 event.setY ( 0.0 );
@@ -190,18 +190,18 @@ class Phase
     @SubscribeEvent
     public
     void onPacketReceive ( PacketEvent.Receive event ) {
-        if ( this.posLook.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof SPacketPlayerPosLook ) {
+        if ( this.posLook.getValue ( ) && event.getPacket ( ) instanceof SPacketPlayerPosLook ) {
             SPacketPlayerPosLook packet = event.getPacket ( );
             if ( Phase.mc.player.isEntityAlive ( ) && Phase.mc.world.isBlockLoaded ( new BlockPos ( Phase.mc.player.posX , Phase.mc.player.posY , Phase.mc.player.posZ ) ) && ! ( Phase.mc.currentScreen instanceof GuiDownloadTerrain ) ) {
                 if ( this.teleportIds <= 0 ) {
                     this.teleportIds = packet.getTeleportId ( );
                 }
-                if ( this.cancel.getValue ( ).booleanValue ( ) && this.cancelType.getValue ( ).booleanValue ( ) ) {
+                if ( this.cancel.getValue ( ) && this.cancelType.getValue ( ) ) {
                     packet.yaw = Phase.mc.player.rotationYaw;
                     packet.pitch = Phase.mc.player.rotationPitch;
                     return;
                 }
-                if ( ! ( ! this.cancel.getValue ( ).booleanValue ( ) || this.posLookPackets < this.cancelPacket.getValue ( ) || this.onlyY.getValue ( ).booleanValue ( ) && ( Phase.mc.gameSettings.keyBindForward.isKeyDown ( ) || Phase.mc.gameSettings.keyBindRight.isKeyDown ( ) || Phase.mc.gameSettings.keyBindLeft.isKeyDown ( ) || Phase.mc.gameSettings.keyBindBack.isKeyDown ( ) ) ) ) {
+                if ( ! ( ! this.cancel.getValue ( ) || this.posLookPackets < this.cancelPacket.getValue ( ) || this.onlyY.getValue ( ) && ( Phase.mc.gameSettings.keyBindForward.isKeyDown ( ) || Phase.mc.gameSettings.keyBindRight.isKeyDown ( ) || Phase.mc.gameSettings.keyBindLeft.isKeyDown ( ) || Phase.mc.gameSettings.keyBindBack.isKeyDown ( ) ) ) ) {
                     this.posLookPackets = 0;
                     event.setCanceled ( true );
                 }
@@ -213,7 +213,7 @@ class Phase
     @SubscribeEvent
     public
     void onPacketReceive ( PacketEvent.Send event ) {
-        if ( this.scanPackets.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof CPacketPlayer ) {
+        if ( this.scanPackets.getValue ( ) && event.getPacket ( ) instanceof CPacketPlayer ) {
             CPacketPlayer packetPlayer = event.getPacket ( );
             if ( this.packets.contains ( packetPlayer ) ) {
                 this.packets.remove ( packetPlayer );

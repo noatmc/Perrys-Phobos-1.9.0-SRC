@@ -64,7 +64,7 @@ class BlockLag
     @SubscribeEvent
     public
     void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
-        if ( event.getStage ( ) != 0 || ! this.timer.passedMs ( this.timeOut.getValue ( ).intValue ( ) ) ) {
+        if ( event.getStage ( ) != 0 || ! this.timer.passedMs ( this.timeOut.getValue ( ) ) ) {
             return;
         }
         this.lastHotbarSlot = BlockLag.mc.player.inventory.currentItem;
@@ -74,7 +74,7 @@ class BlockLag
         }
         BlockUtil.placeBlock ( this.startPos , this.blockSlot == - 2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , false , this.packet.getValue ( ) , BlockLag.mc.player.isSneaking ( ) );
         InventoryUtil.switchToHotbarSlot ( this.lastHotbarSlot , false );
-        if ( this.invalidPacket.getValue ( ).booleanValue ( ) ) {
+        if ( this.invalidPacket.getValue ( ) ) {
             BlockLag.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( BlockLag.mc.player.posX , 1337.0 , BlockLag.mc.player.posZ , true ) );
         }
         this.disable ( );

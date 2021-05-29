@@ -103,7 +103,7 @@ class Module
 
     public
     boolean isOff ( ) {
-        return this.enabled.getValue ( ) == false;
+        return ! this.enabled.getValue ( );
     }
 
     public

@@ -26,7 +26,7 @@ class Skeleton
     private final Setting < Integer > green = this.register ( new Setting < Integer > ( "Green" , 255 , 0 , 255 ) );
     private final Setting < Integer > blue = this.register ( new Setting < Integer > ( "Blue" , 255 , 0 , 255 ) );
     private final Setting < Integer > alpha = this.register ( new Setting < Integer > ( "Alpha" , 255 , 0 , 255 ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Float > ( "LineWidth" , Float.valueOf ( 1.5f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Float > ( "LineWidth" , 1.5f , 0.1f , 5.0f ) );
     private final Setting < Boolean > colorFriends = this.register ( new Setting < Boolean > ( "Friends" , true ) );
     private final Setting < Boolean > invisibles = this.register ( new Setting < Boolean > ( "Invisibles" , false ) );
     private final Map < EntityPlayer, float[][] > rotationList = new HashMap < EntityPlayer, float[][] > ( );
@@ -53,11 +53,11 @@ class Skeleton
     @Override
     public
     void onRender3D ( Render3DEvent event ) {
-        RenderUtil.GLPre ( this.lineWidth.getValue ( ).floatValue ( ) );
+        RenderUtil.GLPre ( this.lineWidth.getValue ( ) );
         for (EntityPlayer player : Skeleton.mc.world.playerEntities) {
-            if ( player == null || player == mc.getRenderViewEntity ( ) || ! player.isEntityAlive ( ) || player.isPlayerSleeping ( ) || player.isInvisible ( ) && ! this.invisibles.getValue ( ).booleanValue ( ) || this.rotationList.get ( player ) == null || ! ( Skeleton.mc.player.getDistanceSq ( player ) < 2500.0 ) )
+            if ( player == null || player == mc.getRenderViewEntity ( ) || ! player.isEntityAlive ( ) || player.isPlayerSleeping ( ) || player.isInvisible ( ) && ! this.invisibles.getValue ( ) || this.rotationList.get ( player ) == null || ! ( Skeleton.mc.player.getDistanceSq ( player ) < 2500.0 ) )
                 continue;
-            this.renderSkeleton ( player , this.rotationList.get ( player ) , this.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : EntityUtil.getColor ( player , this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) , this.colorFriends.getValue ( ) ) );
+            this.renderSkeleton ( player , this.rotationList.get ( player ) , this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : EntityUtil.getColor ( player , this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) , this.colorFriends.getValue ( ) ) );
         }
         RenderUtil.GlPost ( );
     }

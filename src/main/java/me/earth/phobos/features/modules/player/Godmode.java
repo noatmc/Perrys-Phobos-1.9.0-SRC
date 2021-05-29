@@ -37,7 +37,7 @@ class Godmode
             this.hideEntity ( );
             this.mc.player.setPosition ( Minecraft.getMinecraft ( ).player.getPosition ( ).getX ( ) , Minecraft.getMinecraft ( ).player.getPosition ( ).getY ( ) - 1 , Minecraft.getMinecraft ( ).player.getPosition ( ).getZ ( ) );
         }
-        if ( this.mc.world != null && this.remount.getValue ( ).booleanValue ( ) ) {
+        if ( this.mc.world != null && this.remount.getValue ( ) ) {
             this.remount.setValue ( false );
         }
     }
@@ -46,7 +46,7 @@ class Godmode
     public
     void onDisable ( ) {
         super.onDisable ( );
-        if ( this.remount.getValue ( ).booleanValue ( ) ) {
+        if ( this.remount.getValue ( ) ) {
             this.remount.setValue ( false );
         }
         this.mc.player.dismountRidingEntity ( );
@@ -84,7 +84,7 @@ class Godmode
             return;
         }
         if ( event.getStage ( ) == 0 ) {
-            if ( this.remount.getValue ( ).booleanValue ( ) && Objects.requireNonNull ( Phobos.moduleManager.getModuleByClass ( Godmode.class ) ).isEnabled ( ) ) {
+            if ( this.remount.getValue ( ) && Objects.requireNonNull ( Phobos.moduleManager.getModuleByClass ( Godmode.class ) ).isEnabled ( ) ) {
                 this.showEntity ( this.entity );
             }
             this.entity.setPositionAndRotation ( Minecraft.getMinecraft ( ).player.posX , Minecraft.getMinecraft ( ).player.posY , Minecraft.getMinecraft ( ).player.posZ , Minecraft.getMinecraft ( ).player.rotationYaw , Minecraft.getMinecraft ( ).player.rotationPitch );
@@ -94,4 +94,3 @@ class Godmode
         }
     }
 }
-

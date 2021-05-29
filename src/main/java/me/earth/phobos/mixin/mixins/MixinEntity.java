@@ -463,7 +463,7 @@ class MixinEntity {
     private
     int getMaxInPortalTimeHook ( Entity entity ) {
         int time = this.getMaxInPortalTime ( );
-        if ( BetterPortals.getInstance ( ).isOn ( ) && BetterPortals.getInstance ( ).fastPortal.getValue ( ).booleanValue ( ) ) {
+        if ( BetterPortals.getInstance ( ).isOn ( ) && BetterPortals.getInstance ( ).fastPortal.getValue ( ) ) {
             time = BetterPortals.getInstance ( ).time.getValue ( );
         }
         return time;

@@ -48,7 +48,7 @@ class MixinEntityRenderer {
     @Inject(method = {"renderItemActivation"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void renderItemActivationHook ( CallbackInfo info ) {
-        if ( this.itemActivationItem != null && NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).totemPops.getValue ( ).booleanValue ( ) && this.itemActivationItem.getItem ( ) == Items.TOTEM_OF_UNDYING ) {
+        if ( this.itemActivationItem != null && NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).totemPops.getValue ( ) && this.itemActivationItem.getItem ( ) == Items.TOTEM_OF_UNDYING ) {
             info.cancel ( );
         }
     }
@@ -73,7 +73,7 @@ class MixinEntityRenderer {
                     this.getMouseOver ( partialTicks );
                 } catch ( Exception e ) {
                     e.printStackTrace ( );
-                    if ( ! Notifications.getInstance ( ).isOn ( ) || ! Notifications.getInstance ( ).crash.getValue ( ).booleanValue ( ) )
+                    if ( ! Notifications.getInstance ( ).isOn ( ) || ! Notifications.getInstance ( ).crash.getValue ( ) )
                         break block3;
                     Notifications.displayCrash ( e );
                 }
@@ -85,7 +85,7 @@ class MixinEntityRenderer {
     @Redirect(method = {"setupCameraTransform"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/entity/EntityPlayerSP;prevTimeInPortal:F"))
     public
     float prevTimeInPortalHook ( EntityPlayerSP entityPlayerSP ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).nausea.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).nausea.getValue ( ) ) {
             return - 3.4028235E38f;
         }
         return entityPlayerSP.prevTimeInPortal;
@@ -111,7 +111,7 @@ class MixinEntityRenderer {
     @Inject(method = {"hurtCameraEffect"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void hurtCameraEffectHook ( float ticks , CallbackInfo info ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).hurtcam.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).hurtcam.getValue ( ) ) {
             info.cancel ( );
         }
     }
@@ -119,10 +119,10 @@ class MixinEntityRenderer {
     @Redirect(method = {"getMouseOver"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/WorldClient;getEntitiesInAABBexcluding(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/AxisAlignedBB;Lcom/google/common/base/Predicate;)Ljava/util/List;"))
     public
     List < Entity > getEntitiesInAABBexcludingHook ( WorldClient worldClient , @Nullable Entity entityIn , AxisAlignedBB boundingBox , @Nullable Predicate < ? super Entity > predicate ) {
-        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).noTrace.getValue ( ).booleanValue ( ) && ( ! Speedmine.getInstance ( ).pickaxe.getValue ( ).booleanValue ( ) || this.mc.player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemPickaxe ) ) {
+        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).noTrace.getValue ( ) && ( ! Speedmine.getInstance ( ).pickaxe.getValue ( ) || this.mc.player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemPickaxe ) ) {
             return new ArrayList < Entity > ( );
         }
-        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).noTrace.getValue ( ).booleanValue ( ) && Speedmine.getInstance ( ).noGapTrace.getValue ( ).booleanValue ( ) && this.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.GOLDEN_APPLE ) {
+        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).noTrace.getValue ( ) && Speedmine.getInstance ( ).noGapTrace.getValue ( ) && this.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.GOLDEN_APPLE ) {
             return new ArrayList < Entity > ( );
         }
         return worldClient.getEntitiesInAABBexcluding ( entityIn , boundingBox , predicate );
@@ -131,13 +131,13 @@ class MixinEntityRenderer {
     @ModifyVariable(method = {"orientCamera"}, ordinal = 3, at = @At(value = "STORE", ordinal = 0), require = 1)
     public
     double changeCameraDistanceHook ( double range ) {
-        return CameraClip.getInstance ( ).isEnabled ( ) && CameraClip.getInstance ( ).extend.getValue ( ) != false ? CameraClip.getInstance ( ).distance.getValue ( ) : range;
+        return CameraClip.getInstance ( ).isEnabled ( ) && CameraClip.getInstance ( ).extend.getValue ( ) ? CameraClip.getInstance ( ).distance.getValue ( ) : range;
     }
 
     @ModifyVariable(method = {"orientCamera"}, ordinal = 7, at = @At(value = "STORE", ordinal = 0), require = 1)
     public
     double orientCameraHook ( double range ) {
-        return CameraClip.getInstance ( ).isEnabled ( ) && CameraClip.getInstance ( ).extend.getValue ( ) != false ? CameraClip.getInstance ( ).distance.getValue ( ) : ( CameraClip.getInstance ( ).isEnabled ( ) && CameraClip.getInstance ( ).extend.getValue ( ) == false ? 4.0 : range );
+        return CameraClip.getInstance ( ).isEnabled ( ) && CameraClip.getInstance ( ).extend.getValue ( ) ? CameraClip.getInstance ( ).distance.getValue ( ) : ( CameraClip.getInstance ( ).isEnabled ( ) && ! CameraClip.getInstance ( ).extend.getValue ( ) ? 4.0 : range );
     }
 }
 

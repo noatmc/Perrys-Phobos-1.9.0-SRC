@@ -33,27 +33,27 @@ class Nametags
     private static Nametags INSTANCE = new Nametags ( );
     private final Setting < Boolean > health = this.register ( new Setting < Boolean > ( "Health" , true ) );
     private final Setting < Boolean > armor = this.register ( new Setting < Boolean > ( "Armor" , true ) );
-    private final Setting < Float > scaling = this.register ( new Setting < Float > ( "Size" , Float.valueOf ( 0.3f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 20.0f ) ) );
+    private final Setting < Float > scaling = this.register ( new Setting < Float > ( "Size" , 0.3f , 0.1f , 20.0f ) );
     private final Setting < Boolean > invisibles = this.register ( new Setting < Boolean > ( "Invisibles" , false ) );
     private final Setting < Boolean > ping = this.register ( new Setting < Boolean > ( "Ping" , true ) );
     private final Setting < Boolean > totemPops = this.register ( new Setting < Boolean > ( "TotemPops" , true ) );
     private final Setting < Boolean > gamemode = this.register ( new Setting < Boolean > ( "Gamemode" , false ) );
     private final Setting < Boolean > entityID = this.register ( new Setting < Boolean > ( "ID" , false ) );
     private final Setting < Boolean > rect = this.register ( new Setting < Boolean > ( "Rectangle" , true ) );
-    private final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.valueOf ( false ) , v -> this.rect.getValue ( ) ) );
-    private final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.valueOf ( false ) , v -> this.outline.getValue ( ) ) );
-    private final Setting < Integer > redSetting = this.register ( new Setting < Object > ( "Red" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.outline.getValue ( ) ) );
-    private final Setting < Integer > greenSetting = this.register ( new Setting < Object > ( "Green" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.outline.getValue ( ) ) );
-    private final Setting < Integer > blueSetting = this.register ( new Setting < Object > ( "Blue" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.outline.getValue ( ) ) );
-    private final Setting < Integer > alphaSetting = this.register ( new Setting < Object > ( "Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.outline.getValue ( ) ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , Float.valueOf ( 1.5f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.outline.getValue ( ) ) );
+    private final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.FALSE , v -> this.rect.getValue ( ) ) );
+    private final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.FALSE , v -> this.outline.getValue ( ) ) );
+    private final Setting < Integer > redSetting = this.register ( new Setting < Object > ( "Red" , 255 , 0 , 255 , v -> this.outline.getValue ( ) ) );
+    private final Setting < Integer > greenSetting = this.register ( new Setting < Object > ( "Green" , 255 , 0 , 255 , v -> this.outline.getValue ( ) ) );
+    private final Setting < Integer > blueSetting = this.register ( new Setting < Object > ( "Blue" , 255 , 0 , 255 , v -> this.outline.getValue ( ) ) );
+    private final Setting < Integer > alphaSetting = this.register ( new Setting < Object > ( "Alpha" , 255 , 0 , 255 , v -> this.outline.getValue ( ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , 1.5f , 0.1f , 5.0f , v -> this.outline.getValue ( ) ) );
     private final Setting < Boolean > sneak = this.register ( new Setting < Boolean > ( "SneakColor" , false ) );
     private final Setting < Boolean > heldStackName = this.register ( new Setting < Boolean > ( "StackName" , false ) );
     private final Setting < Boolean > whiter = this.register ( new Setting < Boolean > ( "White" , false ) );
     private final Setting < Boolean > onlyFov = this.register ( new Setting < Boolean > ( "OnlyFov" , false ) );
     private final Setting < Boolean > scaleing = this.register ( new Setting < Boolean > ( "Scale" , false ) );
-    private final Setting < Float > factor = this.register ( new Setting < Object > ( "Factor" , Float.valueOf ( 0.3f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 1.0f ) , v -> this.scaleing.getValue ( ) ) );
-    private final Setting < Boolean > smartScale = this.register ( new Setting < Object > ( "SmartScale" , Boolean.valueOf ( false ) , v -> this.scaleing.getValue ( ) ) );
+    private final Setting < Float > factor = this.register ( new Setting < Object > ( "Factor" , 0.3f , 0.1f , 1.0f , v -> this.scaleing.getValue ( ) ) );
+    private final Setting < Boolean > smartScale = this.register ( new Setting < Object > ( "SmartScale" , Boolean.FALSE , v -> this.scaleing.getValue ( ) ) );
 
     public
     Nametags ( ) {
@@ -79,7 +79,7 @@ class Nametags
     void onRender3D ( Render3DEvent event ) {
         if ( ! Nametags.fullNullCheck ( ) ) {
             for (EntityPlayer player : Nametags.mc.world.playerEntities) {
-                if ( player == null || player.equals ( Nametags.mc.player ) || ! player.isEntityAlive ( ) || player.isInvisible ( ) && ! this.invisibles.getValue ( ).booleanValue ( ) || this.onlyFov.getValue ( ).booleanValue ( ) && ! RotationUtil.isInFov ( player ) )
+                if ( player == null || player.equals ( Nametags.mc.player ) || ! player.isEntityAlive ( ) || player.isInvisible ( ) && ! this.invisibles.getValue ( ) || this.onlyFov.getValue ( ) && ! RotationUtil.isInFov ( player ) )
                     continue;
                 double x = this.interpolate ( player.lastTickPosX , player.posX , event.getPartialTicks ( ) ) - Nametags.mc.getRenderManager ( ).renderPosX;
                 double y = this.interpolate ( player.lastTickPosY , player.posY , event.getPartialTicks ( ) ) - Nametags.mc.getRenderManager ( ).renderPosY;
@@ -99,7 +99,7 @@ class Nametags
         BufferBuilder bufferbuilder = tessellator.getBuffer ( );
         GlStateManager.enableBlend ( );
         GlStateManager.disableTexture2D ( );
-        GlStateManager.glLineWidth ( this.lineWidth.getValue ( ).floatValue ( ) );
+        GlStateManager.glLineWidth ( this.lineWidth.getValue ( ) );
         GlStateManager.tryBlendFuncSeparate ( 770 , 771 , 1 , 0 );
         bufferbuilder.begin ( 7 , DefaultVertexFormats.POSITION_COLOR );
         bufferbuilder.pos ( x , h , 0.0 ).color ( red , green , blue , alpha ).endVertex ( );
@@ -121,7 +121,7 @@ class Nametags
         BufferBuilder bufferbuilder = tessellator.getBuffer ( );
         GlStateManager.enableBlend ( );
         GlStateManager.disableTexture2D ( );
-        GlStateManager.glLineWidth ( this.lineWidth.getValue ( ).floatValue ( ) );
+        GlStateManager.glLineWidth ( this.lineWidth.getValue ( ) );
         GlStateManager.tryBlendFuncSeparate ( 770 , 771 , 1 , 0 );
         bufferbuilder.begin ( 2 , DefaultVertexFormats.POSITION_COLOR );
         bufferbuilder.pos ( x , h , 0.0 ).color ( red , green , blue , alpha ).endVertex ( );
@@ -148,12 +148,12 @@ class Nametags
         String displayTag = this.getDisplayTag ( player );
         double distance = camera.getDistance ( x + Nametags.mc.getRenderManager ( ).viewerPosX , y + Nametags.mc.getRenderManager ( ).viewerPosY , z + Nametags.mc.getRenderManager ( ).viewerPosZ );
         int width = this.renderer.getStringWidth ( displayTag ) / 2;
-        double scale = ( 0.0018 + (double) this.scaling.getValue ( ).floatValue ( ) * ( distance * (double) this.factor.getValue ( ).floatValue ( ) ) ) / 1000.0;
-        if ( distance <= 8.0 && this.smartScale.getValue ( ).booleanValue ( ) ) {
+        double scale = ( 0.0018 + (double) this.scaling.getValue ( ) * ( distance * (double) this.factor.getValue ( ) ) ) / 1000.0;
+        if ( distance <= 8.0 && this.smartScale.getValue ( ) ) {
             scale = 0.0245;
         }
-        if ( ! this.scaleing.getValue ( ).booleanValue ( ) ) {
-            scale = (double) this.scaling.getValue ( ).floatValue ( ) / 100.0;
+        if ( ! this.scaleing.getValue ( ) ) {
+            scale = (double) this.scaling.getValue ( ) / 100.0;
         }
         GlStateManager.pushMatrix ( );
         RenderHelper.enableStandardItemLighting ( );
@@ -167,7 +167,7 @@ class Nametags
         GlStateManager.disableDepth ( );
         GlStateManager.enableBlend ( );
         GlStateManager.enableBlend ( );
-        if ( this.rect.getValue ( ).booleanValue ( ) ) {
+        if ( this.rect.getValue ( ) ) {
             drawRect ( - width - 2 , - ( this.renderer.getFontHeight ( ) + 1 ) , (float) width + 2.0f , 1.5f , 0x55000000 );
             if ( this.outline.getValue ( ) ) {
                 final int color = this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColorHex ( ) : new Color ( this.redSetting.getValue ( ) , this.greenSetting.getValue ( ) , this.blueSetting.getValue ( ) , this.alphaSetting.getValue ( ) ).getRGB ( );
@@ -179,7 +179,7 @@ class Nametags
         if ( renderMainHand.hasEffect ( ) && ( renderMainHand.getItem ( ) instanceof ItemTool || renderMainHand.getItem ( ) instanceof ItemArmor ) ) {
             renderMainHand.stackSize = 1;
         }
-        if ( this.heldStackName.getValue ( ).booleanValue ( ) && ! renderMainHand.isEmpty && renderMainHand.getItem ( ) != Items.AIR ) {
+        if ( this.heldStackName.getValue ( ) && ! renderMainHand.isEmpty && renderMainHand.getItem ( ) != Items.AIR ) {
             String stackName = renderMainHand.getDisplayName ( );
             int stackNameWidth = this.renderer.getStringWidth ( stackName ) / 2;
             GL11.glPushMatrix ( );
@@ -188,7 +188,7 @@ class Nametags
             GL11.glScalef ( 1.5f , 1.5f , 1.0f );
             GL11.glPopMatrix ( );
         }
-        if ( this.armor.getValue ( ).booleanValue ( ) ) {
+        if ( this.armor.getValue ( ) ) {
             GlStateManager.pushMatrix ( );
             int xOffset = - 8;
             for (ItemStack stack : player.inventory.armorInventory) {
@@ -334,13 +334,13 @@ class Nametags
         if ( name.contains ( mc.getSession ( ).getUsername ( ) ) ) {
             name = "You";
         }
-        if ( ! this.health.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.health.getValue ( ) ) {
             return name;
         }
         float health = EntityUtil.getHealth ( player );
         String color = health > 18.0f ? "\u00a7a" : ( health > 16.0f ? "\u00a72" : ( health > 12.0f ? "\u00a7e" : ( health > 8.0f ? "\u00a76" : ( health > 5.0f ? "\u00a7c" : "\u00a74" ) ) ) );
         String pingStr = "";
-        if ( this.ping.getValue ( ).booleanValue ( ) ) {
+        if ( this.ping.getValue ( ) ) {
             try {
                 int responseTime = Objects.requireNonNull ( mc.getConnection ( ) ).getPlayerInfo ( player.getUniqueID ( ) ).getResponseTime ( );
                 pingStr = pingStr + responseTime + "ms ";
@@ -349,15 +349,15 @@ class Nametags
             }
         }
         String popStr = " ";
-        if ( this.totemPops.getValue ( ).booleanValue ( ) ) {
+        if ( this.totemPops.getValue ( ) ) {
             popStr = popStr + Phobos.totemPopManager.getTotemPopString ( player );
         }
         String idString = "";
-        if ( this.entityID.getValue ( ).booleanValue ( ) ) {
+        if ( this.entityID.getValue ( ) ) {
             idString = idString + "ID: " + player.getEntityId ( ) + " ";
         }
         String gameModeStr = "";
-        if ( this.gamemode.getValue ( ).booleanValue ( ) ) {
+        if ( this.gamemode.getValue ( ) ) {
             gameModeStr = player.isCreative ( ) ? gameModeStr + "[C] " : ( player.isSpectator ( ) || player.isInvisible ( ) ? gameModeStr + "[I] " : gameModeStr + "[S] " );
         }
         name = Math.floor ( health ) == (double) health ? name + color + " " + ( health > 0.0f ? Integer.valueOf ( (int) Math.floor ( health ) ) : "dead" ) : name + color + " " + ( health > 0.0f ? Integer.valueOf ( (int) health ) : "dead" );
@@ -367,7 +367,7 @@ class Nametags
     private
     int getDisplayColour ( EntityPlayer player ) {
         int colour = - 5592406;
-        if ( this.whiter.getValue ( ).booleanValue ( ) ) {
+        if ( this.whiter.getValue ( ) ) {
             colour = - 1;
         }
         if ( Phobos.friendManager.isFriend ( player ) ) {
@@ -375,7 +375,7 @@ class Nametags
         }
         if ( player.isInvisible ( ) ) {
             colour = - 1113785;
-        } else if ( player.isSneaking ( ) && this.sneak.getValue ( ).booleanValue ( ) ) {
+        } else if ( player.isSneaking ( ) && this.sneak.getValue ( ) ) {
             colour = - 6481515;
         }
         return colour;

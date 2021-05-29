@@ -23,11 +23,11 @@ public
 class FastPlace
         extends Module {
     private final Setting < Boolean > all = this.register ( new Setting < Boolean > ( "All" , false ) );
-    private final Setting < Boolean > obby = this.register ( new Setting < Object > ( "Obsidian" , Boolean.valueOf ( false ) , v -> this.all.getValue ( ) == false ) );
-    private final Setting < Boolean > enderChests = this.register ( new Setting < Object > ( "EnderChests" , Boolean.valueOf ( false ) , v -> this.all.getValue ( ) == false ) );
-    private final Setting < Boolean > crystals = this.register ( new Setting < Object > ( "Crystals" , Boolean.valueOf ( false ) , v -> this.all.getValue ( ) == false ) );
-    private final Setting < Boolean > exp = this.register ( new Setting < Object > ( "Experience" , Boolean.valueOf ( false ) , v -> this.all.getValue ( ) == false ) );
-    private final Setting < Boolean > Minecart = this.register ( new Setting < Object > ( "Minecarts" , Boolean.valueOf ( false ) , v -> this.all.getValue ( ) == false ) );
+    private final Setting < Boolean > obby = this.register ( new Setting < Object > ( "Obsidian" , Boolean.FALSE , v -> ! this.all.getValue ( ) ) );
+    private final Setting < Boolean > enderChests = this.register ( new Setting < Object > ( "EnderChests" , Boolean.FALSE , v -> ! this.all.getValue ( ) ) );
+    private final Setting < Boolean > crystals = this.register ( new Setting < Object > ( "Crystals" , Boolean.FALSE , v -> ! this.all.getValue ( ) ) );
+    private final Setting < Boolean > exp = this.register ( new Setting < Object > ( "Experience" , Boolean.FALSE , v -> ! this.all.getValue ( ) ) );
+    private final Setting < Boolean > Minecart = this.register ( new Setting < Object > ( "Minecarts" , Boolean.FALSE , v -> ! this.all.getValue ( ) ) );
     private final Setting < Boolean > feetExp = this.register ( new Setting < Boolean > ( "ExpFeet" , false ) );
     private final Setting < Boolean > fastCrystal = this.register ( new Setting < Boolean > ( "PacketCrystal" , false ) );
     private BlockPos mousePos = null;
@@ -40,7 +40,7 @@ class FastPlace
     @SubscribeEvent
     public
     void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
-        if ( event.getStage ( ) == 0 && this.feetExp.getValue ( ).booleanValue ( ) ) {
+        if ( event.getStage ( ) == 0 && this.feetExp.getValue ( ) ) {
             boolean offHand;
             boolean mainHand = FastPlace.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.EXPERIENCE_BOTTLE;
             boolean bl = offHand = FastPlace.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.EXPERIENCE_BOTTLE;
@@ -56,25 +56,25 @@ class FastPlace
         if ( FastPlace.fullNullCheck ( ) ) {
             return;
         }
-        if ( InventoryUtil.holdingItem ( ItemExpBottle.class ) && this.exp.getValue ( ).booleanValue ( ) ) {
+        if ( InventoryUtil.holdingItem ( ItemExpBottle.class ) && this.exp.getValue ( ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( InventoryUtil.holdingItem ( BlockObsidian.class ) && this.obby.getValue ( ).booleanValue ( ) ) {
+        if ( InventoryUtil.holdingItem ( BlockObsidian.class ) && this.obby.getValue ( ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( InventoryUtil.holdingItem ( BlockEnderChest.class ) && this.enderChests.getValue ( ).booleanValue ( ) ) {
+        if ( InventoryUtil.holdingItem ( BlockEnderChest.class ) && this.enderChests.getValue ( ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( InventoryUtil.holdingItem ( ItemMinecart.class ) && this.Minecart.getValue ( ).booleanValue ( ) ) {
+        if ( InventoryUtil.holdingItem ( ItemMinecart.class ) && this.Minecart.getValue ( ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( this.all.getValue ( ).booleanValue ( ) ) {
+        if ( this.all.getValue ( ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( InventoryUtil.holdingItem ( ItemEndCrystal.class ) && ( this.crystals.getValue ( ).booleanValue ( ) || this.all.getValue ( ).booleanValue ( ) ) ) {
+        if ( InventoryUtil.holdingItem ( ItemEndCrystal.class ) && ( this.crystals.getValue ( ) || this.all.getValue ( ) ) ) {
             FastPlace.mc.rightClickDelayTimer = 0;
         }
-        if ( this.fastCrystal.getValue ( ).booleanValue ( ) && FastPlace.mc.gameSettings.keyBindUseItem.isKeyDown ( ) ) {
+        if ( this.fastCrystal.getValue ( ) && FastPlace.mc.gameSettings.keyBindUseItem.isKeyDown ( ) ) {
             boolean offhand;
             boolean bl = offhand = FastPlace.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.END_CRYSTAL;
             if ( offhand || FastPlace.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.END_CRYSTAL ) {

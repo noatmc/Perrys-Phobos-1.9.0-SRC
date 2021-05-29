@@ -22,9 +22,9 @@ class Blink
     private final Queue < Packet < ? > > packets = new ConcurrentLinkedQueue ( );
     public Setting < Boolean > cPacketPlayer = this.register ( new Setting < Boolean > ( "CPacketPlayer" , true ) );
     public Setting < Mode > autoOff = this.register ( new Setting < Mode > ( "AutoOff" , Mode.MANUAL ) );
-    public Setting < Integer > timeLimit = this.register ( new Setting < Object > ( "Time" , Integer.valueOf ( 20 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 500 ) , v -> this.autoOff.getValue ( ) == Mode.TIME ) );
-    public Setting < Integer > packetLimit = this.register ( new Setting < Object > ( "Packets" , Integer.valueOf ( 20 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 500 ) , v -> this.autoOff.getValue ( ) == Mode.PACKETS ) );
-    public Setting < Float > distance = this.register ( new Setting < Object > ( "Distance" , Float.valueOf ( 10.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 100.0f ) , v -> this.autoOff.getValue ( ) == Mode.DISTANCE ) );
+    public Setting < Integer > timeLimit = this.register ( new Setting < Object > ( "Time" , 20 , 1 , 500 , v -> this.autoOff.getValue ( ) == Mode.TIME ) );
+    public Setting < Integer > packetLimit = this.register ( new Setting < Object > ( "Packets" , 20 , 1 , 500 , v -> this.autoOff.getValue ( ) == Mode.PACKETS ) );
+    public Setting < Float > distance = this.register ( new Setting < Object > ( "Distance" , 10.0f , 1.0f , 100.0f , v -> this.autoOff.getValue ( ) == Mode.DISTANCE ) );
     private EntityOtherPlayerMP entity;
     private int packetsCanceled = 0;
     private BlockPos startPos = null;
@@ -69,7 +69,7 @@ class Blink
     @Override
     public
     void onUpdate ( ) {
-        if ( Blink.nullCheck ( ) || this.autoOff.getValue ( ) == Mode.TIME && this.timer.passedS ( this.timeLimit.getValue ( ).intValue ( ) ) || this.autoOff.getValue ( ) == Mode.DISTANCE && this.startPos != null && Blink.mc.player.getDistanceSq ( this.startPos ) >= MathUtil.square ( this.distance.getValue ( ).floatValue ( ) ) || this.autoOff.getValue ( ) == Mode.PACKETS && this.packetsCanceled >= this.packetLimit.getValue ( ) ) {
+        if ( Blink.nullCheck ( ) || this.autoOff.getValue ( ) == Mode.TIME && this.timer.passedS ( this.timeLimit.getValue ( ) ) || this.autoOff.getValue ( ) == Mode.DISTANCE && this.startPos != null && Blink.mc.player.getDistanceSq ( this.startPos ) >= MathUtil.square ( this.distance.getValue ( ) ) || this.autoOff.getValue ( ) == Mode.PACKETS && this.packetsCanceled >= this.packetLimit.getValue ( ) ) {
             this.disable ( );
         }
     }
@@ -87,12 +87,12 @@ class Blink
     void onSendPacket ( PacketEvent.Send event ) {
         if ( event.getStage ( ) == 0 && Blink.mc.world != null && ! mc.isSingleplayer ( ) ) {
             Object packet = event.getPacket ( );
-            if ( this.cPacketPlayer.getValue ( ).booleanValue ( ) && packet instanceof CPacketPlayer ) {
+            if ( this.cPacketPlayer.getValue ( ) && packet instanceof CPacketPlayer ) {
                 event.setCanceled ( true );
                 this.packets.add ( (Packet < ? >) packet );
                 ++ this.packetsCanceled;
             }
-            if ( ! this.cPacketPlayer.getValue ( ).booleanValue ( ) ) {
+            if ( ! this.cPacketPlayer.getValue ( ) ) {
                 if ( packet instanceof CPacketChatMessage || packet instanceof CPacketConfirmTeleport || packet instanceof CPacketKeepAlive || packet instanceof CPacketTabComplete || packet instanceof CPacketClientStatus ) {
                     return;
                 }

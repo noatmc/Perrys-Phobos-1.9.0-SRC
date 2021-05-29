@@ -26,7 +26,7 @@ class UnlimitedSlider
     @Override
     public
     void drawScreen ( int mouseX , int mouseY , float partialTicks ) {
-        if ( ClickGui.getInstance ( ).rainbowRolling.getValue ( ).booleanValue ( ) ) {
+        if ( ClickGui.getInstance ( ).rainbowRolling.getValue ( ) ) {
             int color = ColorUtil.changeAlpha ( HUD.getInstance ( ).colorMap.get ( MathUtil.clamp ( (int) this.y , 0 , this.renderer.scaledHeight ) ) , Phobos.moduleManager.getModuleByClass ( ClickGui.class ).hoverAlpha.getValue ( ) );
             int color1 = ColorUtil.changeAlpha ( HUD.getInstance ( ).colorMap.get ( MathUtil.clamp ( (int) this.y + this.height , 0 , this.renderer.scaledHeight ) ) , Phobos.moduleManager.getModuleByClass ( ClickGui.class ).hoverAlpha.getValue ( ) );
             RenderUtil.drawGradientRect ( (float) ( (int) this.x ) , (float) ( (int) this.y ) , (float) this.width + 7.4f , (float) this.height , color , color1 );

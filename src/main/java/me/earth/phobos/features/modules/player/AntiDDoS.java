@@ -16,8 +16,8 @@ class AntiDDoS
     private static AntiDDoS instance;
     public final Setting < Boolean > full = this.register ( new Setting < Boolean > ( "Full" , false ) );
     private final Map < String, Setting > servers = new ConcurrentHashMap < String, Setting > ( );
-    public Setting < String > newIP = this.register ( new Setting < Object > ( "NewServer" , "Add Server..." , v -> this.full.getValue ( ) == false ) );
-    public Setting < Boolean > showServer = this.register ( new Setting < Object > ( "ShowServers" , Boolean.valueOf ( false ) , v -> this.full.getValue ( ) == false ) );
+    public Setting < String > newIP = this.register ( new Setting < Object > ( "NewServer" , "Add Server..." , v -> ! this.full.getValue ( ) ) );
+    public Setting < Boolean > showServer = this.register ( new Setting < Object > ( "ShowServers" , Boolean.FALSE , v -> ! this.full.getValue ( ) ) );
 
     public
     AntiDDoS ( ) {
@@ -41,7 +41,7 @@ class AntiDDoS
         }
         if ( event.getStage ( ) == 2 && event.getSetting ( ) != null && event.getSetting ( ).getFeature ( ) != null && event.getSetting ( ).getFeature ( ).equals ( this ) ) {
             if ( event.getSetting ( ).equals ( this.newIP ) && ! this.shouldntPing ( this.newIP.getPlannedValue ( ) ) && ! event.getSetting ( ).getPlannedValue ( ).equals ( event.getSetting ( ).getDefaultValue ( ) ) ) {
-                Setting setting = this.register ( new Setting < Boolean > ( this.newIP.getPlannedValue ( ) , Boolean.valueOf ( true ) , v -> this.showServer.getValue ( ) != false && this.full.getValue ( ) == false ) );
+                Setting setting = this.register ( new Setting < Boolean > ( this.newIP.getPlannedValue ( ) , Boolean.TRUE , v -> this.showServer.getValue ( ) && ! this.full.getValue ( ) ) );
                 this.registerServer ( setting );
                 Command.sendMessage ( "<AntiDDoS> Added new Server: " + this.newIP.getPlannedValue ( ) );
                 event.setCanceled ( true );
@@ -50,7 +50,7 @@ class AntiDDoS
                 if ( setting.equals ( this.enabled ) || setting.equals ( this.drawn ) || setting.equals ( this.bind ) || setting.equals ( this.newIP ) || setting.equals ( this.showServer ) || setting.equals ( this.full ) ) {
                     return;
                 }
-                if ( setting.getValue ( ) instanceof Boolean && ! ( (Boolean) setting.getPlannedValue ( ) ).booleanValue ( ) ) {
+                if ( setting.getValue ( ) instanceof Boolean && ! (Boolean) setting.getPlannedValue ( ) ) {
                     this.servers.remove ( setting.getName ( ).toLowerCase ( ) );
                     this.unregister ( setting );
                     event.setCanceled ( true );
@@ -66,7 +66,7 @@ class AntiDDoS
 
     public
     boolean shouldntPing ( String ip ) {
-        return ! this.isOff ( ) && ( this.full.getValue ( ) != false || this.servers.get ( ip.toLowerCase ( ) ) != null );
+        return ! this.isOff ( ) && ( this.full.getValue ( ) || this.servers.get ( ip.toLowerCase ( ) ) != null );
     }
 }
 

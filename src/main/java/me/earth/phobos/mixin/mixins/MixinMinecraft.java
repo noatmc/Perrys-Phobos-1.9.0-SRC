@@ -45,7 +45,7 @@ class MixinMinecraft {
     public
     void getLimitFramerateHook ( CallbackInfoReturnable < Integer > callbackInfoReturnable ) {
         try {
-            if ( Management.getInstance ( ).unfocusedCpu.getValue ( ).booleanValue ( ) && ! Display.isActive ( ) ) {
+            if ( Management.getInstance ( ).unfocusedCpu.getValue ( ) && ! Display.isActive ( ) ) {
                 callbackInfoReturnable.setReturnValue ( Management.getInstance ( ).cpuFPS.getValue ( ) );
             }
         } catch ( NullPointerException nullPointerException ) {
@@ -56,7 +56,7 @@ class MixinMinecraft {
     @Redirect(method = {"runGameLoop"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;sync(I)V", remap = false))
     public
     void syncHook ( int maxFps ) {
-        if ( Management.getInstance ( ).betterFrames.getValue ( ).booleanValue ( ) ) {
+        if ( Management.getInstance ( ).betterFrames.getValue ( ) ) {
             Display.sync ( Management.getInstance ( ).betterFPS.getValue ( ) );
         } else {
             Display.sync ( maxFps );
@@ -66,7 +66,7 @@ class MixinMinecraft {
     @Inject(method = {"runTick()V"}, at = {@At(value = "RETURN")})
     private
     void runTick ( CallbackInfo callbackInfo ) {
-        if ( Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu && Screens.INSTANCE.mainScreen.getValue ( ).booleanValue ( ) ) {
+        if ( Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu && Screens.INSTANCE.mainScreen.getValue ( ) ) {
             Minecraft.getMinecraft ( ).displayGuiScreen ( new GuiCustomMainScreen ( ) );
         }
     }

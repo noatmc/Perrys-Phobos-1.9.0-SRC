@@ -39,13 +39,13 @@ class MixinPlayerControllerMP {
     @Redirect(method = {"onPlayerDamageBlock"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
     public
     float getPlayerRelativeBlockHardnessHook ( IBlockState state , EntityPlayer player , World worldIn , BlockPos pos ) {
-        return state.getPlayerRelativeBlockHardness ( player , worldIn , pos ) * ( TpsSync.getInstance ( ).isOn ( ) && TpsSync.getInstance ( ).mining.getValue ( ) != false ? 1.0f / Phobos.serverManager.getTpsFactor ( ) : 1.0f );
+        return state.getPlayerRelativeBlockHardness ( player , worldIn , pos ) * ( TpsSync.getInstance ( ).isOn ( ) && TpsSync.getInstance ( ).mining.getValue ( ) ? 1.0f / Phobos.serverManager.getTpsFactor ( ) : 1.0f );
     }
 
     @Inject(method = {"resetBlockRemoving"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void resetBlockRemovingHook ( CallbackInfo info ) {
-        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).reset.getValue ( ).booleanValue ( ) ) {
+        if ( Speedmine.getInstance ( ).isOn ( ) && Speedmine.getInstance ( ).reset.getValue ( ) ) {
             info.cancel ( );
         }
     }
@@ -68,8 +68,8 @@ class MixinPlayerControllerMP {
     private
     void getReachDistanceHook ( CallbackInfoReturnable < Float > distance ) {
         if ( Reach.getInstance ( ).isOn ( ) ) {
-            float range = distance.getReturnValue ( ).floatValue ( );
-            distance.setReturnValue ( Reach.getInstance ( ).override.getValue ( ) != false ? Reach.getInstance ( ).reach.getValue ( ) : Float.valueOf ( range + Reach.getInstance ( ).add.getValue ( ).floatValue ( ) ) );
+            float range = distance.getReturnValue ( );
+            distance.setReturnValue ( Reach.getInstance ( ).override.getValue ( ) ? Reach.getInstance ( ).reach.getValue ( ) : Float.valueOf ( range + Reach.getInstance ( ).add.getValue ( ) ) );
         }
     }
 
@@ -85,7 +85,7 @@ class MixinPlayerControllerMP {
         IBlockState iblockstate1 = worldIn.getBlockState ( pos );
         AxisAlignedBB axisalignedbb = itemBlock.block.getDefaultState ( ).getCollisionBoundingBox ( worldIn , pos );
         if ( axisalignedbb != Block.NULL_AABB && ! worldIn.checkNoEntityCollision ( axisalignedbb.offset ( pos ) , null ) ) {
-            if ( BlockTweaks.getINSTANCE ( ).isOff ( ) || ! BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ).booleanValue ( ) ) {
+            if ( BlockTweaks.getINSTANCE ( ).isOff ( ) || ! BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ) ) {
                 return false;
             }
         } else if ( iblockstate1.getMaterial ( ) == Material.CIRCUITS && itemBlock.block == Blocks.ANVIL ) {

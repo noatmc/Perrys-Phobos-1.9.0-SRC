@@ -41,11 +41,11 @@ class MixinRenderPlayer {
             GL11.glEnable ( 2960 );
             GL11.glEnable ( 10754 );
             OpenGlHelper.setLightmapTextureCoords ( OpenGlHelper.lightmapTexUnit , 240.0f , 240.0f );
-            if ( HandColor.INSTANCE.rainbow.getValue ( ).booleanValue ( ) ) {
-                Color rainbowColor = HandColor.INSTANCE.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ).intValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ).intValue ( ) / 100.0f ) );
-                GL11.glColor4f ( (float) rainbowColor.getRed ( ) / 255.0f , (float) rainbowColor.getGreen ( ) / 255.0f , (float) rainbowColor.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ).intValue ( ) / 255.0f );
+            if ( HandColor.INSTANCE.rainbow.getValue ( ) ) {
+                Color rainbowColor = HandColor.INSTANCE.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ) / 100.0f ) );
+                GL11.glColor4f ( (float) rainbowColor.getRed ( ) / 255.0f , (float) rainbowColor.getGreen ( ) / 255.0f , (float) rainbowColor.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ) / 255.0f );
             } else {
-                Color color = HandColor.INSTANCE.colorSync.getValue ( ) != false ? new Color ( Colors.INSTANCE.getCurrentColor ( ).getRed ( ) , Colors.INSTANCE.getCurrentColor ( ).getBlue ( ) , Colors.INSTANCE.getCurrentColor ( ).getGreen ( ) , HandColor.INSTANCE.alpha.getValue ( ) ) : new Color ( HandColor.INSTANCE.red.getValue ( ) , HandColor.INSTANCE.green.getValue ( ) , HandColor.INSTANCE.blue.getValue ( ) , HandColor.INSTANCE.alpha.getValue ( ) );
+                Color color = HandColor.INSTANCE.colorSync.getValue ( ) ? new Color ( Colors.INSTANCE.getCurrentColor ( ).getRed ( ) , Colors.INSTANCE.getCurrentColor ( ).getBlue ( ) , Colors.INSTANCE.getCurrentColor ( ).getGreen ( ) , HandColor.INSTANCE.alpha.getValue ( ) ) : new Color ( HandColor.INSTANCE.red.getValue ( ) , HandColor.INSTANCE.green.getValue ( ) , HandColor.INSTANCE.blue.getValue ( ) , HandColor.INSTANCE.alpha.getValue ( ) );
                 GL11.glColor4f ( (float) color.getRed ( ) / 255.0f , (float) color.getGreen ( ) / 255.0f , (float) color.getBlue ( ) / 255.0f , (float) color.getAlpha ( ) / 255.0f );
             }
         }
@@ -77,12 +77,12 @@ class MixinRenderPlayer {
             GL11.glEnable ( 2960 );
             GL11.glEnable ( 10754 );
             OpenGlHelper.setLightmapTextureCoords ( OpenGlHelper.lightmapTexUnit , 240.0f , 240.0f );
-            if ( HandColor.INSTANCE.rainbow.getValue ( ).booleanValue ( ) ) {
-                Color rainbowColor = HandColor.INSTANCE.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ).intValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ).intValue ( ) / 100.0f ) );
-                GL11.glColor4f ( (float) rainbowColor.getRed ( ) / 255.0f , (float) rainbowColor.getGreen ( ) / 255.0f , (float) rainbowColor.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ).intValue ( ) / 255.0f );
+            if ( HandColor.INSTANCE.rainbow.getValue ( ) ) {
+                Color rainbowColor = HandColor.INSTANCE.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ) / 100.0f ) );
+                GL11.glColor4f ( (float) rainbowColor.getRed ( ) / 255.0f , (float) rainbowColor.getGreen ( ) / 255.0f , (float) rainbowColor.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ) / 255.0f );
             } else {
-                Color color = HandColor.INSTANCE.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ).intValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ).intValue ( ) / 100.0f ) );
-                GL11.glColor4f ( (float) color.getRed ( ) / 255.0f , (float) color.getGreen ( ) / 255.0f , (float) color.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ).intValue ( ) / 255.0f );
+                Color color = HandColor.INSTANCE.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( RenderUtil.getRainbow ( HandColor.INSTANCE.speed.getValue ( ) * 100 , 0 , (float) HandColor.INSTANCE.saturation.getValue ( ) / 100.0f , (float) HandColor.INSTANCE.brightness.getValue ( ) / 100.0f ) );
+                GL11.glColor4f ( (float) color.getRed ( ) / 255.0f , (float) color.getGreen ( ) / 255.0f , (float) color.getBlue ( ) / 255.0f , (float) HandColor.INSTANCE.alpha.getValue ( ) / 255.0f );
             }
         }
     }

@@ -25,7 +25,7 @@ class MixinAbstractClientPlayer {
     @Inject(method = {"getLocationSkin()Lnet/minecraft/util/ResourceLocation;"}, at = {@At(value = "HEAD")}, cancellable = true)
     public
     void getLocationSkin ( CallbackInfoReturnable < ResourceLocation > callbackInfoReturnable ) {
-        if ( Chams.getInstance ( ).textured.getValue ( ).booleanValue ( ) && Chams.getInstance ( ).isEnabled ( ) ) {
+        if ( Chams.getInstance ( ).textured.getValue ( ) && Chams.getInstance ( ).isEnabled ( ) ) {
             callbackInfoReturnable.setReturnValue ( new ResourceLocation ( "textures/shinechams3.png" ) );
         }
     }

@@ -28,7 +28,7 @@ public
 class LongJump
         extends Module {
     private final Setting < Integer > timeout = this.register ( new Setting < Integer > ( "TimeOut" , 2000 , 0 , 5000 ) );
-    private final Setting < Float > boost = this.register ( new Setting < Float > ( "Boost" , Float.valueOf ( 4.48f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 20.0f ) ) );
+    private final Setting < Float > boost = this.register ( new Setting < Float > ( "Boost" , 4.48f , 1.0f , 20.0f ) );
     private final Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.DIRECT ) );
     private final Setting < Boolean > lagOff = this.register ( new Setting < Boolean > ( "LagOff" , false ) );
     private final Setting < Boolean > autoOff = this.register ( new Setting < Boolean > ( "AutoOff" , false ) );

@@ -29,8 +29,8 @@ class MixinEntityPlayer
     @Inject(method = {"getCooldownPeriod"}, at = {@At(value = "HEAD")}, cancellable = true)
     private
     void getCooldownPeriodHook ( CallbackInfoReturnable < Float > callbackInfoReturnable ) {
-        if ( TpsSync.getInstance ( ).isOn ( ) && TpsSync.getInstance ( ).attack.getValue ( ).booleanValue ( ) ) {
-            callbackInfoReturnable.setReturnValue ( Float.valueOf ( (float) ( 1.0 / this.getEntityAttribute ( SharedMonsterAttributes.ATTACK_SPEED ).getAttributeValue ( ) * 20.0 * (double) Phobos.serverManager.getTpsFactor ( ) ) ) );
+        if ( TpsSync.getInstance ( ).isOn ( ) && TpsSync.getInstance ( ).attack.getValue ( ) ) {
+            callbackInfoReturnable.setReturnValue ( (float) ( 1.0 / this.getEntityAttribute ( SharedMonsterAttributes.ATTACK_SPEED ).getAttributeValue ( ) * 20.0 * (double) Phobos.serverManager.getTpsFactor ( ) ) );
         }
     }
 
@@ -38,7 +38,7 @@ class MixinEntityPlayer
     private
     int getPortalCooldownHook ( int cooldown ) {
         int time = cooldown;
-        if ( BetterPortals.getInstance ( ).isOn ( ) && BetterPortals.getInstance ( ).fastPortal.getValue ( ).booleanValue ( ) ) {
+        if ( BetterPortals.getInstance ( ).isOn ( ) && BetterPortals.getInstance ( ).fastPortal.getValue ( ) ) {
             time = BetterPortals.getInstance ( ).cooldown.getValue ( );
         }
         return time;

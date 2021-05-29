@@ -17,7 +17,7 @@ class TPSpeed
         extends Module {
     private final Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.NORMAL ) );
     private final Setting < Double > speed = this.register ( new Setting < Double > ( "Speed" , 0.25 , 0.1 , 10.0 ) );
-    private final Setting < Double > fallSpeed = this.register ( new Setting < Object > ( "FallSpeed" , Double.valueOf ( 0.25 ) , Double.valueOf ( 0.1 ) , Double.valueOf ( 10.0 ) , v -> this.mode.getValue ( ) == Mode.STEP ) );
+    private final Setting < Double > fallSpeed = this.register ( new Setting < Object > ( "FallSpeed" , 0.25 , 0.1 , 10.0 , v -> this.mode.getValue ( ) == Mode.STEP ) );
     private final Setting < Boolean > turnOff = this.register ( new Setting < Boolean > ( "Off" , false ) );
     private final Setting < Integer > tpLimit = this.register ( new Setting < Object > ( "Limit" , 2 , 1 , 10 , v -> this.turnOff.getValue ( ) , "Turn it off." ) );
     private final double[] selectedPositions = new double[]{0.42 , 0.75 , 1.0};
@@ -51,7 +51,7 @@ class TPSpeed
             return;
         }
         if ( this.mode.getValue ( ) == Mode.NORMAL ) {
-            if ( this.turnOff.getValue ( ).booleanValue ( ) && this.tps >= this.tpLimit.getValue ( ) ) {
+            if ( this.turnOff.getValue ( ) && this.tps >= this.tpLimit.getValue ( ) ) {
                 this.disable ( );
                 return;
             }
@@ -76,7 +76,7 @@ class TPSpeed
                     bb = Objects.requireNonNull ( TPSpeed.mc.player.getEntityBoundingBox ( ) ).offset ( dir[0] , pawnY += 1.0 , dir[1] );
                 }
                 if ( ! TPSpeed.mc.world.checkBlockCollision ( bb.grow ( 0.0125 , 0.0 , 0.0125 ).offset ( 0.0 , - 1.0 , 0.0 ) ) ) {
-                    for (double i = 0.0; i <= 1.0; i += this.fallSpeed.getValue ( ).doubleValue ( )) {
+                    for (double i = 0.0; i <= 1.0; i += this.fallSpeed.getValue ( )) {
                         TPSpeed.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( TPSpeed.mc.player.posX + dir[0] , TPSpeed.mc.player.posY + pawnY - i , TPSpeed.mc.player.posZ + dir[1] , true ) );
                     }
                     pawnY -= 1.0;

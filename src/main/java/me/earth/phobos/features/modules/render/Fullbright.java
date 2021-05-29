@@ -49,7 +49,7 @@ class Fullbright
     @SubscribeEvent
     public
     void onPacketReceive ( PacketEvent.Receive event ) {
-        if ( event.getStage ( ) == 0 && event.getPacket ( ) instanceof SPacketEntityEffect && this.effects.getValue ( ).booleanValue ( ) ) {
+        if ( event.getStage ( ) == 0 && event.getPacket ( ) instanceof SPacketEntityEffect && this.effects.getValue ( ) ) {
             SPacketEntityEffect packet = event.getPacket ( );
             if ( Fullbright.mc.player != null && packet.getEntityId ( ) == Fullbright.mc.player.getEntityId ( ) && ( packet.getEffectId ( ) == 9 || packet.getEffectId ( ) == 15 ) ) {
                 event.setCanceled ( true );

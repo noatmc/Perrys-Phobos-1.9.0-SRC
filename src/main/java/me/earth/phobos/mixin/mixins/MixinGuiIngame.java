@@ -33,7 +33,7 @@ class MixinGuiIngame
     @Inject(method = {"renderPortal"}, at = {@At(value = "HEAD")}, cancellable = true)
     protected
     void renderPortalHook ( float n , ScaledResolution scaledResolution , CallbackInfo info ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).portal.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).portal.getValue ( ) ) {
             info.cancel ( );
         }
     }
@@ -41,7 +41,7 @@ class MixinGuiIngame
     @Inject(method = {"renderPumpkinOverlay"}, at = {@At(value = "HEAD")}, cancellable = true)
     protected
     void renderPumpkinOverlayHook ( ScaledResolution scaledRes , CallbackInfo info ) {
-        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).pumpkin.getValue ( ).booleanValue ( ) ) {
+        if ( NoRender.getInstance ( ).isOn ( ) && NoRender.getInstance ( ).pumpkin.getValue ( ) ) {
             info.cancel ( );
         }
     }
@@ -49,7 +49,7 @@ class MixinGuiIngame
     @Inject(method = {"renderPotionEffects"}, at = {@At(value = "HEAD")}, cancellable = true)
     protected
     void renderPotionEffectsHook ( ScaledResolution scaledRes , CallbackInfo info ) {
-        if ( Phobos.moduleManager != null && ! HUD.getInstance ( ).potionIcons.getValue ( ).booleanValue ( ) ) {
+        if ( Phobos.moduleManager != null && ! HUD.getInstance ( ).potionIcons.getValue ( ) ) {
             info.cancel ( );
         }
     }

@@ -23,7 +23,7 @@ class Tracers
     public Setting < Boolean > animals = this.register ( new Setting < Boolean > ( "Animals" , false ) );
     public Setting < Boolean > invisibles = this.register ( new Setting < Boolean > ( "Invisibles" , false ) );
     public Setting < Boolean > drawFromSky = this.register ( new Setting < Boolean > ( "DrawFromSky" , false ) );
-    public Setting < Float > width = this.register ( new Setting < Float > ( "Width" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) ) );
+    public Setting < Float > width = this.register ( new Setting < Float > ( "Width" , 1.0f , 0.1f , 5.0f ) );
     public Setting < Integer > distance = this.register ( new Setting < Integer > ( "Radius" , 300 , 0 , 300 ) );
     public Setting < Boolean > crystalCheck = this.register ( new Setting < Boolean > ( "CrystalCheck" , false ) );
 
@@ -39,7 +39,7 @@ class Tracers
             return;
         }
         GlStateManager.pushMatrix ( );
-        Tracers.mc.world.loadedEntityList.stream ( ).filter ( EntityUtil::isLiving ).filter ( entity -> entity instanceof EntityPlayer ? this.players.getValue ( ).booleanValue ( ) && Tracers.mc.player != entity : ( EntityUtil.isPassive ( entity ) ? this.animals.getValue ( ).booleanValue ( ) : this.mobs.getValue ( ).booleanValue ( ) ) ).filter ( entity -> Tracers.mc.player.getDistanceSq ( entity ) < MathUtil.square ( this.distance.getValue ( ).intValue ( ) ) ).filter ( entity -> this.invisibles.getValue ( ) != false || ! entity.isInvisible ( ) ).forEach ( entity -> {
+        Tracers.mc.world.loadedEntityList.stream ( ).filter ( EntityUtil::isLiving ).filter ( entity -> entity instanceof EntityPlayer ? this.players.getValue ( ) && Tracers.mc.player != entity : ( EntityUtil.isPassive ( entity ) ? this.animals.getValue ( ) : this.mobs.getValue ( ) ) ).filter ( entity -> Tracers.mc.player.getDistanceSq ( entity ) < MathUtil.square ( this.distance.getValue ( ) ) ).filter ( entity -> this.invisibles.getValue ( ) || ! entity.isInvisible ( ) ).forEach ( entity -> {
             float[] colour = this.getColorByDistance ( entity );
             this.drawLineToEntity ( entity , colour[0] , colour[1] , colour[2] , colour[3] );
         } );
@@ -68,7 +68,7 @@ class Tracers
     public
     void drawLine ( double posx , double posy , double posz , double up , float red , float green , float blue , float opacity ) {
         Vec3d eyes = new Vec3d ( 0.0 , 0.0 , 1.0 ).rotatePitch ( - ( (float) Math.toRadians ( Tracers.mc.player.rotationPitch ) ) ).rotateYaw ( - ( (float) Math.toRadians ( Tracers.mc.player.rotationYaw ) ) );
-        if ( ! this.drawFromSky.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.drawFromSky.getValue ( ) ) {
             this.drawLineFromPosToPos ( eyes.x , eyes.y + (double) Tracers.mc.player.getEyeHeight ( ) , eyes.z , posx , posy , posz , up , red , green , blue , opacity );
         } else {
             this.drawLineFromPosToPos ( posx , 256.0 , posz , posx , posy , posz , up , red , green , blue , opacity );
@@ -79,7 +79,7 @@ class Tracers
     void drawLineFromPosToPos ( double posx , double posy , double posz , double posx2 , double posy2 , double posz2 , double up , float red , float green , float blue , float opacity ) {
         GL11.glBlendFunc ( 770 , 771 );
         GL11.glEnable ( 3042 );
-        GL11.glLineWidth ( this.width.getValue ( ).floatValue ( ) );
+        GL11.glLineWidth ( this.width.getValue ( ) );
         GL11.glDisable ( 3553 );
         GL11.glDisable ( 2929 );
         GL11.glDepthMask ( false );
@@ -106,7 +106,7 @@ class Tracers
             return new float[]{0.0f , 0.5f , 1.0f , 1.0f};
         }
         AutoCrystal autoCrystal = Phobos.moduleManager.getModuleByClass ( AutoCrystal.class );
-        Color col = new Color ( Color.HSBtoRGB ( (float) ( Math.max ( 0.0 , Math.min ( Tracers.mc.player.getDistanceSq ( entity ) , this.crystalCheck.getValue ( ) != false ? (double) ( autoCrystal.placeRange.getValue ( ).floatValue ( ) * autoCrystal.placeRange.getValue ( ).floatValue ( ) ) : 2500.0 ) / (double) ( this.crystalCheck.getValue ( ) != false ? autoCrystal.placeRange.getValue ( ).floatValue ( ) * autoCrystal.placeRange.getValue ( ).floatValue ( ) : 2500.0f ) ) / 3.0 ) , 1.0f , 0.8f ) | 0xFF000000 );
+        Color col = new Color ( Color.HSBtoRGB ( (float) ( Math.max ( 0.0 , Math.min ( Tracers.mc.player.getDistanceSq ( entity ) , this.crystalCheck.getValue ( ) ? (double) ( autoCrystal.placeRange.getValue ( ) * autoCrystal.placeRange.getValue ( ) ) : 2500.0 ) / (double) ( this.crystalCheck.getValue ( ) ? autoCrystal.placeRange.getValue ( ) * autoCrystal.placeRange.getValue ( ) : 2500.0f ) ) / 3.0 ) , 1.0f , 0.8f ) | 0xFF000000 );
         return new float[]{(float) col.getRed ( ) / 255.0f , (float) col.getGreen ( ) / 255.0f , (float) col.getBlue ( ) / 255.0f , 1.0f};
     }
 }

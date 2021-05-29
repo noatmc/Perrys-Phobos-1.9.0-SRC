@@ -25,7 +25,7 @@ class DiscordPresence {
         DiscordEventHandlers handlers = new DiscordEventHandlers ( );
         rpc.Discord_Initialize ( "737779695134834695" , handlers , true , "" );
         DiscordPresence.presence.startTimestamp = System.currentTimeMillis ( ) / 1000L;
-        DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ).booleanValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
+        DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
         DiscordPresence.presence.state = RPC.INSTANCE.state.getValue ( );
         DiscordPresence.presence.largeImageKey = "phobos";
         DiscordPresence.presence.largeImageText = "Phobos 1.9.0";
@@ -33,9 +33,9 @@ class DiscordPresence {
         thread = new Thread ( ( ) -> {
             while ( ! Thread.currentThread ( ).isInterrupted ( ) ) {
                 rpc.Discord_RunCallbacks ( );
-                DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ).booleanValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
+                DiscordPresence.presence.details = Minecraft.getMinecraft ( ).currentScreen instanceof GuiMainMenu ? "In the main menu." : "Playing " + ( Minecraft.getMinecraft ( ).currentServerData != null ? ( RPC.INSTANCE.showIP.getValue ( ) ? "on " + Minecraft.getMinecraft ( ).currentServerData.serverIP + "." : " multiplayer." ) : " singleplayer." );
                 DiscordPresence.presence.state = RPC.INSTANCE.state.getValue ( );
-                if ( RPC.INSTANCE.catMode.getValue ( ).booleanValue ( ) ) {
+                if ( RPC.INSTANCE.catMode.getValue ( ) ) {
                     if ( index == 16 ) {
                         index = 1;
                     }

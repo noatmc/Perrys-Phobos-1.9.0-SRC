@@ -59,7 +59,7 @@ class NoSlowDown
     @Override
     public
     void onUpdate ( ) {
-        if ( this.guiMove.getValue ( ).booleanValue ( ) ) {
+        if ( this.guiMove.getValue ( ) ) {
             {
                 for (KeyBinding bind : keys) {
                     KeyBinding.setKeyBindState ( bind.getKeyCode ( ) , Keyboard.isKeyDown ( bind.getKeyCode ( ) ) );
@@ -71,13 +71,13 @@ class NoSlowDown
                 }
             }
         }
-        if ( this.webs.getValue ( ).booleanValue ( ) && Phobos.moduleManager.getModuleByClass ( Flight.class ).isDisabled ( ) && Phobos.moduleManager.getModuleByClass ( Phase.class ).isDisabled ( ) && NoSlowDown.mc.player.isInWeb ) {
-            NoSlowDown.mc.player.motionX *= this.webHorizontalFactor.getValue ( ).doubleValue ( );
-            NoSlowDown.mc.player.motionZ *= this.webHorizontalFactor.getValue ( ).doubleValue ( );
-            NoSlowDown.mc.player.motionY *= this.webVerticalFactor.getValue ( ).doubleValue ( );
+        if ( this.webs.getValue ( ) && Phobos.moduleManager.getModuleByClass ( Flight.class ).isDisabled ( ) && Phobos.moduleManager.getModuleByClass ( Phase.class ).isDisabled ( ) && NoSlowDown.mc.player.isInWeb ) {
+            NoSlowDown.mc.player.motionX *= this.webHorizontalFactor.getValue ( );
+            NoSlowDown.mc.player.motionZ *= this.webHorizontalFactor.getValue ( );
+            NoSlowDown.mc.player.motionY *= this.webVerticalFactor.getValue ( );
         }
         Item item = NoSlowDown.mc.player.getActiveItemStack ( ).getItem ( );
-        if ( this.sneaking && ! NoSlowDown.mc.player.isHandActive ( ) && this.sneakPacket.getValue ( ).booleanValue ( ) ) {
+        if ( this.sneaking && ! NoSlowDown.mc.player.isHandActive ( ) && this.sneakPacket.getValue ( ) ) {
             NoSlowDown.mc.player.connection.sendPacket ( new CPacketEntityAction ( NoSlowDown.mc.player , CPacketEntityAction.Action.STOP_SNEAKING ) );
             this.sneaking = false;
         }
@@ -87,7 +87,7 @@ class NoSlowDown
     public
     void onUseItem ( PlayerInteractEvent.RightClickItem event ) {
         Item item = NoSlowDown.mc.player.getHeldItem ( event.getHand ( ) ).getItem ( );
-        if ( ( item instanceof ItemFood || item instanceof ItemBow || item instanceof ItemPotion && this.sneakPacket.getValue ( ).booleanValue ( ) ) && ! this.sneaking ) {
+        if ( ( item instanceof ItemFood || item instanceof ItemBow || item instanceof ItemPotion && this.sneakPacket.getValue ( ) ) && ! this.sneaking ) {
             NoSlowDown.mc.player.connection.sendPacket ( new CPacketEntityAction ( NoSlowDown.mc.player , CPacketEntityAction.Action.START_SNEAKING ) );
             this.sneaking = true;
         }
@@ -96,7 +96,7 @@ class NoSlowDown
     @SubscribeEvent
     public
     void onInput ( InputUpdateEvent event ) {
-        if ( this.noSlow.getValue ( ).booleanValue ( ) && NoSlowDown.mc.player.isHandActive ( ) && ! NoSlowDown.mc.player.isRiding ( ) ) {
+        if ( this.noSlow.getValue ( ) && NoSlowDown.mc.player.isHandActive ( ) && ! NoSlowDown.mc.player.isRiding ( ) ) {
             event.getMovementInput ( ).moveStrafe *= 5.0f;
             event.getMovementInput ( ).moveForward *= 5.0f;
         }
@@ -105,7 +105,7 @@ class NoSlowDown
     @SubscribeEvent
     public
     void onKeyEvent ( KeyEvent event ) {
-        if ( this.guiMove.getValue ( ).booleanValue ( ) && event.getStage ( ) == 0 && ! ( NoSlowDown.mc.currentScreen instanceof GuiChat ) ) {
+        if ( this.guiMove.getValue ( ) && event.getStage ( ) == 0 && ! ( NoSlowDown.mc.currentScreen instanceof GuiChat ) ) {
             event.info = event.pressed;
         }
     }
@@ -113,7 +113,7 @@ class NoSlowDown
     @SubscribeEvent
     public
     void onPacket ( PacketEvent.Send event ) {
-        if ( event.getPacket ( ) instanceof CPacketPlayer && this.strict.getValue ( ).booleanValue ( ) && this.noSlow.getValue ( ).booleanValue ( ) && NoSlowDown.mc.player.isHandActive ( ) && ! NoSlowDown.mc.player.isRiding ( ) ) {
+        if ( event.getPacket ( ) instanceof CPacketPlayer && this.strict.getValue ( ) && this.noSlow.getValue ( ) && NoSlowDown.mc.player.isHandActive ( ) && ! NoSlowDown.mc.player.isRiding ( ) ) {
             NoSlowDown.mc.player.connection.sendPacket ( new CPacketPlayerDigging ( CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK , new BlockPos ( Math.floor ( NoSlowDown.mc.player.posX ) , Math.floor ( NoSlowDown.mc.player.posY ) , Math.floor ( NoSlowDown.mc.player.posZ ) ) , EnumFacing.DOWN ) );
         }
     }

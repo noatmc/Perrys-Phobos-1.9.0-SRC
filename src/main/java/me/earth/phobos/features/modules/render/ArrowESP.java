@@ -26,10 +26,10 @@ class ArrowESP
     private final Setting < Boolean > invisibles = this.register ( new Setting < Boolean > ( "Invisibles" , false ) );
     private final Setting < Boolean > offscreenOnly = this.register ( new Setting < Boolean > ( "Offscreen-Only" , true ) );
     private final Setting < Boolean > outline = this.register ( new Setting < Boolean > ( "Outline" , true ) );
-    private final Setting < Float > outlineWidth = this.register ( new Setting < Float > ( "Outline-Width" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 3.0f ) ) );
+    private final Setting < Float > outlineWidth = this.register ( new Setting < Float > ( "Outline-Width" , 1.0f , 0.1f , 3.0f ) );
     private final Setting < Integer > fadeDistance = this.register ( new Setting < Integer > ( "Fade-Distance" , 100 , 10 , 200 ) );
     private final Setting < Integer > radius = this.register ( new Setting < Integer > ( "Radius" , 45 , 10 , 200 ) );
-    private final Setting < Float > size = this.register ( new Setting < Float > ( "Size" , Float.valueOf ( 10.0f ) , Float.valueOf ( 5.0f ) , Float.valueOf ( 25.0f ) ) );
+    private final Setting < Float > size = this.register ( new Setting < Float > ( "Size" , 10.0f , 5.0f , 25.0f ) );
     private final Setting < Integer > red = this.register ( new Setting < Integer > ( "Red" , 255 , 0 , 255 ) );
     private final Setting < Integer > green = this.register ( new Setting < Integer > ( "Green" , 0 , 0 , 255 ) );
     private final Setting < Integer > blue = this.register ( new Setting < Integer > ( "Blue" , 255 , 0 , 255 ) );
@@ -48,15 +48,15 @@ class ArrowESP
             if ( o instanceof EntityPlayer && this.isValid ( (EntityPlayer) o ) ) {
                 EntityPlayer entity = (EntityPlayer) o;
                 Vec3d pos = this.entityListener.getEntityLowerBounds ( ).get ( entity );
-                if ( ! ( pos == null || this.isOnScreen ( pos ) || RenderUtil.isInViewFrustrum ( entity ) && this.offscreenOnly.getValue ( ).booleanValue ( ) ) ) {
-                    Color color = this.colorSync.getValue ( ) != false ? new Color ( Colors.INSTANCE.getCurrentColor ( ).getRed ( ) , Colors.INSTANCE.getCurrentColor ( ).getGreen ( ) , Colors.INSTANCE.getCurrentColor ( ).getBlue ( ) , (int) MathHelper.clamp ( 255.0f - 255.0f / (float) this.fadeDistance.getValue ( ).intValue ( ) * ArrowESP.mc.player.getDistance ( entity ) , 100.0f , 255.0f ) ) : EntityUtil.getColor ( entity , this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , (int) MathHelper.clamp ( 255.0f - 255.0f / (float) this.fadeDistance.getValue ( ).intValue ( ) * ArrowESP.mc.player.getDistance ( entity ) , 100.0f , 255.0f ) , true );
+                if ( ! ( pos == null || this.isOnScreen ( pos ) || RenderUtil.isInViewFrustrum ( entity ) && this.offscreenOnly.getValue ( ) ) ) {
+                    Color color = this.colorSync.getValue ( ) ? new Color ( Colors.INSTANCE.getCurrentColor ( ).getRed ( ) , Colors.INSTANCE.getCurrentColor ( ).getGreen ( ) , Colors.INSTANCE.getCurrentColor ( ).getBlue ( ) , (int) MathHelper.clamp ( 255.0f - 255.0f / (float) this.fadeDistance.getValue ( ) * ArrowESP.mc.player.getDistance ( entity ) , 100.0f , 255.0f ) ) : EntityUtil.getColor ( entity , this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , (int) MathHelper.clamp ( 255.0f - 255.0f / (float) this.fadeDistance.getValue ( ) * ArrowESP.mc.player.getDistance ( entity ) , 100.0f , 255.0f ) , true );
                     int x = Display.getWidth ( ) / 2 / ( ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale );
                     int y = Display.getHeight ( ) / 2 / ( ArrowESP.mc.gameSettings.guiScale == 0 ? 1 : ArrowESP.mc.gameSettings.guiScale );
                     float yaw = this.getRotations ( entity ) - ArrowESP.mc.player.rotationYaw;
                     GL11.glTranslatef ( (float) x , (float) y , 0.0f );
                     GL11.glRotatef ( yaw , 0.0f , 0.0f , 1.0f );
                     GL11.glTranslatef ( (float) ( - x ) , (float) ( - y ) , 0.0f );
-                    RenderUtil.drawTracerPointer ( x , y - this.radius.getValue ( ) , this.size.getValue ( ).floatValue ( ) , 2.0f , 1.0f , this.outline.getValue ( ) , this.outlineWidth.getValue ( ).floatValue ( ) , color.getRGB ( ) );
+                    RenderUtil.drawTracerPointer ( x , y - this.radius.getValue ( ) , this.size.getValue ( ) , 2.0f , 1.0f , this.outline.getValue ( ) , this.outlineWidth.getValue ( ) , color.getRGB ( ) );
                     GL11.glTranslatef ( (float) x , (float) y , 0.0f );
                     GL11.glRotatef ( - yaw , 0.0f , 0.0f , 1.0f );
                     GL11.glTranslatef ( (float) ( - x ) , (float) ( - y ) , 0.0f );
@@ -85,7 +85,7 @@ class ArrowESP
 
     private
     boolean isValid ( EntityPlayer entity ) {
-        return entity != ArrowESP.mc.player && ( ! entity.isInvisible ( ) || this.invisibles.getValue ( ) != false ) && entity.isEntityAlive ( );
+        return entity != ArrowESP.mc.player && ( ! entity.isInvisible ( ) || this.invisibles.getValue ( ) ) && entity.isEntityAlive ( );
     }
 
     private

@@ -13,7 +13,7 @@ class MixinC00Handshake {
     @Redirect(method = {"writePacketData"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketBuffer;writeString(Ljava/lang/String;)Lnet/minecraft/network/PacketBuffer;"))
     public
     PacketBuffer writePacketDataHook ( PacketBuffer packetBuffer , String string ) {
-        if ( PingBypass.getInstance ( ).noFML.getValue ( ).booleanValue ( ) ) {
+        if ( PingBypass.getInstance ( ).noFML.getValue ( ) ) {
             String ipNoFML = string.substring ( 0 , string.length ( ) - "\u0000FML\u0000".length ( ) );
             return packetBuffer.writeString ( ipNoFML );
         }

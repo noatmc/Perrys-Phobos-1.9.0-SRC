@@ -8,7 +8,7 @@ public
 class IceSpeed
         extends Module {
     private static IceSpeed INSTANCE = new IceSpeed ( );
-    private final Setting < Float > speed = this.register ( new Setting < Float > ( "Speed" , Float.valueOf ( 0.4f ) , Float.valueOf ( 0.2f ) , Float.valueOf ( 1.5f ) ) );
+    private final Setting < Float > speed = this.register ( new Setting < Float > ( "Speed" , 0.4f , 0.2f , 1.5f ) );
 
     public
     IceSpeed ( ) {
@@ -27,9 +27,9 @@ class IceSpeed
     @Override
     public
     void onUpdate ( ) {
-        Blocks.ICE.slipperiness = this.speed.getValue ( ).floatValue ( );
-        Blocks.PACKED_ICE.slipperiness = this.speed.getValue ( ).floatValue ( );
-        Blocks.FROSTED_ICE.slipperiness = this.speed.getValue ( ).floatValue ( );
+        Blocks.ICE.slipperiness = this.speed.getValue ( );
+        Blocks.PACKED_ICE.slipperiness = this.speed.getValue ( );
+        Blocks.FROSTED_ICE.slipperiness = this.speed.getValue ( );
     }
 
     @Override

@@ -5,8 +5,7 @@ import me.earth.phobos.event.events.KeyEvent;
 import me.earth.phobos.event.events.PacketEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
@@ -61,11 +60,11 @@ class NoSlowDown
     public
     void onUpdate ( ) {
         if ( this.guiMove.getValue ( ).booleanValue ( ) ) {
-            if ( NoSlowDown.mc.currentScreen instanceof GuiOptions || NoSlowDown.mc.currentScreen instanceof GuiVideoSettings || NoSlowDown.mc.currentScreen instanceof GuiScreenOptionsSounds || NoSlowDown.mc.currentScreen instanceof GuiContainer || NoSlowDown.mc.currentScreen instanceof GuiIngameMenu ) {
+            {
                 for (KeyBinding bind : keys) {
                     KeyBinding.setKeyBindState ( bind.getKeyCode ( ) , Keyboard.isKeyDown ( bind.getKeyCode ( ) ) );
                 }
-            } else if ( NoSlowDown.mc.currentScreen == null ) {
+            } if ( NoSlowDown.mc.currentScreen == null ) {
                 for (KeyBinding bind : keys) {
                     if ( Keyboard.isKeyDown ( bind.getKeyCode ( ) ) ) continue;
                     KeyBinding.setKeyBindState ( bind.getKeyCode ( ) , false );

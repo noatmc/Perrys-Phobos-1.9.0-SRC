@@ -267,9 +267,6 @@ class AutoCrystal
         if ( this.threadMode.getValue ( ) == ThreadMode.NONE && this.eventMode.getValue ( ) == 1 ) {
             this.doAutoCrystal ( );
         }
-        if ( this.attackOppositeHand.getValue ( ).booleanValue ( ) ) {
-            AutoCrystal.mc.player.connection.sendPacket ( new CPacketAnimation ( EnumHand.OFF_HAND ) );
-        }
     }
 
     @Override
@@ -446,9 +443,6 @@ class AutoCrystal
         if ( this.breakSwing.getValue ( ).booleanValue ( ) ) {
             AutoCrystal.mc.player.connection.sendPacket ( new CPacketAnimation ( EnumHand.MAIN_HAND ) );
         }
-        if ( this.attackOppositeHand.getValue ( ).booleanValue ( ) ) {
-            AutoCrystal.mc.player.connection.sendPacket ( new CPacketAnimation ( EnumHand.OFF_HAND ) );
-        }
         if ( this.resetBreakTimer.getValue ( ).booleanValue ( ) ) {
             this.breakTimer.reset ( );
         }
@@ -536,9 +530,6 @@ class AutoCrystal
             AutoCrystal.mc.player.connection.sendPacket ( packet );
             if ( this.breakSwing.getValue ( ).booleanValue ( ) ) {
                 AutoCrystal.mc.player.swingArm ( EnumHand.MAIN_HAND );
-            }
-            if ( this.attackOppositeHand.getValue ( ).booleanValue ( ) ) {
-                AutoCrystal.mc.player.swingArm ( EnumHand.OFF_HAND );
             }
             this.breakTimer.reset ( );
         }
@@ -1107,7 +1098,7 @@ class AutoCrystal
                 this.packetUseEntities.add ( new CPacketUseEntity ( entity ) );
             } else {
                 EntityUtil.attackEntity ( entity , this.sync.getValue ( ) , this.breakSwing.getValue ( ) );
-                EntityUtil.attackEntity2 ( entity , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
+                EntityUtil.OffhandAttack ( entity , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
                 brokenPos.add ( new BlockPos ( entity.getPositionVector ( ) ).down ( ) );
             }
         }
@@ -1138,7 +1129,7 @@ class AutoCrystal
                     Entity entity = result.entityHit;
                     if ( ! ( entity instanceof EntityEnderCrystal ) ) break;
                     EntityUtil.attackEntity ( entity , this.sync.getValue ( ) , this.breakSwing.getValue ( ) );
-                    EntityUtil.attackEntity2 ( entity , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
+                    EntityUtil.OffhandAttack ( entity , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
                     this.manualTimer.reset ( );
                     break;
                 }
@@ -1147,7 +1138,7 @@ class AutoCrystal
                     for (Entity target : AutoCrystal.mc.world.getEntitiesWithinAABBExcludingEntity ( null , new AxisAlignedBB ( mousePos ) )) {
                         if ( ! ( target instanceof EntityEnderCrystal ) ) continue;
                         EntityUtil.attackEntity ( target , this.sync.getValue ( ) , this.breakSwing.getValue ( ) );
-                        EntityUtil.attackEntity2 ( target , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
+                        EntityUtil.OffhandAttack ( target , this.sync.getValue ( ) , this.attackOppositeHand.getValue ( ) );
                         this.manualTimer.reset ( );
                     }
                     break;

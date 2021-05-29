@@ -87,13 +87,13 @@ class EntityUtil implements Util {
     }
 
     public static
-    void attackEntity2 ( final Entity entity , final boolean packet , final boolean swingArm2 ) {
+    void OffhandAttack ( final Entity entity , final boolean packet , final boolean swingArm ) {
         if ( packet ) {
             EntityUtil.mc.player.connection.sendPacket ( new CPacketUseEntity ( entity ) );
         } else {
             EntityUtil.mc.playerController.attackEntity ( EntityUtil.mc.player , entity );
         }
-        if ( swingArm2 ) {
+        if ( swingArm ) {
             EntityUtil.mc.player.swingArm ( EnumHand.OFF_HAND );
         }
     }

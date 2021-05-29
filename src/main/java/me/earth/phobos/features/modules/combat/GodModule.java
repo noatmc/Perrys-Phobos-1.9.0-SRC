@@ -60,7 +60,7 @@ class GodModule
     @Override
     public
     void onUpdate ( ) {
-        if ( this.render.getValue ( ).booleanValue ( ) ) {
+        if ( this.render.getValue ( ) ) {
             for (Entity entity : GodModule.mc.world.loadedEntityList) {
                 if ( ! ( entity instanceof EntityEnderCrystal ) ) continue;
                 entity.setCustomNameTag ( String.valueOf ( entity.entityId ) );
@@ -81,7 +81,7 @@ class GodModule
         if ( event.getStage ( ) == 0 && event.getPacket ( ) instanceof CPacketPlayerTryUseItemOnBlock ) {
             CPacketPlayerTryUseItemOnBlock packet = event.getPacket ( );
             if ( GodModule.mc.player.getHeldItem ( packet.hand ).getItem ( ) instanceof ItemEndCrystal ) {
-                if ( this.checkPos.getValue ( ).booleanValue ( ) && ! BlockUtil.canPlaceCrystal ( packet.position , this.entitycheck.getValue ( ) , this.oneDot15.getValue ( ) ) || this.checkPlayers ( ) ) {
+                if ( this.checkPos.getValue ( ) && ! BlockUtil.canPlaceCrystal ( packet.position , this.entitycheck.getValue ( ) , this.oneDot15.getValue ( ) ) || this.checkPlayers ( ) ) {
                     return;
                 }
                 this.updateEntityID ( );
@@ -90,7 +90,7 @@ class GodModule
                 }
             }
         }
-        if ( event.getStage ( ) == 0 && this.rotating && this.rotate.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof CPacketPlayer ) {
+        if ( event.getStage ( ) == 0 && this.rotating && this.rotate.getValue ( ) && event.getPacket ( ) instanceof CPacketPlayer ) {
             CPacketPlayer packet = event.getPacket ( );
             packet.yaw = this.yaw;
             packet.pitch = this.pitch;
@@ -146,7 +146,7 @@ class GodModule
 
     private
     boolean checkPlayers ( ) {
-        if ( this.antiIllegal.getValue ( ).booleanValue ( ) ) {
+        if ( this.antiIllegal.getValue ( ) ) {
             for (EntityPlayer player : GodModule.mc.world.playerEntities) {
                 if ( ! this.checkItem ( player.getHeldItemMainhand ( ) ) && ! this.checkItem ( player.getHeldItemOffhand ( ) ) )
                     continue;

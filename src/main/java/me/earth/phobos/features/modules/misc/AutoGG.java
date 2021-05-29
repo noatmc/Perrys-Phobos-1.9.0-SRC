@@ -64,7 +64,7 @@ class AutoGG
     @Override
     public
     void onTick ( ) {
-        if ( this.loadFiles.getValue ( ).booleanValue ( ) ) {
+        if ( this.loadFiles.getValue ( ) ) {
             this.loadMessages ( );
             Command.sendMessage ( "<AutoGG> Loaded messages." );
             this.loadFiles.setValue ( false );
@@ -72,14 +72,14 @@ class AutoGG
         if ( AutoCrystal.target != null && this.cauraTarget != AutoCrystal.target ) {
             this.cauraTarget = AutoCrystal.target;
         }
-        if ( this.test.getValue ( ).booleanValue ( ) ) {
+        if ( this.test.getValue ( ) ) {
             this.announceDeath ( AutoGG.mc.player );
             this.test.setValue ( false );
         }
         if ( ! this.cooldown ) {
             this.cooldownTimer.reset ( );
         }
-        if ( this.cooldownTimer.passedS ( this.delay.getValue ( ).intValue ( ) ) && this.cooldown ) {
+        if ( this.cooldownTimer.passedS ( this.delay.getValue ( ) ) && this.cooldown ) {
             this.cooldown = false;
             this.cooldownTimer.reset ( );
         }
@@ -106,7 +106,7 @@ class AutoGG
             this.announceDeath ( event.player );
             this.cooldown = true;
         }
-        if ( event.player == AutoGG.mc.player && this.onOwnDeath.getValue ( ).booleanValue ( ) ) {
+        if ( event.player == AutoGG.mc.player && this.onOwnDeath.getValue ( ) ) {
             this.announceDeath ( event.player );
             this.cooldown = true;
         }
@@ -149,7 +149,7 @@ class AutoGG
 
     public
     void announceDeath ( EntityPlayer target ) {
-        AutoGG.mc.player.connection.sendPacket ( new CPacketChatMessage ( ( this.greentext.getValue ( ) != false ? ">" : "" ) + this.getRandomMessage ( ).replaceAll ( "<player>" , target.getDisplayNameString ( ) ) ) );
+        AutoGG.mc.player.connection.sendPacket ( new CPacketChatMessage ( ( this.greentext.getValue ( ) ? ">" : "" ) + this.getRandomMessage ( ).replaceAll ( "<player>" , target.getDisplayNameString ( ) ) ) );
     }
 }
 

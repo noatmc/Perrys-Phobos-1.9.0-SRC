@@ -36,7 +36,7 @@ class Selftrap
     private final Setting < Integer > disableTime = this.register ( new Setting < Integer > ( "Ms/Disable" , 200 , 1 , 250 ) );
     private final Setting < Boolean > offhand = this.register ( new Setting < Boolean > ( "OffHand" , true ) );
     private final Setting < InventoryUtil.Switch > switchMode = this.register ( new Setting < InventoryUtil.Switch > ( "Switch" , InventoryUtil.Switch.NORMAL ) );
-    private final Setting < Boolean > onlySafe = this.register ( new Setting < Object > ( "OnlySafe" , Boolean.valueOf ( true ) , v -> this.offhand.getValue ( ) ) );
+    private final Setting < Boolean > onlySafe = this.register ( new Setting < Object > ( "OnlySafe" , Boolean.TRUE , v -> this.offhand.getValue ( ) ) );
     private final Setting < Boolean > highWeb = this.register ( new Setting < Boolean > ( "HighWeb" , false ) );
     private final Setting < Boolean > freecam = this.register ( new Setting < Boolean > ( "Freecam" , false ) );
     private final Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , false ) );
@@ -77,7 +77,7 @@ class Selftrap
         Offhand module = Phobos.moduleManager.getModuleByClass ( Offhand.class );
         this.offhandMode = module.mode;
         this.offhandMode2 = module.currentMode;
-        if ( this.offhand.getValue ( ).booleanValue ( ) && ( EntityUtil.isSafe ( Selftrap.mc.player ) || ! this.onlySafe.getValue ( ).booleanValue ( ) ) ) {
+        if ( this.offhand.getValue ( ) && ( EntityUtil.isSafe ( Selftrap.mc.player ) || ! this.onlySafe.getValue ( ) ) ) {
             if ( module.type.getValue ( ) == Offhand.Type.OLD ) {
                 if ( this.currentMode == Mode.WEBS ) {
                     module.setMode ( Offhand.Mode2.WEBS );
@@ -99,7 +99,7 @@ class Selftrap
     @Override
     public
     void onTick ( ) {
-        if ( this.isOn ( ) && ( this.blocksPerTick.getValue ( ) != 1 || ! this.rotate.getValue ( ).booleanValue ( ) ) ) {
+        if ( this.isOn ( ) && ( this.blocksPerTick.getValue ( ) != 1 || ! this.rotate.getValue ( ) ) ) {
             this.doHoleFill ( );
         }
     }
@@ -107,7 +107,7 @@ class Selftrap
     @SubscribeEvent
     public
     void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
-        if ( this.isOn ( ) && event.getStage ( ) == 0 && this.blocksPerTick.getValue ( ) == 1 && this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.isOn ( ) && event.getStage ( ) == 0 && this.blocksPerTick.getValue ( ) == 1 && this.rotate.getValue ( ) ) {
             this.doHoleFill ( );
         }
     }
@@ -115,7 +115,7 @@ class Selftrap
     @Override
     public
     void onDisable ( ) {
-        if ( this.offhand.getValue ( ).booleanValue ( ) ) {
+        if ( this.offhand.getValue ( ) ) {
             Phobos.moduleManager.getModuleByClass ( Offhand.class ).setMode ( this.offhandMode );
             Phobos.moduleManager.getModuleByClass ( Offhand.class ).setMode ( this.offhandMode2 );
         }
@@ -154,7 +154,7 @@ class Selftrap
             this.placeHighWeb = false;
         }
         for (BlockPos position : this.getPositions ( )) {
-            if ( this.smart.getValue ( ).booleanValue ( ) && ! this.isPlayerInRange ( ) ) continue;
+            if ( this.smart.getValue ( ) && ! this.isPlayerInRange ( ) ) continue;
             int placeability = BlockUtil.isPositionPlaceable ( position , false );
             if ( placeability == 1 ) {
                 switch (this.currentMode) {
@@ -163,7 +163,7 @@ class Selftrap
                         break;
                     }
                     case OBSIDIAN: {
-                        if ( this.switchMode.getValue ( ) != InventoryUtil.Switch.SILENT && ( ! BlockTweaks.getINSTANCE ( ).isOn ( ) || ! BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ).booleanValue ( ) ) || this.retries.get ( position ) != null && this.retries.get ( position ) >= 4 )
+                        if ( this.switchMode.getValue ( ) != InventoryUtil.Switch.SILENT && ( ! BlockTweaks.getINSTANCE ( ).isOn ( ) || ! BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ) ) || this.retries.get ( position ) != null && this.retries.get ( position ) >= 4 )
                             break;
                         this.placeBlock ( position );
                         this.retries.put ( position , this.retries.get ( position ) == null ? 1 : this.retries.get ( position ) + 1 );
@@ -191,7 +191,7 @@ class Selftrap
         switch (this.currentMode) {
             case WEBS: {
                 positions.add ( new BlockPos ( Selftrap.mc.player.posX , Selftrap.mc.player.posY , Selftrap.mc.player.posZ ) );
-                if ( ! this.highWeb.getValue ( ).booleanValue ( ) ) break;
+                if ( ! this.highWeb.getValue ( ) ) break;
                 positions.add ( new BlockPos ( Selftrap.mc.player.posX , Selftrap.mc.player.posY + 1.0 , Selftrap.mc.player.posZ ) );
                 break;
             }
@@ -250,7 +250,7 @@ class Selftrap
     void placeBlock ( BlockPos pos ) {
         if ( this.blocksThisTick < this.blocksPerTick.getValue ( ) && this.switchItem ( false ) ) {
             boolean smartRotate;
-            boolean bl = smartRotate = this.blocksPerTick.getValue ( ) == 1 && this.rotate.getValue ( ) != false;
+            boolean bl = smartRotate = this.blocksPerTick.getValue ( ) == 1 && this.rotate.getValue ( );
             this.isSneaking = smartRotate ? BlockUtil.placeBlockSmartRotate ( pos , this.hasOffhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , true , this.packet.getValue ( ) , this.isSneaking ) : BlockUtil.placeBlock ( pos , this.hasOffhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , this.rotate.getValue ( ) , this.packet.getValue ( ) , this.isSneaking );
             this.timer.reset ( );
             ++ this.blocksThisTick;
@@ -259,7 +259,7 @@ class Selftrap
 
     private
     boolean check ( ) {
-        if ( Selftrap.fullNullCheck ( ) || this.disable.getValue ( ).booleanValue ( ) && this.offTimer.passedMs ( this.disableTime.getValue ( ).intValue ( ) ) ) {
+        if ( Selftrap.fullNullCheck ( ) || this.disable.getValue ( ) && this.offTimer.passedMs ( this.disableTime.getValue ( ) ) ) {
             this.disable ( );
             return true;
         }
@@ -267,7 +267,7 @@ class Selftrap
             this.lastHotbarSlot = Selftrap.mc.player.inventory.currentItem;
         }
         this.switchItem ( true );
-        if ( ! this.freecam.getValue ( ).booleanValue ( ) && Phobos.moduleManager.isModuleEnabled ( Freecam.class ) ) {
+        if ( ! this.freecam.getValue ( ) && Phobos.moduleManager.isModuleEnabled ( Freecam.class ) ) {
             return true;
         }
         this.blocksThisTick = 0;
@@ -289,22 +289,22 @@ class Selftrap
                 break;
             }
         }
-        if ( this.onlySafe.getValue ( ).booleanValue ( ) && ! EntityUtil.isSafe ( Selftrap.mc.player ) ) {
+        if ( this.onlySafe.getValue ( ) && ! EntityUtil.isSafe ( Selftrap.mc.player ) ) {
             this.disable ( );
             return true;
         }
-        if ( ! this.hasOffhand && targetSlot == - 1 && ( ! this.offhand.getValue ( ).booleanValue ( ) || ! EntityUtil.isSafe ( Selftrap.mc.player ) && this.onlySafe.getValue ( ).booleanValue ( ) ) ) {
+        if ( ! this.hasOffhand && targetSlot == - 1 && ( ! this.offhand.getValue ( ) || ! EntityUtil.isSafe ( Selftrap.mc.player ) && this.onlySafe.getValue ( ) ) ) {
             return true;
         }
-        if ( this.offhand.getValue ( ).booleanValue ( ) && ! this.hasOffhand ) {
+        if ( this.offhand.getValue ( ) && ! this.hasOffhand ) {
             return true;
         }
-        return ! this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) );
+        return ! this.timer.passedMs ( this.delay.getValue ( ) );
     }
 
     private
     boolean switchItem ( boolean back ) {
-        if ( this.offhand.getValue ( ).booleanValue ( ) ) {
+        if ( this.offhand.getValue ( ) ) {
             return true;
         }
         boolean[] value = InventoryUtil.switchItem ( back , this.lastHotbarSlot , this.switchedItem , this.switchMode.getValue ( ) , this.currentMode == Mode.WEBS ? BlockWeb.class : BlockObsidian.class );

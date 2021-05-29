@@ -46,41 +46,41 @@ class Components
     public static ResourceLocation logo = new ResourceLocation ( "textures/phobos.png" );
     private final Map < EntityPlayer, Map < Integer, ItemStack > > hotbarMap = new HashMap < EntityPlayer, Map < Integer, ItemStack > > ( );
     public Setting < Boolean > inventory = this.register ( new Setting < Boolean > ( "Inventory" , false ) );
-    public Setting < Integer > invX = this.register ( new Setting < Object > ( "InvX" , Integer.valueOf ( 564 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.inventory.getValue ( ) ) );
-    public Setting < Integer > invY = this.register ( new Setting < Object > ( "InvY" , Integer.valueOf ( 467 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.inventory.getValue ( ) ) );
-    public Setting < Integer > fineinvX = this.register ( new Setting < Object > ( "InvFineX" , Integer.valueOf ( 0 ) , v -> this.inventory.getValue ( ) ) );
-    public Setting < Integer > fineinvY = this.register ( new Setting < Object > ( "InvFineY" , Integer.valueOf ( 0 ) , v -> this.inventory.getValue ( ) ) );
-    public Setting < Boolean > renderXCarry = this.register ( new Setting < Object > ( "RenderXCarry" , Boolean.valueOf ( false ) , v -> this.inventory.getValue ( ) ) );
-    public Setting < Integer > invH = this.register ( new Setting < Object > ( "InvH" , Integer.valueOf ( 3 ) , v -> this.inventory.getValue ( ) ) );
+    public Setting < Integer > invX = this.register ( new Setting < Object > ( "InvX" , 564 , 0 , 1000 , v -> this.inventory.getValue ( ) ) );
+    public Setting < Integer > invY = this.register ( new Setting < Object > ( "InvY" , 467 , 0 , 1000 , v -> this.inventory.getValue ( ) ) );
+    public Setting < Integer > fineinvX = this.register ( new Setting < Object > ( "InvFineX" , 0 , v -> this.inventory.getValue ( ) ) );
+    public Setting < Integer > fineinvY = this.register ( new Setting < Object > ( "InvFineY" , 0 , v -> this.inventory.getValue ( ) ) );
+    public Setting < Boolean > renderXCarry = this.register ( new Setting < Object > ( "RenderXCarry" , Boolean.FALSE , v -> this.inventory.getValue ( ) ) );
+    public Setting < Integer > invH = this.register ( new Setting < Object > ( "InvH" , 3 , v -> this.inventory.getValue ( ) ) );
     public Setting < Boolean > holeHud = this.register ( new Setting < Boolean > ( "HoleHUD" , false ) );
-    public Setting < Integer > holeX = this.register ( new Setting < Object > ( "HoleX" , Integer.valueOf ( 279 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.holeHud.getValue ( ) ) );
-    public Setting < Integer > holeY = this.register ( new Setting < Object > ( "HoleY" , Integer.valueOf ( 485 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.holeHud.getValue ( ) ) );
+    public Setting < Integer > holeX = this.register ( new Setting < Object > ( "HoleX" , 279 , 0 , 1000 , v -> this.holeHud.getValue ( ) ) );
+    public Setting < Integer > holeY = this.register ( new Setting < Object > ( "HoleY" , 485 , 0 , 1000 , v -> this.holeHud.getValue ( ) ) );
     public Setting < Compass > compass = this.register ( new Setting < Compass > ( "Compass" , Compass.NONE ) );
-    public Setting < Integer > compassX = this.register ( new Setting < Object > ( "CompX" , Integer.valueOf ( 472 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.compass.getValue ( ) != Compass.NONE ) );
-    public Setting < Integer > compassY = this.register ( new Setting < Object > ( "CompY" , Integer.valueOf ( 424 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.compass.getValue ( ) != Compass.NONE ) );
-    public Setting < Integer > scale = this.register ( new Setting < Object > ( "Scale" , Integer.valueOf ( 3 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 10 ) , v -> this.compass.getValue ( ) != Compass.NONE ) );
+    public Setting < Integer > compassX = this.register ( new Setting < Object > ( "CompX" , 472 , 0 , 1000 , v -> this.compass.getValue ( ) != Compass.NONE ) );
+    public Setting < Integer > compassY = this.register ( new Setting < Object > ( "CompY" , 424 , 0 , 1000 , v -> this.compass.getValue ( ) != Compass.NONE ) );
+    public Setting < Integer > scale = this.register ( new Setting < Object > ( "Scale" , 3 , 0 , 10 , v -> this.compass.getValue ( ) != Compass.NONE ) );
     public Setting < Boolean > playerViewer = this.register ( new Setting < Boolean > ( "PlayerViewer" , false ) );
-    public Setting < Integer > playerViewerX = this.register ( new Setting < Object > ( "PlayerX" , Integer.valueOf ( 752 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.playerViewer.getValue ( ) ) );
-    public Setting < Integer > playerViewerY = this.register ( new Setting < Object > ( "PlayerY" , Integer.valueOf ( 497 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.playerViewer.getValue ( ) ) );
-    public Setting < Float > playerScale = this.register ( new Setting < Object > ( "PlayerScale" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 2.0f ) , v -> this.playerViewer.getValue ( ) ) );
+    public Setting < Integer > playerViewerX = this.register ( new Setting < Object > ( "PlayerX" , 752 , 0 , 1000 , v -> this.playerViewer.getValue ( ) ) );
+    public Setting < Integer > playerViewerY = this.register ( new Setting < Object > ( "PlayerY" , 497 , 0 , 1000 , v -> this.playerViewer.getValue ( ) ) );
+    public Setting < Float > playerScale = this.register ( new Setting < Object > ( "PlayerScale" , 1.0f , 0.1f , 2.0f , v -> this.playerViewer.getValue ( ) ) );
     public Setting < Boolean > imageLogo = this.register ( new Setting < Boolean > ( "ImageLogo" , false ) );
-    public Setting < Integer > imageX = this.register ( new Setting < Object > ( "ImageX" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.imageLogo.getValue ( ) ) );
-    public Setting < Integer > imageY = this.register ( new Setting < Object > ( "ImageY" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.imageLogo.getValue ( ) ) );
-    public Setting < Integer > imageWidth = this.register ( new Setting < Object > ( "ImageWidth" , Integer.valueOf ( 100 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.imageLogo.getValue ( ) ) );
-    public Setting < Integer > imageHeight = this.register ( new Setting < Object > ( "ImageHeight" , Integer.valueOf ( 100 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.imageLogo.getValue ( ) ) );
+    public Setting < Integer > imageX = this.register ( new Setting < Object > ( "ImageX" , 2 , 0 , 1000 , v -> this.imageLogo.getValue ( ) ) );
+    public Setting < Integer > imageY = this.register ( new Setting < Object > ( "ImageY" , 2 , 0 , 1000 , v -> this.imageLogo.getValue ( ) ) );
+    public Setting < Integer > imageWidth = this.register ( new Setting < Object > ( "ImageWidth" , 100 , 0 , 1000 , v -> this.imageLogo.getValue ( ) ) );
+    public Setting < Integer > imageHeight = this.register ( new Setting < Object > ( "ImageHeight" , 100 , 0 , 1000 , v -> this.imageLogo.getValue ( ) ) );
     public Setting < Boolean > targetHud = this.register ( new Setting < Boolean > ( "TargetHud" , false ) );
-    public Setting < Boolean > targetHudBackground = this.register ( new Setting < Object > ( "TargetHudBackground" , Boolean.valueOf ( true ) , v -> this.targetHud.getValue ( ) ) );
-    public Setting < Integer > targetHudX = this.register ( new Setting < Object > ( "TargetHudX" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.targetHud.getValue ( ) ) );
-    public Setting < Integer > targetHudY = this.register ( new Setting < Object > ( "TargetHudY" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.targetHud.getValue ( ) ) );
+    public Setting < Boolean > targetHudBackground = this.register ( new Setting < Object > ( "TargetHudBackground" , Boolean.TRUE , v -> this.targetHud.getValue ( ) ) );
+    public Setting < Integer > targetHudX = this.register ( new Setting < Object > ( "TargetHudX" , 2 , 0 , 1000 , v -> this.targetHud.getValue ( ) ) );
+    public Setting < Integer > targetHudY = this.register ( new Setting < Object > ( "TargetHudY" , 2 , 0 , 1000 , v -> this.targetHud.getValue ( ) ) );
     public Setting < TargetHudDesign > design = this.register ( new Setting < Object > ( "Design" , TargetHudDesign.NORMAL , v -> this.targetHud.getValue ( ) ) );
     public Setting < Boolean > clock = this.register ( new Setting < Boolean > ( "Clock" , true ) );
     public Setting < Boolean > clockFill = this.register ( new Setting < Boolean > ( "ClockFill" , true ) );
-    public Setting < Float > clockX = this.register ( new Setting < Object > ( "ClockX" , Float.valueOf ( 2.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 1000.0f ) , v -> this.clock.getValue ( ) ) );
-    public Setting < Float > clockY = this.register ( new Setting < Object > ( "ClockY" , Float.valueOf ( 2.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 1000.0f ) , v -> this.clock.getValue ( ) ) );
-    public Setting < Float > clockRadius = this.register ( new Setting < Object > ( "ClockRadius" , Float.valueOf ( 6.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 100.0f ) , v -> this.clock.getValue ( ) ) );
-    public Setting < Float > clockLineWidth = this.register ( new Setting < Object > ( "ClockLineWidth" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 5.0f ) , v -> this.clock.getValue ( ) ) );
-    public Setting < Integer > clockSlices = this.register ( new Setting < Object > ( "ClockSlices" , Integer.valueOf ( 360 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 720 ) , v -> this.clock.getValue ( ) ) );
-    public Setting < Integer > clockLoops = this.register ( new Setting < Object > ( "ClockLoops" , Integer.valueOf ( 1 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 720 ) , v -> this.clock.getValue ( ) ) );
+    public Setting < Float > clockX = this.register ( new Setting < Object > ( "ClockX" , 2.0f , 0.0f , 1000.0f , v -> this.clock.getValue ( ) ) );
+    public Setting < Float > clockY = this.register ( new Setting < Object > ( "ClockY" , 2.0f , 0.0f , 1000.0f , v -> this.clock.getValue ( ) ) );
+    public Setting < Float > clockRadius = this.register ( new Setting < Object > ( "ClockRadius" , 6.0f , 0.0f , 100.0f , v -> this.clock.getValue ( ) ) );
+    public Setting < Float > clockLineWidth = this.register ( new Setting < Object > ( "ClockLineWidth" , 1.0f , 0.0f , 5.0f , v -> this.clock.getValue ( ) ) );
+    public Setting < Integer > clockSlices = this.register ( new Setting < Object > ( "ClockSlices" , 360 , 1 , 720 , v -> this.clock.getValue ( ) ) );
+    public Setting < Integer > clockLoops = this.register ( new Setting < Object > ( "ClockLoops" , 1 , 1 , 720 , v -> this.clock.getValue ( ) ) );
 
     public
     Components ( ) {
@@ -179,26 +179,26 @@ class Components
         if ( Components.fullNullCheck ( ) ) {
             return;
         }
-        if ( this.playerViewer.getValue ( ).booleanValue ( ) ) {
+        if ( this.playerViewer.getValue ( ) ) {
             this.drawPlayer ( );
         }
         if ( this.compass.getValue ( ) != Compass.NONE ) {
             this.drawCompass ( );
         }
-        if ( this.holeHud.getValue ( ).booleanValue ( ) ) {
+        if ( this.holeHud.getValue ( ) ) {
             this.drawOverlay ( event.partialTicks );
         }
-        if ( this.inventory.getValue ( ).booleanValue ( ) ) {
+        if ( this.inventory.getValue ( ) ) {
             this.renderInventory ( );
         }
-        if ( this.imageLogo.getValue ( ).booleanValue ( ) ) {
+        if ( this.imageLogo.getValue ( ) ) {
             this.drawImageLogo ( );
         }
-        if ( this.targetHud.getValue ( ).booleanValue ( ) ) {
+        if ( this.targetHud.getValue ( ) ) {
             this.drawTargetHud ( event.partialTicks );
         }
-        if ( this.clock.getValue ( ).booleanValue ( ) ) {
-            RenderUtil.drawClock ( this.clockX.getValue ( ).floatValue ( ) , this.clockY.getValue ( ).floatValue ( ) , this.clockRadius.getValue ( ).floatValue ( ) , this.clockSlices.getValue ( ) , this.clockLoops.getValue ( ) , this.clockLineWidth.getValue ( ).floatValue ( ) , this.clockFill.getValue ( ) , new Color ( 255 , 0 , 0 , 255 ) );
+        if ( this.clock.getValue ( ) ) {
+            RenderUtil.drawClock ( this.clockX.getValue ( ) , this.clockY.getValue ( ) , this.clockRadius.getValue ( ) , this.clockSlices.getValue ( ) , this.clockLoops.getValue ( ) , this.clockLineWidth.getValue ( ) , this.clockFill.getValue ( ) , new Color ( 255 , 0 , 0 , 255 ) );
         }
     }
 
@@ -209,7 +209,7 @@ class Components
             if ( target == null ) {
                 return;
             }
-            if ( this.targetHudBackground.getValue ( ).booleanValue ( ) ) {
+            if ( this.targetHudBackground.getValue ( ) ) {
                 RenderUtil.drawRectangleCorrectly ( this.targetHudX.getValue ( ) , this.targetHudY.getValue ( ) , 210 , 100 , ColorUtil.toRGBA ( 20 , 20 , 20 , 160 ) );
             }
             GlStateManager.disableRescaleNormal ( );
@@ -290,25 +290,25 @@ class Components
         if ( this.compass.getValue ( ) == Compass.LINE ) {
             float playerYaw = Components.mc.player.rotationYaw;
             float rotationYaw = MathUtil.wrap ( playerYaw );
-            RenderUtil.drawRect ( this.compassX.getValue ( ).intValue ( ) , this.compassY.getValue ( ).intValue ( ) , this.compassX.getValue ( ) + 100 , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) , 1963986960 );
-            RenderUtil.glScissor ( this.compassX.getValue ( ).intValue ( ) , this.compassY.getValue ( ).intValue ( ) , this.compassX.getValue ( ) + 100 , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) , sr );
+            RenderUtil.drawRect ( this.compassX.getValue ( ) , this.compassY.getValue ( ) , this.compassX.getValue ( ) + 100 , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) , 1963986960 );
+            RenderUtil.glScissor ( this.compassX.getValue ( ) , this.compassY.getValue ( ) , this.compassX.getValue ( ) + 100 , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) , sr );
             GL11.glEnable ( 3089 );
             float zeroZeroYaw = MathUtil.wrap ( (float) ( Math.atan2 ( 0.0 - Components.mc.player.posZ , 0.0 - Components.mc.player.posX ) * 180.0 / Math.PI ) - 90.0f );
-            RenderUtil.drawLine ( (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + zeroZeroYaw , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + zeroZeroYaw , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 61424 );
-            RenderUtil.drawLine ( (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 45.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 45.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
-            RenderUtil.drawLine ( (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 45.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 45.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
-            RenderUtil.drawLine ( (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 135.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 135.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
-            RenderUtil.drawLine ( (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 135.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 135.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
-            this.renderer.drawStringWithShadow ( "n" , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 180.0f - (float) this.renderer.getStringWidth ( "n" ) / 2.0f , this.compassY.getValue ( ).intValue ( ) , - 1 );
-            this.renderer.drawStringWithShadow ( "n" , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 180.0f - (float) this.renderer.getStringWidth ( "n" ) / 2.0f , this.compassY.getValue ( ).intValue ( ) , - 1 );
-            this.renderer.drawStringWithShadow ( "e" , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - 90.0f - (float) this.renderer.getStringWidth ( "e" ) / 2.0f , this.compassY.getValue ( ).intValue ( ) , - 1 );
-            this.renderer.drawStringWithShadow ( "s" , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f - (float) this.renderer.getStringWidth ( "s" ) / 2.0f , this.compassY.getValue ( ).intValue ( ) , - 1 );
-            this.renderer.drawStringWithShadow ( "w" , (float) this.compassX.getValue ( ).intValue ( ) - rotationYaw + 50.0f + 90.0f - (float) this.renderer.getStringWidth ( "w" ) / 2.0f , this.compassY.getValue ( ).intValue ( ) , - 1 );
+            RenderUtil.drawLine ( (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + zeroZeroYaw , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + zeroZeroYaw , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 61424 );
+            RenderUtil.drawLine ( (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 45.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 45.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
+            RenderUtil.drawLine ( (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 45.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 45.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
+            RenderUtil.drawLine ( (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 135.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 135.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
+            RenderUtil.drawLine ( (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 135.0f , this.compassY.getValue ( ) + 2 , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 135.0f , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 2 , 2.0f , - 1 );
+            this.renderer.drawStringWithShadow ( "n" , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 180.0f - (float) this.renderer.getStringWidth ( "n" ) / 2.0f , this.compassY.getValue ( ) , - 1 );
+            this.renderer.drawStringWithShadow ( "n" , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 180.0f - (float) this.renderer.getStringWidth ( "n" ) / 2.0f , this.compassY.getValue ( ) , - 1 );
+            this.renderer.drawStringWithShadow ( "e" , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - 90.0f - (float) this.renderer.getStringWidth ( "e" ) / 2.0f , this.compassY.getValue ( ) , - 1 );
+            this.renderer.drawStringWithShadow ( "s" , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f - (float) this.renderer.getStringWidth ( "s" ) / 2.0f , this.compassY.getValue ( ) , - 1 );
+            this.renderer.drawStringWithShadow ( "w" , (float) this.compassX.getValue ( ) - rotationYaw + 50.0f + 90.0f - (float) this.renderer.getStringWidth ( "w" ) / 2.0f , this.compassY.getValue ( ) , - 1 );
             RenderUtil.drawLine ( this.compassX.getValue ( ) + 50 , this.compassY.getValue ( ) + 1 , this.compassX.getValue ( ) + 50 , this.compassY.getValue ( ) + this.renderer.getFontHeight ( ) - 1 , 2.0f , - 7303024 );
             GL11.glDisable ( 3089 );
         } else {
-            double centerX = this.compassX.getValue ( ).intValue ( );
-            double centerY = this.compassY.getValue ( ).intValue ( );
+            double centerX = this.compassX.getValue ( );
+            double centerY = this.compassY.getValue ( );
             for (Direction dir : Direction.values ( )) {
                 double rad = Components.getPosOnCompass ( dir );
                 this.renderer.drawStringWithShadow ( dir.name ( ) , (float) ( centerX + this.getX ( rad ) ) , (float) ( centerY + this.getY ( rad ) ) , dir == Direction.N ? - 65536 : - 1 );
@@ -330,12 +330,12 @@ class Components
         GlStateManager.enableColorMaterial ( );
         GlStateManager.pushMatrix ( );
         GlStateManager.translate ( (float) ( this.playerViewerX.getValue ( ) + 25 ) , (float) ( this.playerViewerY.getValue ( ) + 25 ) , 50.0f );
-        GlStateManager.scale ( - 50.0f * this.playerScale.getValue ( ).floatValue ( ) , 50.0f * this.playerScale.getValue ( ).floatValue ( ) , 50.0f * this.playerScale.getValue ( ).floatValue ( ) );
+        GlStateManager.scale ( - 50.0f * this.playerScale.getValue ( ) , 50.0f * this.playerScale.getValue ( ) , 50.0f * this.playerScale.getValue ( ) );
         GlStateManager.rotate ( 180.0f , 0.0f , 0.0f , 1.0f );
         GlStateManager.rotate ( 135.0f , 0.0f , 1.0f , 0.0f );
         RenderHelper.enableStandardItemLighting ( );
         GlStateManager.rotate ( - 135.0f , 0.0f , 1.0f , 0.0f );
-        GlStateManager.rotate ( - ( (float) Math.atan ( (float) this.playerViewerY.getValue ( ).intValue ( ) / 40.0f ) ) * 20.0f , 1.0f , 0.0f , 0.0f );
+        GlStateManager.rotate ( - ( (float) Math.atan ( (float) this.playerViewerY.getValue ( ) / 40.0f ) ) * 20.0f , 1.0f , 0.0f , 0.0f );
         GlStateManager.translate ( 0.0f , 0.0f , 0.0f );
         RenderManager rendermanager = mc.getRenderManager ( );
         rendermanager.setPlayerViewY ( 180.0f );
@@ -372,12 +372,12 @@ class Components
         GlStateManager.enableColorMaterial ( );
         GlStateManager.pushMatrix ( );
         GlStateManager.translate ( (float) ( this.playerViewerX.getValue ( ) + 25 ) , (float) ( this.playerViewerY.getValue ( ) + 25 ) , 50.0f );
-        GlStateManager.scale ( - 50.0f * this.playerScale.getValue ( ).floatValue ( ) , 50.0f * this.playerScale.getValue ( ).floatValue ( ) , 50.0f * this.playerScale.getValue ( ).floatValue ( ) );
+        GlStateManager.scale ( - 50.0f * this.playerScale.getValue ( ) , 50.0f * this.playerScale.getValue ( ) , 50.0f * this.playerScale.getValue ( ) );
         GlStateManager.rotate ( 180.0f , 0.0f , 0.0f , 1.0f );
         GlStateManager.rotate ( 135.0f , 0.0f , 1.0f , 0.0f );
         RenderHelper.enableStandardItemLighting ( );
         GlStateManager.rotate ( - 135.0f , 0.0f , 1.0f , 0.0f );
-        GlStateManager.rotate ( - ( (float) Math.atan ( (float) this.playerViewerY.getValue ( ).intValue ( ) / 40.0f ) ) * 20.0f , 1.0f , 0.0f , 0.0f );
+        GlStateManager.rotate ( - ( (float) Math.atan ( (float) this.playerViewerY.getValue ( ) / 40.0f ) ) * 20.0f , 1.0f , 0.0f , 0.0f );
         GlStateManager.translate ( 0.0f , 0.0f , 0.0f );
         RenderManager rendermanager = mc.getRenderManager ( );
         rendermanager.setPlayerViewY ( 180.0f );
@@ -441,9 +441,9 @@ class Components
         if ( north != null && north != Blocks.AIR ) {
             int damage = this.getBlockDamage ( northPos );
             if ( damage != 0 ) {
-                RenderUtil.drawRect ( this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ).intValue ( ) , this.holeX.getValue ( ) + 32 , this.holeY.getValue ( ) + 16 , 0x60FF0000 );
+                RenderUtil.drawRect ( this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ) , this.holeX.getValue ( ) + 32 , this.holeY.getValue ( ) + 16 , 0x60FF0000 );
             }
-            this.drawBlock ( north , this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ).intValue ( ) );
+            this.drawBlock ( north , this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ) );
         }
         if ( ( south = this.getBlock ( southPos = this.traceToBlock ( partialTicks , yaw - 180.0f ) ) ) != null && south != Blocks.AIR ) {
             int damage = this.getBlockDamage ( southPos );
@@ -462,9 +462,9 @@ class Components
         if ( ( west = this.getBlock ( westPos = this.traceToBlock ( partialTicks , yaw - 90.0f ) ) ) != null && west != Blocks.AIR ) {
             int damage = this.getBlockDamage ( westPos );
             if ( damage != 0 ) {
-                RenderUtil.drawRect ( this.holeX.getValue ( ).intValue ( ) , this.holeY.getValue ( ) + 16 , this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ) + 32 , 0x60FF0000 );
+                RenderUtil.drawRect ( this.holeX.getValue ( ) , this.holeY.getValue ( ) + 16 , this.holeX.getValue ( ) + 16 , this.holeY.getValue ( ) + 32 , 0x60FF0000 );
             }
-            this.drawBlock ( west , this.holeX.getValue ( ).intValue ( ) , this.holeY.getValue ( ) + 16 );
+            this.drawBlock ( west , this.holeX.getValue ( ) , this.holeY.getValue ( ) + 16 );
         }
     }
 
@@ -605,7 +605,7 @@ class Components
             Components.mc.getRenderItem ( ).zLevel = 0.0f;
             Components.postitemrender ( );
         }
-        if ( this.renderXCarry.getValue ( ).booleanValue ( ) ) {
+        if ( this.renderXCarry.getValue ( ) ) {
             for (i = 1; i < 5; ++ i) {
                 iX = x + ( i + 4 ) % 9 * 18 + 8;
                 ItemStack itemStack = Components.mc.player.inventoryContainer.inventorySlots.get ( i ).getStack ( );

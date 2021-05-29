@@ -28,7 +28,7 @@ class Nuker
     private final Timer timer = new Timer ( );
     private final Setting < Boolean > autoSwitch = this.register ( new Setting < Boolean > ( "AutoSwitch" , false ) );
     public Setting < Boolean > rotate = this.register ( new Setting < Boolean > ( "Rotate" , false ) );
-    public Setting < Float > distance = this.register ( new Setting < Float > ( "Range" , Float.valueOf ( 6.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 10.0f ) ) );
+    public Setting < Float > distance = this.register ( new Setting < Float > ( "Range" , 6.0f , 0.1f , 10.0f ) );
     public Setting < Integer > blockPerTick = this.register ( new Setting < Integer > ( "Blocks/Attack" , 50 , 1 , 100 ) );
     public Setting < Integer > delay = this.register ( new Setting < Integer > ( "Delay/Attack" , 50 , 1 , 1000 ) );
     public Setting < Boolean > nuke = this.register ( new Setting < Boolean > ( "Nuke" , false ) );
@@ -64,7 +64,7 @@ class Nuker
     public
     void onUpdateWalkingPlayerPre ( UpdateWalkingPlayerEvent event ) {
         if ( event.getStage ( ) == 0 ) {
-            if ( this.nuke.getValue ( ).booleanValue ( ) ) {
+            if ( this.nuke.getValue ( ) ) {
                 BlockPos pos = null;
                 switch (this.mode.getValue ( )) {
                     case SELECTION:
@@ -79,7 +79,7 @@ class Nuker
                 }
                 if ( pos != null ) {
                     if ( this.mode.getValue ( ) == Mode.SELECTION || this.mode.getValue ( ) == Mode.ALL ) {
-                        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                        if ( this.rotate.getValue ( ) ) {
                             float[] angle = MathUtil.calcAngle ( Nuker.mc.player.getPositionEyes ( mc.getRenderPartialTicks ( ) ) , new Vec3d ( (float) pos.getX ( ) + 0.5f , (float) pos.getY ( ) + 0.5f , (float) pos.getZ ( ) + 0.5f ) );
                             Phobos.rotationManager.setPlayerRotations ( angle[0] , angle[1] );
                         }
@@ -91,11 +91,11 @@ class Nuker
                         for (int i = 0; i < this.blockPerTick.getValue ( ); ++ i) {
                             pos = this.getClosestBlockSelection ( );
                             if ( pos == null ) continue;
-                            if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                            if ( this.rotate.getValue ( ) ) {
                                 float[] angle = MathUtil.calcAngle ( Nuker.mc.player.getPositionEyes ( mc.getRenderPartialTicks ( ) ) , new Vec3d ( (float) pos.getX ( ) + 0.5f , (float) pos.getY ( ) + 0.5f , (float) pos.getZ ( ) + 0.5f ) );
                                 Phobos.rotationManager.setPlayerRotations ( angle[0] , angle[1] );
                             }
-                            if ( ! this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) ) ) continue;
+                            if ( ! this.timer.passedMs ( this.delay.getValue ( ) ) ) continue;
                             Nuker.mc.playerController.onPlayerDamageBlock ( pos , Nuker.mc.player.getHorizontalFacing ( ) );
                             Nuker.mc.player.swingArm ( EnumHand.MAIN_HAND );
                             this.timer.reset ( );
@@ -103,10 +103,10 @@ class Nuker
                     }
                 }
             }
-            if ( this.antiRegear.getValue ( ).booleanValue ( ) ) {
+            if ( this.antiRegear.getValue ( ) ) {
                 this.breakBlocks ( BlockUtil.shulkerList );
             }
-            if ( this.hopperNuker.getValue ( ).booleanValue ( ) ) {
+            if ( this.hopperNuker.getValue ( ) ) {
                 ArrayList < Block > blocklist = new ArrayList < Block > ( );
                 blocklist.add ( Blocks.HOPPER );
                 this.breakBlocks ( blocklist );
@@ -122,12 +122,12 @@ class Nuker
                 this.oldSlot = Nuker.mc.player.inventory.currentItem;
                 this.isMining = true;
             }
-            if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+            if ( this.rotate.getValue ( ) ) {
                 float[] angle = MathUtil.calcAngle ( Nuker.mc.player.getPositionEyes ( mc.getRenderPartialTicks ( ) ) , new Vec3d ( (float) pos.getX ( ) + 0.5f , (float) pos.getY ( ) + 0.5f , (float) pos.getZ ( ) + 0.5f ) );
                 Phobos.rotationManager.setPlayerRotations ( angle[0] , angle[1] );
             }
             if ( this.canBreak ( pos ) ) {
-                if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+                if ( this.autoSwitch.getValue ( ) ) {
                     int newSlot = - 1;
                     for (int i = 0; i < 9; ++ i) {
                         ItemStack stack = Nuker.mc.player.inventory.getStackInSlot ( i );
@@ -142,7 +142,7 @@ class Nuker
                 Nuker.mc.playerController.onPlayerDamageBlock ( pos , Nuker.mc.player.getHorizontalFacing ( ) );
                 Nuker.mc.player.swingArm ( EnumHand.MAIN_HAND );
             }
-        } else if ( this.autoSwitch.getValue ( ).booleanValue ( ) && this.oldSlot != - 1 ) {
+        } else if ( this.autoSwitch.getValue ( ) && this.oldSlot != - 1 ) {
             Nuker.mc.player.inventory.currentItem = this.oldSlot;
             this.oldSlot = - 1;
             this.isMining = false;
@@ -158,7 +158,7 @@ class Nuker
 
     private
     BlockPos getNearestBlock ( List < Block > blocks ) {
-        double maxDist = MathUtil.square ( this.distance.getValue ( ).floatValue ( ) );
+        double maxDist = MathUtil.square ( this.distance.getValue ( ) );
         BlockPos ret = null;
         for (double x = maxDist; x >= - maxDist; x -= 1.0) {
             for (double y = maxDist; y >= - maxDist; y -= 1.0) {
@@ -177,7 +177,7 @@ class Nuker
 
     private
     BlockPos getClosestBlockAll ( ) {
-        float maxDist = this.distance.getValue ( ).floatValue ( );
+        float maxDist = this.distance.getValue ( );
         BlockPos ret = null;
         for (float x = maxDist; x >= - maxDist; x -= 1.0f) {
             for (float y = maxDist; y >= - maxDist; y -= 1.0f) {
@@ -196,7 +196,7 @@ class Nuker
 
     private
     BlockPos getClosestBlockSelection ( ) {
-        float maxDist = this.distance.getValue ( ).floatValue ( );
+        float maxDist = this.distance.getValue ( );
         BlockPos ret = null;
         for (float x = maxDist; x >= - maxDist; x -= 1.0f) {
             for (float y = maxDist; y >= - maxDist; y -= 1.0f) {

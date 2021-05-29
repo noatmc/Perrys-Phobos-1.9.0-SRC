@@ -45,8 +45,8 @@ class AutoTrap
     private final Setting < Boolean > antiScaffold = this.register ( new Setting < Boolean > ( "AntiScaffold" , false ) );
     private final Setting < Boolean > antiStep = this.register ( new Setting < Boolean > ( "AntiStep" , false ) );
     private final Setting < Boolean > face = this.register ( new Setting < Boolean > ( "Face" , true ) );
-    private final Setting < Boolean > legs = this.register ( new Setting < Object > ( "Legs" , Boolean.valueOf ( false ) , v -> this.pattern.getValue ( ) != Pattern.OPEN ) );
-    private final Setting < Boolean > platform = this.register ( new Setting < Object > ( "Platform" , Boolean.valueOf ( false ) , v -> this.pattern.getValue ( ) != Pattern.OPEN ) );
+    private final Setting < Boolean > legs = this.register ( new Setting < Object > ( "Legs" , Boolean.FALSE , v -> this.pattern.getValue ( ) != Pattern.OPEN ) );
+    private final Setting < Boolean > platform = this.register ( new Setting < Object > ( "Platform" , Boolean.FALSE , v -> this.pattern.getValue ( ) != Pattern.OPEN ) );
     private final Setting < Boolean > antiDrop = this.register ( new Setting < Boolean > ( "AntiDrop" , false ) );
     private final Setting < Double > speed = this.register ( new Setting < Double > ( "Speed" , 10.0 , 0.0 , 30.0 ) );
     private final Setting < Boolean > antiSelf = this.register ( new Setting < Boolean > ( "AntiSelf" , false ) );
@@ -57,24 +57,24 @@ class AutoTrap
     private final Setting < Boolean > noScaffoldExtend = this.register ( new Setting < Boolean > ( "NoScaffoldExtend" , false ) );
     private final Setting < Boolean > disable = this.register ( new Setting < Boolean > ( "TSelfMove" , false ) );
     private final Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , false ) );
-    private final Setting < Boolean > airPacket = this.register ( new Setting < Object > ( "AirPacket" , Boolean.valueOf ( false ) , v -> this.packet.getValue ( ) ) );
+    private final Setting < Boolean > airPacket = this.register ( new Setting < Object > ( "AirPacket" , Boolean.FALSE , v -> this.packet.getValue ( ) ) );
     private final Setting < Integer > retryer = this.register ( new Setting < Integer > ( "Retries" , 4 , 1 , 15 ) );
     private final Setting < Boolean > endPortals = this.register ( new Setting < Boolean > ( "EndPortals" , false ) );
     private final Setting < Boolean > render = this.register ( new Setting < Boolean > ( "Render" , true ) );
-    public final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.valueOf ( false ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > box = this.register ( new Setting < Object > ( "Box" , Boolean.valueOf ( false ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.valueOf ( true ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > customOutline = this.register ( new Setting < Object > ( "CustomLine" , Boolean.valueOf ( false ) , v -> this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , Integer.valueOf ( 125 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.box.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cRed = this.register ( new Setting < Object > ( "OL-Red" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cGreen = this.register ( new Setting < Object > ( "OL-Green" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cBlue = this.register ( new Setting < Object > ( "OL-Blue" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cAlpha = this.register ( new Setting < Object > ( "OL-Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
+    public final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.FALSE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > box = this.register ( new Setting < Object > ( "Box" , Boolean.FALSE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.TRUE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > customOutline = this.register ( new Setting < Object > ( "CustomLine" , Boolean.FALSE , v -> this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , 0 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , 255 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , 0 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , 255 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , 125 , 0 , 255 , v -> this.box.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cRed = this.register ( new Setting < Object > ( "OL-Red" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cGreen = this.register ( new Setting < Object > ( "OL-Green" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cBlue = this.register ( new Setting < Object > ( "OL-Blue" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cAlpha = this.register ( new Setting < Object > ( "OL-Alpha" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
     private final Timer timer = new Timer ( );
     private final Map < BlockPos, Integer > retries = new HashMap < BlockPos, Integer > ( );
     private final Timer retryTimer = new Timer ( );
@@ -130,7 +130,7 @@ class AutoTrap
     public
     void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
         if ( event.getStage ( ) == 0 && this.eventMode.getValue ( ) == 2 ) {
-            this.smartRotate = this.rotate.getValue ( ) != false && this.blocksPerPlace.getValue ( ) == 1;
+            this.smartRotate = this.rotate.getValue ( ) && this.blocksPerPlace.getValue ( ) == 1;
             this.doTrap ( );
         }
     }
@@ -147,7 +147,7 @@ class AutoTrap
     @Override
     public
     String getDisplayInfo ( ) {
-        if ( this.info.getValue ( ).booleanValue ( ) && this.target != null ) {
+        if ( this.info.getValue ( ) && this.target != null ) {
             return this.target.getName ( );
         }
         return null;
@@ -172,18 +172,18 @@ class AutoTrap
     @Override
     public
     void onRender3D ( Render3DEvent event ) {
-        if ( this.render.getValue ( ).booleanValue ( ) && this.currentPlaceList != null ) {
+        if ( this.render.getValue ( ) && this.currentPlaceList != null ) {
             for (Vec3d vec : this.currentPlaceList) {
                 BlockPos pos = new BlockPos ( vec );
                 if ( ! ( AutoTrap.mc.world.getBlockState ( pos ).getBlock ( ) instanceof BlockAir ) ) continue;
-                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ).floatValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
+                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ).floatValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
             }
         }
     }
 
     private
     boolean shouldServer ( ) {
-        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( ) != false;
+        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( );
     }
 
     private
@@ -202,7 +202,7 @@ class AutoTrap
                 break;
             }
         }
-        if ( this.packet.getValue ( ).booleanValue ( ) && this.airPacket.getValue ( ).booleanValue ( ) ) {
+        if ( this.packet.getValue ( ) && this.airPacket.getValue ( ) ) {
             for (Map.Entry < BlockPos, IBlockState > entry : this.toAir.entrySet ( )) {
                 AutoTrap.mc.world.setBlockState ( entry.getKey ( ) , entry.getValue ( ) );
             }
@@ -234,13 +234,13 @@ class AutoTrap
         for (Vec3d vec3d3 : list) {
             BlockPos position = new BlockPos ( vec3d3 );
             int placeability = BlockUtil.isPositionPlaceable ( position , this.raytrace.getValue ( ) );
-            if ( this.entityCheck.getValue ( ).booleanValue ( ) && placeability == 1 && ( this.switchMode.getValue ( ) == InventoryUtil.Switch.SILENT || BlockTweaks.getINSTANCE ( ).isOn ( ) && BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ).booleanValue ( ) ) && ( this.retries.get ( position ) == null || this.retries.get ( position ) < this.retryer.getValue ( ) ) ) {
+            if ( this.entityCheck.getValue ( ) && placeability == 1 && ( this.switchMode.getValue ( ) == InventoryUtil.Switch.SILENT || BlockTweaks.getINSTANCE ( ).isOn ( ) && BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ) ) && ( this.retries.get ( position ) == null || this.retries.get ( position ) < this.retryer.getValue ( ) ) ) {
                 this.placeBlock ( position );
                 this.retries.put ( position , this.retries.get ( position ) == null ? 1 : this.retries.get ( position ) + 1 );
                 this.retryTimer.reset ( );
                 continue;
             }
-            if ( placeability != 3 || this.antiSelf.getValue ( ).booleanValue ( ) && MathUtil.areVec3dsAligned ( AutoTrap.mc.player.getPositionVector ( ) , vec3d3 ) )
+            if ( placeability != 3 || this.antiSelf.getValue ( ) && MathUtil.areVec3dsAligned ( AutoTrap.mc.player.getPositionVector ( ) , vec3d3 ) )
                 continue;
             this.placeBlock ( position );
         }
@@ -252,7 +252,7 @@ class AutoTrap
         this.didPlace = false;
         this.placements = 0;
         int obbySlot = - 1;
-        if ( this.endPortals.getValue ( ).booleanValue ( ) ) {
+        if ( this.endPortals.getValue ( ) ) {
             obbySlot = InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class );
             if ( obbySlot == - 1 ) {
                 obbySlot = InventoryUtil.findHotbarBlock ( BlockObsidian.class );
@@ -263,7 +263,7 @@ class AutoTrap
         if ( this.isOff ( ) ) {
             return true;
         }
-        if ( this.disable.getValue ( ).booleanValue ( ) && this.startPos != null && ! this.startPos.equals ( EntityUtil.getRoundedBlockPos ( AutoTrap.mc.player ) ) ) {
+        if ( this.disable.getValue ( ) && this.startPos != null && ! this.startPos.equals ( EntityUtil.getRoundedBlockPos ( AutoTrap.mc.player ) ) ) {
             this.disable ( );
             return true;
         }
@@ -273,7 +273,7 @@ class AutoTrap
         }
         if ( obbySlot == - 1 ) {
             if ( this.switchMode.getValue ( ) != InventoryUtil.Switch.NONE ) {
-                if ( this.info.getValue ( ).booleanValue ( ) ) {
+                if ( this.info.getValue ( ) ) {
                     Command.sendMessage ( "<" + this.getDisplayName ( ) + "> " + "\u00a7c" + "You are out of Obsidian." );
                 }
                 this.disable ( );
@@ -286,7 +286,7 @@ class AutoTrap
         this.switchItem ( true );
         this.isSneaking = EntityUtil.stopSneaking ( this.isSneaking );
         this.target = this.getTarget ( this.targetRange.getValue ( ) , this.targetMode.getValue ( ) == TargetMode.UNTRAPPED );
-        return this.target == null || Phobos.moduleManager.isModuleEnabled ( "Freecam" ) && this.freecam.getValue ( ) == false || ! this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && AutoTrap.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockObsidian.class );
+        return this.target == null || Phobos.moduleManager.isModuleEnabled ( "Freecam" ) && ! this.freecam.getValue ( ) || ! this.timer.passedMs ( this.delay.getValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && AutoTrap.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockObsidian.class );
     }
 
     private
@@ -294,7 +294,7 @@ class AutoTrap
         EntityPlayer target = null;
         double distance = Math.pow ( range , 2.0 ) + 1.0;
         for (EntityPlayer player : AutoTrap.mc.world.playerEntities) {
-            if ( EntityUtil.isntValid ( player , range ) || this.pattern.getValue ( ) == Pattern.STATIC && trapped && EntityUtil.isTrapped ( player , this.antiScaffold.getValue ( ) , this.antiStep.getValue ( ) , this.legs.getValue ( ) , this.platform.getValue ( ) , this.antiDrop.getValue ( ) , this.face.getValue ( ) ) || this.pattern.getValue ( ) != Pattern.STATIC && trapped && EntityUtil.isTrappedExtended ( this.extend.getValue ( ) , player , this.antiScaffold.getValue ( ) , this.antiStep.getValue ( ) , this.legs.getValue ( ) , this.platform.getValue ( ) , this.antiDrop.getValue ( ) , this.raytrace.getValue ( ) , this.noScaffoldExtend.getValue ( ) , this.face.getValue ( ) ) || EntityUtil.getRoundedBlockPos ( AutoTrap.mc.player ).equals ( EntityUtil.getRoundedBlockPos ( player ) ) && this.antiSelf.getValue ( ).booleanValue ( ) || Phobos.speedManager.getPlayerSpeed ( player ) > this.speed.getValue ( ) )
+            if ( EntityUtil.isntValid ( player , range ) || this.pattern.getValue ( ) == Pattern.STATIC && trapped && EntityUtil.isTrapped ( player , this.antiScaffold.getValue ( ) , this.antiStep.getValue ( ) , this.legs.getValue ( ) , this.platform.getValue ( ) , this.antiDrop.getValue ( ) , this.face.getValue ( ) ) || this.pattern.getValue ( ) != Pattern.STATIC && trapped && EntityUtil.isTrappedExtended ( this.extend.getValue ( ) , player , this.antiScaffold.getValue ( ) , this.antiStep.getValue ( ) , this.legs.getValue ( ) , this.platform.getValue ( ) , this.antiDrop.getValue ( ) , this.raytrace.getValue ( ) , this.noScaffoldExtend.getValue ( ) , this.face.getValue ( ) ) || EntityUtil.getRoundedBlockPos ( AutoTrap.mc.player ).equals ( EntityUtil.getRoundedBlockPos ( player ) ) && this.antiSelf.getValue ( ) || Phobos.speedManager.getPlayerSpeed ( player ) > this.speed.getValue ( ) )
                 continue;
             if ( target == null ) {
                 target = player;
@@ -312,10 +312,10 @@ class AutoTrap
     void placeBlock ( BlockPos pos ) {
         if ( this.placements < this.blocksPerPlace.getValue ( ) && AutoTrap.mc.player.getDistanceSq ( pos ) <= MathUtil.square ( this.range.getValue ( ) ) && this.switchItem ( false ) ) {
             isPlacing = true;
-            if ( this.airPacket.getValue ( ).booleanValue ( ) && this.packet.getValue ( ).booleanValue ( ) ) {
+            if ( this.airPacket.getValue ( ) && this.packet.getValue ( ) ) {
                 this.toAir.put ( pos , AutoTrap.mc.world.getBlockState ( pos ) );
             }
-            this.isSneaking = this.smartRotate ? BlockUtil.placeBlockSmartRotate ( pos , EnumHand.MAIN_HAND , true , this.airPacket.getValue ( ) == false && this.packet.getValue ( ) != false , this.isSneaking ) : BlockUtil.placeBlock ( pos , EnumHand.MAIN_HAND , this.rotate.getValue ( ) , this.airPacket.getValue ( ) == false && this.packet.getValue ( ) != false , this.isSneaking );
+            this.isSneaking = this.smartRotate ? BlockUtil.placeBlockSmartRotate ( pos , EnumHand.MAIN_HAND , true , ! this.airPacket.getValue ( ) && this.packet.getValue ( ) , this.isSneaking ) : BlockUtil.placeBlock ( pos , EnumHand.MAIN_HAND , this.rotate.getValue ( ) , ! this.airPacket.getValue ( ) && this.packet.getValue ( ) , this.isSneaking );
             this.didPlace = true;
             ++ this.placements;
         }
@@ -323,7 +323,7 @@ class AutoTrap
 
     private
     boolean switchItem ( boolean back ) {
-        boolean[] value = InventoryUtil.switchItem ( back , this.lastHotbarSlot , this.switchedItem , this.switchMode.getValue ( ) , this.endPortals.getValue ( ) != false && InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class ) != - 1 ? BlockEndPortalFrame.class : BlockObsidian.class );
+        boolean[] value = InventoryUtil.switchItem ( back , this.lastHotbarSlot , this.switchedItem , this.switchMode.getValue ( ) , this.endPortals.getValue ( ) && InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class ) != - 1 ? BlockEndPortalFrame.class : BlockObsidian.class );
         this.switchedItem = value[0];
         return value[1];
     }

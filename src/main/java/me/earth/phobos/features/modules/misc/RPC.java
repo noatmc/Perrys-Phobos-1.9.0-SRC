@@ -9,7 +9,7 @@ class RPC
         extends Module {
     public static RPC INSTANCE;
     public Setting < Boolean > catMode = this.register ( new Setting < Boolean > ( "CatMode" , false ) );
-    public Setting < Boolean > showIP = this.register ( new Setting < Boolean > ( "ShowIP" , Boolean.valueOf ( true ) , "Shows the server IP in your discord presence." ) );
+    public Setting < Boolean > showIP = this.register ( new Setting < Boolean > ( "ShowIP" , Boolean.TRUE , "Shows the server IP in your discord presence." ) );
     public Setting < String > state = this.register ( new Setting < String > ( "State" , "Phobos 1.9.0" , "Sets the state of the DiscordRPC." ) );
 
     public

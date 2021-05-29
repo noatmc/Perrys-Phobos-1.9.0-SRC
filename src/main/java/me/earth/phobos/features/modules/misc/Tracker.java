@@ -59,14 +59,14 @@ class Tracker
     @SubscribeEvent
     public
     void onPacketReceive ( PacketEvent.Receive event ) {
-        if ( ! Tracker.fullNullCheck ( ) && ( this.autoEnable.getValue ( ).booleanValue ( ) || this.autoDisable.getValue ( ).booleanValue ( ) ) && event.getPacket ( ) instanceof SPacketChat ) {
+        if ( ! Tracker.fullNullCheck ( ) && ( this.autoEnable.getValue ( ) || this.autoDisable.getValue ( ) ) && event.getPacket ( ) instanceof SPacketChat ) {
             SPacketChat packet = event.getPacket ( );
             String message = packet.getChatComponent ( ).getFormattedText ( );
-            if ( this.autoEnable.getValue ( ).booleanValue ( ) && ( message.contains ( "has accepted your duel request" ) || message.contains ( "Accepted the duel request from" ) ) && ! message.contains ( "<" ) ) {
+            if ( this.autoEnable.getValue ( ) && ( message.contains ( "has accepted your duel request" ) || message.contains ( "Accepted the duel request from" ) ) && ! message.contains ( "<" ) ) {
                 Command.sendMessage ( "Tracker will enable in 5 seconds." );
                 this.timer.reset ( );
                 this.shouldEnable = true;
-            } else if ( this.autoDisable.getValue ( ).booleanValue ( ) && message.contains ( "has defeated" ) && message.contains ( Tracker.mc.player.getName ( ) ) && ! message.contains ( "<" ) ) {
+            } else if ( this.autoDisable.getValue ( ) && message.contains ( "has defeated" ) && message.contains ( Tracker.mc.player.getName ( ) ) && ! message.contains ( "<" ) ) {
                 this.disable ( );
             }
         }
@@ -137,7 +137,7 @@ class Tracker
             return;
         }
         String name = event.getName ( );
-        if ( this.trackedPlayer != null && name != null && name.equals ( this.trackedPlayer.getName ( ) ) && this.autoDisable.getValue ( ).booleanValue ( ) ) {
+        if ( this.trackedPlayer != null && name != null && name.equals ( this.trackedPlayer.getName ( ) ) && this.autoDisable.getValue ( ) ) {
             Command.sendMessage ( name + " logged, Tracker disabling." );
             this.disable ( );
         }
@@ -159,7 +159,7 @@ class Tracker
     @Override
     public
     void onLogout ( ) {
-        if ( this.autoDisable.getValue ( ).booleanValue ( ) ) {
+        if ( this.autoDisable.getValue ( ) ) {
             this.disable ( );
         }
     }
@@ -172,7 +172,7 @@ class Tracker
             this.usedStacks = 0;
             this.usedCrystals = 0;
             this.usedCStacks = 0;
-            if ( this.autoDisable.getValue ( ).booleanValue ( ) ) {
+            if ( this.autoDisable.getValue ( ) ) {
                 this.disable ( );
             }
         }

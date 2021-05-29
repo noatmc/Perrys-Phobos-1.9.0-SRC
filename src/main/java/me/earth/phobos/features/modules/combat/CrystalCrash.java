@@ -24,7 +24,7 @@ public
 class CrystalCrash
         extends Module {
     private final Setting < Boolean > oneDot15 = this.register ( new Setting < Boolean > ( "1.15" , false ) );
-    private final Setting < Float > placeRange = this.register ( new Setting < Float > ( "PlaceRange" , Float.valueOf ( 6.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 10.0f ) ) );
+    private final Setting < Float > placeRange = this.register ( new Setting < Float > ( "PlaceRange" , 6.0f , 0.0f , 10.0f ) );
     private final Setting < Integer > crystals = this.register ( new Setting < Integer > ( "Packets" , 25 , 0 , 100 ) );
     private final Setting < Integer > coolDown = this.register ( new Setting < Integer > ( "CoolDown" , 400 , 0 , 1000 ) );
     private final Setting < InventoryUtil.Switch > switchMode = this.register ( new Setting < InventoryUtil.Switch > ( "Switch" , InventoryUtil.Switch.NORMAL ) );
@@ -47,7 +47,7 @@ class CrystalCrash
     public
     void onEnable ( ) {
         this.chinese = false;
-        if ( CrystalCrash.fullNullCheck ( ) || ! this.timer.passedMs ( this.coolDown.getValue ( ).intValue ( ) ) ) {
+        if ( CrystalCrash.fullNullCheck ( ) || ! this.timer.passedMs ( this.coolDown.getValue ( ) ) ) {
             this.disable ( );
             return;
         }
@@ -83,7 +83,7 @@ class CrystalCrash
         this.offhand = CrystalCrash.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.END_CRYSTAL;
         this.mainhand = CrystalCrash.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.END_CRYSTAL;
         int crystalcount = 0;
-        List < BlockPos > blocks = BlockUtil.possiblePlacePositions ( this.placeRange.getValue ( ).floatValue ( ) , false , this.oneDot15.getValue ( ) );
+        List < BlockPos > blocks = BlockUtil.possiblePlacePositions ( this.placeRange.getValue ( ) , false , this.oneDot15.getValue ( ) );
         if ( this.sort.getValue ( ) == 1 ) {
             blocks.sort ( Comparator.comparingDouble ( hole -> CrystalCrash.mc.player.getDistanceSq ( hole ) ) );
         } else if ( this.sort.getValue ( ) == 2 ) {

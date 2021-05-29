@@ -44,28 +44,28 @@ class BedBomb
         extends Module {
     private final Setting < Boolean > server = this.register ( new Setting < Boolean > ( "Server" , false ) );
     private final Setting < Boolean > place = this.register ( new Setting < Boolean > ( "Place" , false ) );
-    private final Setting < Integer > placeDelay = this.register ( new Setting < Object > ( "Placedelay" , Integer.valueOf ( 50 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 500 ) , v -> this.place.getValue ( ) ) );
-    private final Setting < Float > placeRange = this.register ( new Setting < Object > ( "PlaceRange" , Float.valueOf ( 6.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 10.0f ) , v -> this.place.getValue ( ) ) );
-    private final Setting < Boolean > extraPacket = this.register ( new Setting < Object > ( "InsanePacket" , Boolean.valueOf ( false ) , v -> this.place.getValue ( ) ) );
-    private final Setting < Boolean > packet = this.register ( new Setting < Object > ( "Packet" , Boolean.valueOf ( false ) , v -> this.place.getValue ( ) ) );
+    private final Setting < Integer > placeDelay = this.register ( new Setting < Object > ( "Placedelay" , 50 , 0 , 500 , v -> this.place.getValue ( ) ) );
+    private final Setting < Float > placeRange = this.register ( new Setting < Object > ( "PlaceRange" , 6.0f , 1.0f , 10.0f , v -> this.place.getValue ( ) ) );
+    private final Setting < Boolean > extraPacket = this.register ( new Setting < Object > ( "InsanePacket" , Boolean.FALSE , v -> this.place.getValue ( ) ) );
+    private final Setting < Boolean > packet = this.register ( new Setting < Object > ( "Packet" , Boolean.FALSE , v -> this.place.getValue ( ) ) );
     private final Setting < Boolean > explode = this.register ( new Setting < Boolean > ( "Break" , true ) );
     private final Setting < BreakLogic > breakMode = this.register ( new Setting < Object > ( "BreakMode" , BreakLogic.ALL , v -> this.explode.getValue ( ) ) );
-    private final Setting < Integer > breakDelay = this.register ( new Setting < Object > ( "Breakdelay" , Integer.valueOf ( 50 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 500 ) , v -> this.explode.getValue ( ) ) );
-    private final Setting < Float > breakRange = this.register ( new Setting < Object > ( "BreakRange" , Float.valueOf ( 6.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 10.0f ) , v -> this.explode.getValue ( ) ) );
-    private final Setting < Float > minDamage = this.register ( new Setting < Object > ( "MinDamage" , Float.valueOf ( 5.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 36.0f ) , v -> this.explode.getValue ( ) ) );
-    private final Setting < Float > range = this.register ( new Setting < Object > ( "Range" , Float.valueOf ( 10.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 12.0f ) , v -> this.explode.getValue ( ) ) );
-    private final Setting < Boolean > suicide = this.register ( new Setting < Object > ( "Suicide" , Boolean.valueOf ( false ) , v -> this.explode.getValue ( ) ) );
+    private final Setting < Integer > breakDelay = this.register ( new Setting < Object > ( "Breakdelay" , 50 , 0 , 500 , v -> this.explode.getValue ( ) ) );
+    private final Setting < Float > breakRange = this.register ( new Setting < Object > ( "BreakRange" , 6.0f , 1.0f , 10.0f , v -> this.explode.getValue ( ) ) );
+    private final Setting < Float > minDamage = this.register ( new Setting < Object > ( "MinDamage" , 5.0f , 1.0f , 36.0f , v -> this.explode.getValue ( ) ) );
+    private final Setting < Float > range = this.register ( new Setting < Object > ( "Range" , 10.0f , 1.0f , 12.0f , v -> this.explode.getValue ( ) ) );
+    private final Setting < Boolean > suicide = this.register ( new Setting < Object > ( "Suicide" , Boolean.FALSE , v -> this.explode.getValue ( ) ) );
     private final Setting < Boolean > removeTiles = this.register ( new Setting < Boolean > ( "RemoveTiles" , false ) );
     private final Setting < Boolean > rotate = this.register ( new Setting < Boolean > ( "Rotate" , false ) );
     private final Setting < Boolean > oneDot15 = this.register ( new Setting < Boolean > ( "1.15" , false ) );
-    private final Setting < Logic > logic = this.register ( new Setting < Object > ( "Logic" , Logic.BREAKPLACE , v -> this.place.getValue ( ) != false && this.explode.getValue ( ) != false ) );
+    private final Setting < Logic > logic = this.register ( new Setting < Object > ( "Logic" , Logic.BREAKPLACE , v -> this.place.getValue ( ) && this.explode.getValue ( ) ) );
     private final Setting < Boolean > craft = this.register ( new Setting < Boolean > ( "Craft" , false ) );
-    private final Setting < Boolean > placeCraftingTable = this.register ( new Setting < Object > ( "PlaceTable" , Boolean.valueOf ( false ) , v -> this.craft.getValue ( ) ) );
-    private final Setting < Boolean > openCraftingTable = this.register ( new Setting < Object > ( "OpenTable" , Boolean.valueOf ( false ) , v -> this.craft.getValue ( ) ) );
-    private final Setting < Boolean > craftTable = this.register ( new Setting < Object > ( "CraftTable" , Boolean.valueOf ( false ) , v -> this.craft.getValue ( ) ) );
-    private final Setting < Float > tableRange = this.register ( new Setting < Object > ( "TableRange" , Float.valueOf ( 6.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 10.0f ) , v -> this.craft.getValue ( ) ) );
-    private final Setting < Integer > craftDelay = this.register ( new Setting < Object > ( "CraftDelay" , Integer.valueOf ( 4 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 10 ) , v -> this.craft.getValue ( ) ) );
-    private final Setting < Integer > tableSlot = this.register ( new Setting < Object > ( "TableSlot" , Integer.valueOf ( 8 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 8 ) , v -> this.craft.getValue ( ) ) );
+    private final Setting < Boolean > placeCraftingTable = this.register ( new Setting < Object > ( "PlaceTable" , Boolean.FALSE , v -> this.craft.getValue ( ) ) );
+    private final Setting < Boolean > openCraftingTable = this.register ( new Setting < Object > ( "OpenTable" , Boolean.FALSE , v -> this.craft.getValue ( ) ) );
+    private final Setting < Boolean > craftTable = this.register ( new Setting < Object > ( "CraftTable" , Boolean.FALSE , v -> this.craft.getValue ( ) ) );
+    private final Setting < Float > tableRange = this.register ( new Setting < Object > ( "TableRange" , 6.0f , 1.0f , 10.0f , v -> this.craft.getValue ( ) ) );
+    private final Setting < Integer > craftDelay = this.register ( new Setting < Object > ( "CraftDelay" , 4 , 1 , 10 , v -> this.craft.getValue ( ) ) );
+    private final Setting < Integer > tableSlot = this.register ( new Setting < Object > ( "TableSlot" , 8 , 0 , 8 , v -> this.craft.getValue ( ) ) );
     private final Setting < Boolean > sslot = this.register ( new Setting < Boolean > ( "S-Slot" , false ) );
     private final Timer breakTimer = new Timer ( );
     private final Timer placeTimer = new Timer ( );
@@ -114,7 +114,7 @@ class BedBomb
         if ( ! BedBomb.fullNullCheck ( ) && this.shouldServer ( ) ) {
             BedBomb.mc.player.connection.sendPacket ( new CPacketChatMessage ( "@Serverprefix" + ClickGui.getInstance ( ).prefix.getValue ( ) ) );
             BedBomb.mc.player.connection.sendPacket ( new CPacketChatMessage ( "@Server" + ClickGui.getInstance ( ).prefix.getValue ( ) + "module BedBomb set Enabled false" ) );
-            if ( this.sslot.getValue ( ).booleanValue ( ) ) {
+            if ( this.sslot.getValue ( ) ) {
                 BedBomb.mc.player.connection.sendPacket ( new CPacketHeldItemChange ( BedBomb.mc.player.inventory.currentItem ) );
             }
         }
@@ -133,7 +133,7 @@ class BedBomb
 
     private
     boolean shouldServer ( ) {
-        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( ) != false;
+        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( );
     }
 
     @SubscribeEvent
@@ -226,7 +226,7 @@ class BedBomb
 
     public
     void incrementCraftStage ( ) {
-        if ( this.craftTimer.passedMs ( this.craftDelay.getValue ( ).intValue ( ) ) ) {
+        if ( this.craftTimer.passedMs ( this.craftDelay.getValue ( ) ) ) {
             ++ this.craftStage;
             if ( this.craftStage > 9 ) {
                 this.craftStage = 0;
@@ -254,14 +254,14 @@ class BedBomb
 
     private
     void breakBeds ( ) {
-        if ( this.explode.getValue ( ).booleanValue ( ) && this.breakTimer.passedMs ( this.breakDelay.getValue ( ).intValue ( ) ) ) {
+        if ( this.explode.getValue ( ) && this.breakTimer.passedMs ( this.breakDelay.getValue ( ) ) ) {
             if ( this.breakMode.getValue ( ) == BreakLogic.CALC ) {
                 if ( this.maxPos != null ) {
                     RayTraceResult result;
                     Vec3d hitVec = new Vec3d ( this.maxPos ).add ( 0.5 , 0.5 , 0.5 );
                     float[] rotations = RotationUtil.getLegitRotations ( hitVec );
                     this.yaw.set ( rotations[0] );
-                    if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                    if ( this.rotate.getValue ( ) ) {
                         this.shouldRotate.set ( true );
                         this.pitch.set ( rotations[1] );
                     }
@@ -272,12 +272,12 @@ class BedBomb
             } else {
                 for (TileEntity entityBed : BedBomb.mc.world.loadedTileEntityList) {
                     RayTraceResult result;
-                    if ( ! ( entityBed instanceof TileEntityBed ) || BedBomb.mc.player.getDistanceSq ( entityBed.getPos ( ) ) > MathUtil.square ( this.breakRange.getValue ( ).floatValue ( ) ) )
+                    if ( ! ( entityBed instanceof TileEntityBed ) || BedBomb.mc.player.getDistanceSq ( entityBed.getPos ( ) ) > MathUtil.square ( this.breakRange.getValue ( ) ) )
                         continue;
                     Vec3d hitVec = new Vec3d ( entityBed.getPos ( ) ).add ( 0.5 , 0.5 , 0.5 );
                     float[] rotations = RotationUtil.getLegitRotations ( hitVec );
                     this.yaw.set ( rotations[0] );
-                    if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                    if ( this.rotate.getValue ( ) ) {
                         this.shouldRotate.set ( true );
                         this.pitch.set ( rotations[1] );
                     }
@@ -293,7 +293,7 @@ class BedBomb
     void mapBeds ( ) {
         this.maxPos = null;
         float maxDamage = 0.5f;
-        if ( this.removeTiles.getValue ( ).booleanValue ( ) ) {
+        if ( this.removeTiles.getValue ( ) ) {
             ArrayList < BedData > removedBlocks = new ArrayList < BedData > ( );
             for (TileEntity tile : BedBomb.mc.world.loadedTileEntityList) {
                 if ( ! ( tile instanceof TileEntityBed ) ) continue;
@@ -307,11 +307,11 @@ class BedBomb
             for (BedData data : removedBlocks) {
                 float selfDamage;
                 BlockPos pos;
-                if ( ! data.isHeadPiece ( ) || ! ( BedBomb.mc.player.getDistanceSq ( pos = data.getPos ( ) ) <= MathUtil.square ( this.breakRange.getValue ( ).floatValue ( ) ) ) || ! ( (double) ( selfDamage = DamageUtil.calculateDamage ( pos , BedBomb.mc.player ) ) + 1.0 < (double) EntityUtil.getHealth ( BedBomb.mc.player ) ) && DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) )
+                if ( ! data.isHeadPiece ( ) || ! ( BedBomb.mc.player.getDistanceSq ( pos = data.getPos ( ) ) <= MathUtil.square ( this.breakRange.getValue ( ) ) ) || ! ( (double) ( selfDamage = DamageUtil.calculateDamage ( pos , BedBomb.mc.player ) ) + 1.0 < (double) EntityUtil.getHealth ( BedBomb.mc.player ) ) && DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) )
                     continue;
                 for (EntityPlayer player : BedBomb.mc.world.playerEntities) {
                     float damage;
-                    if ( ! ( player.getDistanceSq ( pos ) < MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) ) || ! EntityUtil.isValid ( player , this.range.getValue ( ).floatValue ( ) + this.breakRange.getValue ( ).floatValue ( ) ) || ! ( ( damage = DamageUtil.calculateDamage ( pos , player ) ) > selfDamage || damage > this.minDamage.getValue ( ).floatValue ( ) && ! DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) ) && ! ( damage > EntityUtil.getHealth ( player ) ) || ! ( damage > maxDamage ) )
+                    if ( ! ( player.getDistanceSq ( pos ) < MathUtil.square ( this.range.getValue ( ) ) ) || ! EntityUtil.isValid ( player , this.range.getValue ( ) + this.breakRange.getValue ( ) ) || ! ( ( damage = DamageUtil.calculateDamage ( pos , player ) ) > selfDamage || damage > this.minDamage.getValue ( ) && ! DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) ) && ! ( damage > EntityUtil.getHealth ( player ) ) || ! ( damage > maxDamage ) )
                         continue;
                     maxDamage = damage;
                     this.maxPos = pos;
@@ -325,11 +325,11 @@ class BedBomb
                 float selfDamage;
                 BlockPos pos;
                 TileEntityBed bed;
-                if ( ! ( tile instanceof TileEntityBed ) || ! ( bed = (TileEntityBed) tile ).isHeadPiece ( ) || ! ( BedBomb.mc.player.getDistanceSq ( pos = bed.getPos ( ) ) <= MathUtil.square ( this.breakRange.getValue ( ).floatValue ( ) ) ) || ! ( (double) ( selfDamage = DamageUtil.calculateDamage ( pos , BedBomb.mc.player ) ) + 1.0 < (double) EntityUtil.getHealth ( BedBomb.mc.player ) ) && DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) )
+                if ( ! ( tile instanceof TileEntityBed ) || ! ( bed = (TileEntityBed) tile ).isHeadPiece ( ) || ! ( BedBomb.mc.player.getDistanceSq ( pos = bed.getPos ( ) ) <= MathUtil.square ( this.breakRange.getValue ( ) ) ) || ! ( (double) ( selfDamage = DamageUtil.calculateDamage ( pos , BedBomb.mc.player ) ) + 1.0 < (double) EntityUtil.getHealth ( BedBomb.mc.player ) ) && DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) )
                     continue;
                 for (EntityPlayer player : BedBomb.mc.world.playerEntities) {
                     float damage;
-                    if ( ! ( player.getDistanceSq ( pos ) < MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) ) || ! EntityUtil.isValid ( player , this.range.getValue ( ).floatValue ( ) + this.breakRange.getValue ( ).floatValue ( ) ) || ! ( ( damage = DamageUtil.calculateDamage ( pos , player ) ) > selfDamage || damage > this.minDamage.getValue ( ).floatValue ( ) && ! DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) ) && ! ( damage > EntityUtil.getHealth ( player ) ) || ! ( damage > maxDamage ) )
+                    if ( ! ( player.getDistanceSq ( pos ) < MathUtil.square ( this.range.getValue ( ) ) ) || ! EntityUtil.isValid ( player , this.range.getValue ( ) + this.breakRange.getValue ( ) ) || ! ( ( damage = DamageUtil.calculateDamage ( pos , player ) ) > selfDamage || damage > this.minDamage.getValue ( ) && ! DamageUtil.canTakeDamage ( this.suicide.getValue ( ) ) ) && ! ( damage > EntityUtil.getHealth ( player ) ) || ! ( damage > maxDamage ) )
                         continue;
                     maxDamage = damage;
                     this.maxPos = pos;
@@ -340,24 +340,24 @@ class BedBomb
 
     private
     void placeBeds ( ) {
-        if ( this.place.getValue ( ).booleanValue ( ) && this.placeTimer.passedMs ( this.placeDelay.getValue ( ).intValue ( ) ) && this.maxPos == null ) {
+        if ( this.place.getValue ( ) && this.placeTimer.passedMs ( this.placeDelay.getValue ( ) ) && this.maxPos == null ) {
             this.bedSlot = this.findBedSlot ( );
             if ( this.bedSlot == - 1 ) {
                 if ( BedBomb.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.BED ) {
                     this.bedSlot = - 2;
                 } else {
-                    if ( this.craft.getValue ( ).booleanValue ( ) && ! this.shouldCraft && EntityUtil.getClosestEnemy ( this.placeRange.getValue ( ).floatValue ( ) ) != null ) {
+                    if ( this.craft.getValue ( ) && ! this.shouldCraft && EntityUtil.getClosestEnemy ( this.placeRange.getValue ( ) ) != null ) {
                         this.doBedCraft ( );
                     }
                     return;
                 }
             }
             this.lastHotbarSlot = BedBomb.mc.player.inventory.currentItem;
-            this.target = EntityUtil.getClosestEnemy ( this.placeRange.getValue ( ).floatValue ( ) );
+            this.target = EntityUtil.getClosestEnemy ( this.placeRange.getValue ( ) );
             if ( this.target != null ) {
                 BlockPos targetPos = new BlockPos ( this.target.getPositionVector ( ) );
                 this.placeBed ( targetPos , true );
-                if ( this.craft.getValue ( ).booleanValue ( ) ) {
+                if ( this.craft.getValue ( ) ) {
                     this.doBedCraft ( );
                 }
             }
@@ -371,13 +371,13 @@ class BedBomb
         }
         float damage = DamageUtil.calculateDamage ( pos , BedBomb.mc.player );
         if ( (double) damage > (double) EntityUtil.getHealth ( BedBomb.mc.player ) + 0.5 ) {
-            if ( firstCheck && this.oneDot15.getValue ( ).booleanValue ( ) ) {
+            if ( firstCheck && this.oneDot15.getValue ( ) ) {
                 this.placeBed ( pos.up ( ) , false );
             }
             return;
         }
         if ( ! BedBomb.mc.world.getBlockState ( pos ).getMaterial ( ).isReplaceable ( ) ) {
-            if ( firstCheck && this.oneDot15.getValue ( ).booleanValue ( ) ) {
+            if ( firstCheck && this.oneDot15.getValue ( ) ) {
                 this.placeBed ( pos.up ( ) , false );
             }
             return;
@@ -386,13 +386,13 @@ class BedBomb
         HashMap < BlockPos, EnumFacing > facings = new HashMap < BlockPos, EnumFacing > ( );
         for (EnumFacing facing : EnumFacing.values ( )) {
             BlockPos position;
-            if ( facing == EnumFacing.DOWN || facing == EnumFacing.UP || ! ( BedBomb.mc.player.getDistanceSq ( position = pos.offset ( facing ) ) <= MathUtil.square ( this.placeRange.getValue ( ).floatValue ( ) ) ) || ! BedBomb.mc.world.getBlockState ( position ).getMaterial ( ).isReplaceable ( ) || BedBomb.mc.world.getBlockState ( position.down ( ) ).getMaterial ( ).isReplaceable ( ) )
+            if ( facing == EnumFacing.DOWN || facing == EnumFacing.UP || ! ( BedBomb.mc.player.getDistanceSq ( position = pos.offset ( facing ) ) <= MathUtil.square ( this.placeRange.getValue ( ) ) ) || ! BedBomb.mc.world.getBlockState ( position ).getMaterial ( ).isReplaceable ( ) || BedBomb.mc.world.getBlockState ( position.down ( ) ).getMaterial ( ).isReplaceable ( ) )
                 continue;
             positions.add ( position );
             facings.put ( position , facing.getOpposite ( ) );
         }
         if ( positions.isEmpty ( ) ) {
-            if ( firstCheck && this.oneDot15.getValue ( ).booleanValue ( ) ) {
+            if ( firstCheck && this.oneDot15.getValue ( ) ) {
                 this.placeBed ( pos.up ( ) , false );
             }
             return;
@@ -401,7 +401,7 @@ class BedBomb
         this.finalPos = positions.get ( 0 );
         this.finalFacing = facings.get ( this.finalPos );
         float[] rotation = RotationUtil.simpleFacing ( this.finalFacing );
-        if ( ! this.sendRotationPacket && this.extraPacket.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.sendRotationPacket && this.extraPacket.getValue ( ) ) {
             RotationUtil.faceYawAndPitch ( rotation[0] , rotation[1] );
             this.sendRotationPacket = true;
         }
@@ -433,14 +433,14 @@ class BedBomb
             }
             return;
         }
-        if ( this.placeCraftingTable.getValue ( ).booleanValue ( ) && BlockUtil.getBlockSphere ( this.tableRange.getValue ( ).floatValue ( ) - 1.0f , BlockWorkbench.class ).size ( ) == 0 && ! ( targets = BlockUtil.getSphere ( EntityUtil.getPlayerPos ( BedBomb.mc.player ) , this.tableRange.getValue ( ).floatValue ( ) , this.tableRange.getValue ( ).intValue ( ) , false , true , 0 ).stream ( ).filter ( pos -> BlockUtil.isPositionPlaceable ( pos , false ) == 3 ).sorted ( Comparator.comparingInt ( pos -> - this.safety ( pos ) ) ).collect ( Collectors.toList ( ) ) ).isEmpty ( ) ) {
+        if ( this.placeCraftingTable.getValue ( ) && BlockUtil.getBlockSphere ( this.tableRange.getValue ( ) - 1.0f , BlockWorkbench.class ).size ( ) == 0 && ! ( targets = BlockUtil.getSphere ( EntityUtil.getPlayerPos ( BedBomb.mc.player ) , this.tableRange.getValue ( ) , this.tableRange.getValue ( ).intValue ( ) , false , true , 0 ).stream ( ).filter ( pos -> BlockUtil.isPositionPlaceable ( pos , false ) == 3 ).sorted ( Comparator.comparingInt ( pos -> - this.safety ( pos ) ) ).collect ( Collectors.toList ( ) ) ).isEmpty ( ) ) {
             target = (BlockPos) targets.get ( 0 );
             int tableSlot = InventoryUtil.findHotbarBlock ( BlockWorkbench.class );
             if ( tableSlot != - 1 ) {
                 BedBomb.mc.player.inventory.currentItem = tableSlot;
                 BlockUtil.placeBlock ( target , EnumHand.MAIN_HAND , this.rotate.getValue ( ) , true , false );
             } else {
-                if ( this.craftTable.getValue ( ).booleanValue ( ) ) {
+                if ( this.craftTable.getValue ( ) ) {
                     this.craftTable ( );
                 }
                 if ( ( tableSlot = InventoryUtil.findHotbarBlock ( BlockWorkbench.class ) ) != - 1 ) {
@@ -449,20 +449,20 @@ class BedBomb
                 }
             }
         }
-        if ( this.openCraftingTable.getValue ( ).booleanValue ( ) ) {
-            List < BlockPos > tables = BlockUtil.getBlockSphere ( this.tableRange.getValue ( ).floatValue ( ) , BlockWorkbench.class );
+        if ( this.openCraftingTable.getValue ( ) ) {
+            List < BlockPos > tables = BlockUtil.getBlockSphere ( this.tableRange.getValue ( ) , BlockWorkbench.class );
             tables.sort ( Comparator.comparingDouble ( pos -> BedBomb.mc.player.getDistanceSq ( pos ) ) );
             if ( ! tables.isEmpty ( ) && ! ( BedBomb.mc.currentScreen instanceof GuiCrafting ) ) {
                 RayTraceResult result;
                 target = tables.get ( 0 );
                 BedBomb.mc.player.connection.sendPacket ( new CPacketEntityAction ( BedBomb.mc.player , CPacketEntityAction.Action.STOP_SNEAKING ) );
-                if ( BedBomb.mc.player.getDistanceSq ( target ) > MathUtil.square ( this.breakRange.getValue ( ).floatValue ( ) ) ) {
+                if ( BedBomb.mc.player.getDistanceSq ( target ) > MathUtil.square ( this.breakRange.getValue ( ) ) ) {
                     return;
                 }
                 Vec3d hitVec = new Vec3d ( target );
                 float[] rotations = RotationUtil.getLegitRotations ( hitVec );
                 this.yaw.set ( rotations[0] );
-                if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                if ( this.rotate.getValue ( ) ) {
                     this.shouldRotate.set ( true );
                     this.pitch.set ( rotations[1] );
                 }
@@ -492,7 +492,7 @@ class BedBomb
             int table = InventoryUtil.findInventoryBlock ( BlockWorkbench.class , true );
             if ( table != - 1 ) {
                 BedBomb.mc.playerController.windowClick ( 0 , table , 0 , ClickType.PICKUP , BedBomb.mc.player );
-                BedBomb.mc.playerController.windowClick ( 0 , this.tableSlot.getValue ( ).intValue ( ) , 0 , ClickType.PICKUP , BedBomb.mc.player );
+                BedBomb.mc.playerController.windowClick ( 0 , this.tableSlot.getValue ( ) , 0 , ClickType.PICKUP , BedBomb.mc.player );
                 BedBomb.mc.playerController.windowClick ( 0 , table , 0 , ClickType.PICKUP , BedBomb.mc.player );
             }
         }

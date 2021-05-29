@@ -30,7 +30,7 @@ class NoSoundLag
 
     public Setting < Boolean > crystals = this.register ( new Setting < Boolean > ( "Crystals" , true ) );
     public Setting < Boolean > armor = this.register ( new Setting < Boolean > ( "Armor" , true ) );
-    public Setting < Float > soundRange = this.register ( new Setting < Float > ( "SoundRange" , Float.valueOf ( 12.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 12.0f ) ) );
+    public Setting < Float > soundRange = this.register ( new Setting < Float > ( "SoundRange" , 12.0f , 0.0f , 12.0f ) );
 
     public
     NoSoundLag ( ) {
@@ -65,10 +65,10 @@ class NoSoundLag
     void onPacketReceived ( PacketEvent.Receive event ) {
         if ( event != null && event.getPacket ( ) != null && NoSoundLag.mc.player != null && NoSoundLag.mc.world != null && event.getPacket ( ) instanceof SPacketSoundEffect ) {
             SPacketSoundEffect packet = event.getPacket ( );
-            if ( this.crystals.getValue ( ).booleanValue ( ) && packet.getCategory ( ) == SoundCategory.BLOCKS && packet.getSound ( ) == SoundEvents.ENTITY_GENERIC_EXPLODE && ( AutoCrystal.getInstance ( ).isOff ( ) || ! AutoCrystal.getInstance ( ).sound.getValue ( ).booleanValue ( ) && AutoCrystal.getInstance ( ).threadMode.getValue ( ) != AutoCrystal.ThreadMode.SOUND ) ) {
-                NoSoundLag.removeEntities ( packet , this.soundRange.getValue ( ).floatValue ( ) );
+            if ( this.crystals.getValue ( ) && packet.getCategory ( ) == SoundCategory.BLOCKS && packet.getSound ( ) == SoundEvents.ENTITY_GENERIC_EXPLODE && ( AutoCrystal.getInstance ( ).isOff ( ) || ! AutoCrystal.getInstance ( ).sound.getValue ( ) && AutoCrystal.getInstance ( ).threadMode.getValue ( ) != AutoCrystal.ThreadMode.SOUND ) ) {
+                NoSoundLag.removeEntities ( packet , this.soundRange.getValue ( ) );
             }
-            if ( BLACKLIST.contains ( packet.getSound ( ) ) && this.armor.getValue ( ).booleanValue ( ) ) {
+            if ( BLACKLIST.contains ( packet.getSound ( ) ) && this.armor.getValue ( ) ) {
                 event.setCanceled ( true );
             }
         }

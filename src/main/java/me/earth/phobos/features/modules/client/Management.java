@@ -18,12 +18,12 @@ class Management
     public Setting < Boolean > rainbowPrefix = this.register ( new Setting < Boolean > ( "RainbowPrefix" , false ) );
     public Setting < TextUtil.Color > bracketColor = this.register ( new Setting < TextUtil.Color > ( "BColor" , TextUtil.Color.BLUE ) );
     public Setting < TextUtil.Color > commandColor = this.register ( new Setting < TextUtil.Color > ( "CColor" , TextUtil.Color.BLUE ) );
-    public Setting < Integer > betterFPS = this.register ( new Setting < Object > ( "MaxFPS" , Integer.valueOf ( 300 ) , Integer.valueOf ( 30 ) , Integer.valueOf ( 1000 ) , v -> this.betterFrames.getValue ( ) ) );
+    public Setting < Integer > betterFPS = this.register ( new Setting < Object > ( "MaxFPS" , 300 , 30 , 1000 , v -> this.betterFrames.getValue ( ) ) );
     public Setting < Boolean > potions = this.register ( new Setting < Boolean > ( "Potions" , true ) );
     public Setting < Integer > textRadarUpdates = this.register ( new Setting < Integer > ( "TRUpdates" , 500 , 0 , 1000 ) );
     public Setting < Integer > respondTime = this.register ( new Setting < Integer > ( "SeverTime" , 500 , 0 , 1000 ) );
     public Setting < Integer > moduleListUpdates = this.register ( new Setting < Integer > ( "ALUpdates" , 1000 , 0 , 1000 ) );
-    public Setting < Float > holeRange = this.register ( new Setting < Float > ( "HoleRange" , Float.valueOf ( 6.0f ) , Float.valueOf ( 1.0f ) , Float.valueOf ( 256.0f ) ) );
+    public Setting < Float > holeRange = this.register ( new Setting < Float > ( "HoleRange" , 6.0f , 1.0f , 256.0f ) );
     public Setting < Integer > holeUpdates = this.register ( new Setting < Integer > ( "HoleUpdates" , 100 , 0 , 1000 ) );
     public Setting < Integer > holeSync = this.register ( new Setting < Integer > ( "HoleSync" , 10000 , 1 , 10000 ) );
     public Setting < Boolean > safety = this.register ( new Setting < Boolean > ( "SafetyPlayer" , false ) );
@@ -33,7 +33,7 @@ class Management
     public Setting < Boolean > oneDot15 = this.register ( new Setting < Boolean > ( "1.15" , false ) );
     public Setting < Boolean > tRadarInv = this.register ( new Setting < Boolean > ( "TRadarInv" , true ) );
     public Setting < Boolean > unfocusedCpu = this.register ( new Setting < Boolean > ( "UnfocusedCPU" , false ) );
-    public Setting < Integer > cpuFPS = this.register ( new Setting < Object > ( "UnfocusedFPS" , Integer.valueOf ( 60 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 60 ) , v -> this.unfocusedCpu.getValue ( ) ) );
+    public Setting < Integer > cpuFPS = this.register ( new Setting < Object > ( "UnfocusedFPS" , 60 , 1 , 60 , v -> this.unfocusedCpu.getValue ( ) ) );
     public Setting < Integer > baritoneTimeOut = this.register ( new Setting < Integer > ( "Baritone" , 5 , 1 , 20 ) );
     public Setting < Boolean > oneChunk = this.register ( new Setting < Boolean > ( "OneChunk" , false ) );
 
@@ -66,7 +66,7 @@ class Management
     public
     void onSettingChange ( ClientEvent event ) {
         if ( event.getStage ( ) == 2 ) {
-            if ( this.oneChunk.getPlannedValue ( ).booleanValue ( ) ) {
+            if ( this.oneChunk.getPlannedValue ( ) ) {
                 Management.mc.gameSettings.renderDistanceChunks = 1;
             }
             if ( event.getSetting ( ) != null && this.equals ( event.getSetting ( ).getFeature ( ) ) ) {
@@ -80,7 +80,7 @@ class Management
 
     public
     String getCommandMessage ( ) {
-        if ( this.rainbowPrefix.getPlannedValue ( ).booleanValue ( ) ) {
+        if ( this.rainbowPrefix.getPlannedValue ( ) ) {
             StringBuilder stringBuilder = new StringBuilder ( this.getRawCommandMessage ( ) );
             stringBuilder.insert ( 0 , "\u00a7+" );
             stringBuilder.append ( "\u00a7r" );

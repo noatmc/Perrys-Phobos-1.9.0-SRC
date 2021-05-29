@@ -39,10 +39,10 @@ class Surround
     private final Setting < InventoryUtil.Switch > switchMode = this.register ( new Setting < InventoryUtil.Switch > ( "Switch" , InventoryUtil.Switch.NORMAL ) );
     private final Setting < Boolean > center = this.register ( new Setting < Boolean > ( "Center" , false ) );
     private final Setting < Boolean > helpingBlocks = this.register ( new Setting < Boolean > ( "HelpingBlocks" , true ) );
-    private final Setting < Boolean > intelligent = this.register ( new Setting < Object > ( "Intelligent" , Boolean.valueOf ( false ) , v -> this.helpingBlocks.getValue ( ) ) );
+    private final Setting < Boolean > intelligent = this.register ( new Setting < Object > ( "Intelligent" , Boolean.FALSE , v -> this.helpingBlocks.getValue ( ) ) );
     private final Setting < Boolean > antiPedo = this.register ( new Setting < Boolean > ( "NoPedo" , false ) );
     private final Setting < Integer > extender = this.register ( new Setting < Integer > ( "Extend" , 1 , 1 , 4 ) );
-    private final Setting < Boolean > extendMove = this.register ( new Setting < Object > ( "MoveExtend" , Boolean.valueOf ( false ) , v -> this.extender.getValue ( ) > 1 ) );
+    private final Setting < Boolean > extendMove = this.register ( new Setting < Object > ( "MoveExtend" , Boolean.FALSE , v -> this.extender.getValue ( ) > 1 ) );
     private final Setting < MovementMode > movementMode = this.register ( new Setting < MovementMode > ( "Movement" , MovementMode.STATIC ) );
     private final Setting < Double > speed = this.register ( new Setting < Object > ( "Speed" , 10.0 , 0.0 , 30.0 , v -> this.movementMode.getValue ( ) == MovementMode.LIMIT || this.movementMode.getValue ( ) == MovementMode.OFF , "Maximum Movement Speed" ) );
     private final Setting < Integer > eventMode = this.register ( new Setting < Integer > ( "Updates" , 3 , 1 , 3 ) );
@@ -53,20 +53,20 @@ class Surround
     private final Setting < Integer > retryer = this.register ( new Setting < Integer > ( "Retries" , 4 , 1 , 15 ) );
     private final Setting < Boolean > endPortals = this.register ( new Setting < Boolean > ( "EndPortals" , false ) );
     private final Setting < Boolean > render = this.register ( new Setting < Boolean > ( "Render" , true ) );
-    public final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.valueOf ( false ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > box = this.register ( new Setting < Object > ( "Box" , Boolean.valueOf ( false ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.valueOf ( true ) , v -> this.render.getValue ( ) ) );
-    public final Setting < Boolean > customOutline = this.register ( new Setting < Object > ( "CustomLine" , Boolean.valueOf ( false ) , v -> this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.render.getValue ( ) ) );
-    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , Integer.valueOf ( 125 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.box.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , Float.valueOf ( 1.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 5.0f ) , v -> this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cRed = this.register ( new Setting < Object > ( "OL-Red" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cGreen = this.register ( new Setting < Object > ( "OL-Green" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cBlue = this.register ( new Setting < Object > ( "OL-Blue" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
-    private final Setting < Integer > cAlpha = this.register ( new Setting < Object > ( "OL-Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.customOutline.getValue ( ) != false && this.outline.getValue ( ) != false && this.render.getValue ( ) != false ) );
+    public final Setting < Boolean > colorSync = this.register ( new Setting < Object > ( "Sync" , Boolean.FALSE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > box = this.register ( new Setting < Object > ( "Box" , Boolean.FALSE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.TRUE , v -> this.render.getValue ( ) ) );
+    public final Setting < Boolean > customOutline = this.register ( new Setting < Object > ( "CustomLine" , Boolean.FALSE , v -> this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , 0 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , 255 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , 0 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , 255 , 0 , 255 , v -> this.render.getValue ( ) ) );
+    private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , 125 , 0 , 255 , v -> this.box.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cRed = this.register ( new Setting < Object > ( "OL-Red" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cGreen = this.register ( new Setting < Object > ( "OL-Green" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cBlue = this.register ( new Setting < Object > ( "OL-Blue" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
+    private final Setting < Integer > cAlpha = this.register ( new Setting < Object > ( "OL-Alpha" , 255 , 0 , 255 , v -> this.customOutline.getValue ( ) && this.outline.getValue ( ) && this.render.getValue ( ) ) );
     private final Timer timer = new Timer ( );
     private final Timer retryTimer = new Timer ( );
     private final Set < Vec3d > extendingBlocks = new HashSet < Vec3d > ( );
@@ -96,7 +96,7 @@ class Surround
         }
         this.lastHotbarSlot = Surround.mc.player.inventory.currentItem;
         this.startPos = EntityUtil.getRoundedBlockPos ( Surround.mc.player );
-        if ( this.center.getValue ( ).booleanValue ( ) && ! Phobos.moduleManager.isModuleEnabled ( "Freecam" ) ) {
+        if ( this.center.getValue ( ) && ! Phobos.moduleManager.isModuleEnabled ( "Freecam" ) ) {
             if ( Surround.mc.world.getBlockState ( new BlockPos ( Surround.mc.player.getPositionVector ( ) ) ).getBlock ( ) == Blocks.WEB ) {
                 Phobos.positionManager.setPositionPacket ( Surround.mc.player.posX , this.startPos.getY ( ) , Surround.mc.player.posZ , true , true , true );
             } else {
@@ -158,11 +158,11 @@ class Surround
     @Override
     public
     void onRender3D ( Render3DEvent event ) {
-        if ( this.render.getValue ( ).booleanValue ( ) && ( this.isSafe == 0 || this.isSafe == 1 ) ) {
+        if ( this.render.getValue ( ) && ( this.isSafe == 0 || this.isSafe == 1 ) ) {
             this.placeVectors = this.fuckYou3arthqu4keYourCodeIsGarbage ( );
             for (BlockPos pos : this.placeVectors) {
                 if ( ! ( Surround.mc.world.getBlockState ( pos ).getBlock ( ) instanceof BlockAir ) ) continue;
-                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) != false ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ).floatValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
+                RenderUtil.drawBoxESP ( pos , this.colorSync.getValue ( ) ? Colors.INSTANCE.getCurrentColor ( ) : new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) ) , this.customOutline.getValue ( ) , new Color ( this.cRed.getValue ( ) , this.cGreen.getValue ( ) , this.cBlue.getValue ( ) , this.cAlpha.getValue ( ) ) , this.lineWidth.getValue ( ) , this.outline.getValue ( ) , this.box.getValue ( ) , this.boxAlpha.getValue ( ) , false );
             }
         }
     }
@@ -170,7 +170,7 @@ class Surround
     @Override
     public
     String getDisplayInfo ( ) {
-        if ( ! this.info.getValue ( ).booleanValue ( ) ) {
+        if ( ! this.info.getValue ( ) ) {
             return null;
         }
         switch (this.isSafe) {
@@ -186,7 +186,7 @@ class Surround
 
     private
     boolean shouldServer ( ) {
-        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( ) != false;
+        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( );
     }
 
     private
@@ -199,7 +199,7 @@ class Surround
             this.placeBlocks ( Surround.mc.player.getPositionVector ( ) , EntityUtil.getUnsafeBlockArray ( Surround.mc.player , 0 , this.floor.getValue ( ) , true ) , this.helpingBlocks.getValue ( ) , false , false );
         } else if ( ! EntityUtil.isSafe ( Surround.mc.player , - 1 , false , true ) ) {
             this.isSafe = 1;
-            if ( this.antiPedo.getValue ( ).booleanValue ( ) ) {
+            if ( this.antiPedo.getValue ( ) ) {
                 this.placeBlocks ( Surround.mc.player.getPositionVector ( ) , EntityUtil.getUnsafeBlockArray ( Surround.mc.player , - 1 , false , true ) , false , false , true );
             }
         } else {
@@ -256,7 +256,7 @@ class Surround
         block6:
         for (Vec3d vec3d : vec3ds) {
             gotHelp = true;
-            if ( isHelping && ! this.intelligent.getValue ( ).booleanValue ( ) && ++ helpings > 1 ) {
+            if ( isHelping && ! this.intelligent.getValue ( ) && ++ helpings > 1 ) {
                 return false;
             }
             BlockPos position = new BlockPos ( pos ).add ( vec3d.x , vec3d.y , vec3d.z );
@@ -265,13 +265,13 @@ class Surround
                     continue block6;
                 }
                 case 1: {
-                    if ( ( this.switchMode.getValue ( ) == InventoryUtil.Switch.SILENT || BlockTweaks.getINSTANCE ( ).isOn ( ) && BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ).booleanValue ( ) ) && ( this.retries.get ( position ) == null || this.retries.get ( position ) < this.retryer.getValue ( ) ) ) {
+                    if ( ( this.switchMode.getValue ( ) == InventoryUtil.Switch.SILENT || BlockTweaks.getINSTANCE ( ).isOn ( ) && BlockTweaks.getINSTANCE ( ).noBlock.getValue ( ) ) && ( this.retries.get ( position ) == null || this.retries.get ( position ) < this.retryer.getValue ( ) ) ) {
                         this.placeBlock ( position );
                         this.retries.put ( position , this.retries.get ( position ) == null ? 1 : this.retries.get ( position ) + 1 );
                         this.retryTimer.reset ( );
                         continue block6;
                     }
-                    if ( ! this.extendMove.getValue ( ).booleanValue ( ) && Phobos.speedManager.getSpeedKpH ( ) != 0.0 || isExtending || this.extenders >= this.extender.getValue ( ) )
+                    if ( ! this.extendMove.getValue ( ) && Phobos.speedManager.getSpeedKpH ( ) != 0.0 || isExtending || this.extenders >= this.extender.getValue ( ) )
                         continue block6;
                     this.placeBlocks ( Surround.mc.player.getPositionVector ( ).add ( vec3d ) , EntityUtil.getUnsafeBlockArrayFromVec3d ( Surround.mc.player.getPositionVector ( ).add ( vec3d ) , 0 , this.floor.getValue ( ) , true ) , hasHelpingBlocks , false , true );
                     this.extendingBlocks.add ( vec3d );
@@ -299,7 +299,7 @@ class Surround
         if ( Surround.fullNullCheck ( ) || this.shouldServer ( ) ) {
             return true;
         }
-        if ( this.endPortals.getValue ( ).booleanValue ( ) ) {
+        if ( this.endPortals.getValue ( ) ) {
             this.offHand = InventoryUtil.isBlock ( Surround.mc.player.getHeldItemOffhand ( ).getItem ( ) , BlockEndPortalFrame.class );
             if ( ! this.offHand ) {
                 this.offHand = InventoryUtil.isBlock ( Surround.mc.player.getHeldItemOffhand ( ).getItem ( ) , BlockObsidian.class );
@@ -311,7 +311,7 @@ class Surround
         this.didPlace = false;
         this.extenders = 1;
         this.placements = 0;
-        if ( this.endPortals.getValue ( ).booleanValue ( ) ) {
+        if ( this.endPortals.getValue ( ) ) {
             this.obbySlot = InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class );
             if ( this.obbySlot == - 1 ) {
                 this.obbySlot = InventoryUtil.findHotbarBlock ( BlockObsidian.class );
@@ -328,8 +328,8 @@ class Surround
             this.retryTimer.reset ( );
         }
         this.switchItem ( true );
-        if ( ! ( this.obbySlot != - 1 || this.offHand || this.echests.getValue ( ).booleanValue ( ) && echestSlot != - 1 ) ) {
-            if ( this.info.getValue ( ).booleanValue ( ) ) {
+        if ( ! ( this.obbySlot != - 1 || this.offHand || this.echests.getValue ( ) && echestSlot != - 1 ) ) {
+            if ( this.info.getValue ( ) ) {
                 Command.sendMessage ( "<" + this.getDisplayName ( ) + "> " + "\u00a7c" + "You are out of Obsidian." );
             }
             this.disable ( );
@@ -359,7 +359,7 @@ class Surround
                 return true;
             }
         }
-        return Phobos.moduleManager.isModuleEnabled ( "Freecam" ) || ! this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && Surround.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockObsidian.class );
+        return Phobos.moduleManager.isModuleEnabled ( "Freecam" ) || ! this.timer.passedMs ( this.delay.getValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && Surround.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockObsidian.class );
     }
 
     private
@@ -377,14 +377,14 @@ class Surround
         if ( this.offHand ) {
             return true;
         }
-        boolean[] value = InventoryUtil.switchItem ( back , this.lastHotbarSlot , this.switchedItem , this.switchMode.getValue ( ) , this.obbySlot == - 1 ? BlockEnderChest.class : ( this.endPortals.getValue ( ) != false && InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class ) != - 1 ? BlockEndPortalFrame.class : BlockObsidian.class ) );
+        boolean[] value = InventoryUtil.switchItem ( back , this.lastHotbarSlot , this.switchedItem , this.switchMode.getValue ( ) , this.obbySlot == - 1 ? BlockEnderChest.class : ( this.endPortals.getValue ( ) && InventoryUtil.findHotbarBlock ( BlockEndPortalFrame.class ) != - 1 ? BlockEndPortalFrame.class : BlockObsidian.class ) );
         this.switchedItem = value[0];
         return value[1];
     }
 
     private
     List < BlockPos > fuckYou3arthqu4keYourCodeIsGarbage ( ) {
-        if ( this.floor.getValue ( ).booleanValue ( ) ) {
+        if ( this.floor.getValue ( ) ) {
             return Arrays.asList ( new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 0 , - 1 , 0 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 1 , 0 , 0 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( - 1 , 0 , 0 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 0 , 0 , - 1 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 0 , 0 , 1 ) );
         }
         return Arrays.asList ( new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 1 , 0 , 0 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( - 1 , 0 , 0 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 0 , 0 , - 1 ) , new BlockPos ( Surround.mc.player.getPositionVector ( ) ).add ( 0 , 0 , 1 ) );

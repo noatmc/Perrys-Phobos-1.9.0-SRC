@@ -27,17 +27,17 @@ class BowSpam
         extends Module {
     private final Timer timer = new Timer ( );
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.FAST ) );
-    public Setting < Boolean > bowbomb = this.register ( new Setting < Object > ( "BowBomb" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) != Mode.BOWBOMB ) );
-    public Setting < Boolean > allowOffhand = this.register ( new Setting < Object > ( "Offhand" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) != Mode.AUTORELEASE ) );
+    public Setting < Boolean > bowbomb = this.register ( new Setting < Object > ( "BowBomb" , Boolean.FALSE , v -> this.mode.getValue ( ) != Mode.BOWBOMB ) );
+    public Setting < Boolean > allowOffhand = this.register ( new Setting < Object > ( "Offhand" , Boolean.TRUE , v -> this.mode.getValue ( ) != Mode.AUTORELEASE ) );
     public Setting < Integer > ticks = this.register ( new Setting < Object > ( "Ticks" , 3 , 0 , 20 , v -> this.mode.getValue ( ) == Mode.BOWBOMB || this.mode.getValue ( ) == Mode.FAST , "Speed" ) );
     public Setting < Integer > delay = this.register ( new Setting < Object > ( "Delay" , 50 , 0 , 500 , v -> this.mode.getValue ( ) == Mode.AUTORELEASE , "Speed" ) );
     public Setting < Boolean > tpsSync = this.register ( new Setting < Boolean > ( "TpsSync" , true ) );
     public Setting < Boolean > autoSwitch = this.register ( new Setting < Boolean > ( "AutoSwitch" , false ) );
-    public Setting < Boolean > onlyWhenSave = this.register ( new Setting < Object > ( "OnlyWhenSave" , Boolean.valueOf ( true ) , v -> this.autoSwitch.getValue ( ) ) );
+    public Setting < Boolean > onlyWhenSave = this.register ( new Setting < Object > ( "OnlyWhenSave" , Boolean.TRUE , v -> this.autoSwitch.getValue ( ) ) );
     public Setting < Target > targetMode = this.register ( new Setting < Object > ( "Target" , Target.LOWEST , v -> this.autoSwitch.getValue ( ) ) );
-    public Setting < Float > range = this.register ( new Setting < Object > ( "Range" , Float.valueOf ( 3.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 6.0f ) , v -> this.autoSwitch.getValue ( ) , "Range of the target" ) );
-    public Setting < Float > health = this.register ( new Setting < Object > ( "Lethal" , Float.valueOf ( 6.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 36.0f ) , v -> this.autoSwitch.getValue ( ) , "When should it switch?" ) );
-    public Setting < Float > ownHealth = this.register ( new Setting < Object > ( "OwnHealth" , Float.valueOf ( 20.0f ) , Float.valueOf ( 0.1f ) , Float.valueOf ( 36.0f ) , v -> this.autoSwitch.getValue ( ) , "Own Health." ) );
+    public Setting < Float > range = this.register ( new Setting < Object > ( "Range" , 3.0f , 0.0f , 6.0f , v -> this.autoSwitch.getValue ( ) , "Range of the target" ) );
+    public Setting < Float > health = this.register ( new Setting < Object > ( "Lethal" , 6.0f , 0.1f , 36.0f , v -> this.autoSwitch.getValue ( ) , "When should it switch?" ) );
+    public Setting < Float > ownHealth = this.register ( new Setting < Object > ( "OwnHealth" , 20.0f , 0.1f , 36.0f , v -> this.autoSwitch.getValue ( ) , "Own Health." ) );
     private boolean offhand = false;
     private boolean switched = false;
     private int lastHotbarSlot = - 1;
@@ -59,7 +59,7 @@ class BowSpam
         if ( event.getStage ( ) != 0 ) {
             return;
         }
-        if ( this.autoSwitch.getValue ( ).booleanValue ( ) && InventoryUtil.findHotbarBlock ( ItemBow.class ) != - 1 && this.ownHealth.getValue ( ).floatValue ( ) <= EntityUtil.getHealth ( BowSpam.mc.player ) && ( ! this.onlyWhenSave.getValue ( ).booleanValue ( ) || EntityUtil.isSafe ( BowSpam.mc.player ) ) ) {
+        if ( this.autoSwitch.getValue ( ) && InventoryUtil.findHotbarBlock ( ItemBow.class ) != - 1 && this.ownHealth.getValue ( ) <= EntityUtil.getHealth ( BowSpam.mc.player ) && ( ! this.onlyWhenSave.getValue ( ) || EntityUtil.isSafe ( BowSpam.mc.player ) ) ) {
             AutoCrystal crystal;
             EntityPlayer target = this.getTarget ( );
             if ( ! ( target == null || ( crystal = Phobos.moduleManager.getModuleByClass ( AutoCrystal.class ) ).isOn ( ) && InventoryUtil.holdingItem ( ItemEndCrystal.class ) ) ) {
@@ -94,8 +94,8 @@ class BowSpam
         }
         if ( this.mode.getValue ( ) == Mode.FAST && ( this.offhand || BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) && BowSpam.mc.player.isHandActive ( ) ) {
             float f = BowSpam.mc.player.getItemInUseMaxCount ( );
-            float f2 = this.ticks.getValue ( ).intValue ( );
-            float f3 = this.tpsSync.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f;
+            float f2 = this.ticks.getValue ( );
+            float f3 = this.tpsSync.getValue ( ) ? Phobos.serverManager.getTpsFactor ( ) : 1.0f;
             if ( f >= f2 * f3 ) {
                 BowSpam.mc.player.connection.sendPacket ( new CPacketPlayerDigging ( CPacketPlayerDigging.Action.RELEASE_USE_ITEM , BlockPos.ORIGIN , BowSpam.mc.player.getHorizontalFacing ( ) ) );
                 BowSpam.mc.player.connection.sendPacket ( new CPacketPlayerTryUseItem ( this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND ) );
@@ -107,10 +107,10 @@ class BowSpam
     @Override
     public
     void onUpdate ( ) {
-        this.offhand = BowSpam.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.BOW && this.allowOffhand.getValue ( ) != false;
+        this.offhand = BowSpam.mc.player.getHeldItemOffhand ( ).getItem ( ) == Items.BOW && this.allowOffhand.getValue ( );
         switch (this.mode.getValue ( )) {
             case AUTORELEASE: {
-                if ( ! this.offhand && ! ( BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) || ! this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ).intValue ( ) * ( this.tpsSync.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) )
+                if ( ! this.offhand && ! ( BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) || ! this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ) * ( this.tpsSync.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) )
                     break;
                 BowSpam.mc.playerController.onStoppedUsingItem ( BowSpam.mc.player );
                 this.timer.reset ( );
@@ -120,8 +120,8 @@ class BowSpam
                 if ( ! this.offhand && ! ( BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) || ! BowSpam.mc.player.isHandActive ( ) )
                     break;
                 float f = BowSpam.mc.player.getItemInUseMaxCount ( );
-                float f2 = this.ticks.getValue ( ).intValue ( );
-                float f3 = this.tpsSync.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f;
+                float f2 = this.ticks.getValue ( );
+                float f3 = this.tpsSync.getValue ( ) ? Phobos.serverManager.getTpsFactor ( ) : 1.0f;
                 if ( ! ( f >= f2 * f3 ) ) break;
                 BowSpam.mc.player.connection.sendPacket ( new CPacketPlayerDigging ( CPacketPlayerDigging.Action.RELEASE_USE_ITEM , BlockPos.ORIGIN , BowSpam.mc.player.getHorizontalFacing ( ) ) );
                 BowSpam.mc.player.connection.sendPacket ( new CPacketPlayer.PositionRotation ( BowSpam.mc.player.posX , BowSpam.mc.player.posY - 0.0624 , BowSpam.mc.player.posZ , BowSpam.mc.player.rotationYaw , BowSpam.mc.player.rotationPitch , false ) );
@@ -136,7 +136,7 @@ class BowSpam
     public
     void onPacketSend ( PacketEvent.Send event ) {
         CPacketPlayerDigging packet;
-        if ( event.getStage ( ) == 0 && this.bowbomb.getValue ( ).booleanValue ( ) && this.mode.getValue ( ) != Mode.BOWBOMB && event.getPacket ( ) instanceof CPacketPlayerDigging && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketPlayerDigging.Action.RELEASE_USE_ITEM && ( this.offhand || BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) && BowSpam.mc.player.getItemInUseMaxCount ( ) >= 20 && ! BowSpam.mc.player.onGround ) {
+        if ( event.getStage ( ) == 0 && this.bowbomb.getValue ( ) && this.mode.getValue ( ) != Mode.BOWBOMB && event.getPacket ( ) instanceof CPacketPlayerDigging && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketPlayerDigging.Action.RELEASE_USE_ITEM && ( this.offhand || BowSpam.mc.player.inventory.getCurrentItem ( ).getItem ( ) instanceof ItemBow ) && BowSpam.mc.player.getItemInUseMaxCount ( ) >= 20 && ! BowSpam.mc.player.onGround ) {
             BowSpam.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( BowSpam.mc.player.posX , BowSpam.mc.player.posY - (double) 0.1f , BowSpam.mc.player.posZ , false ) );
             BowSpam.mc.player.connection.sendPacket ( new CPacketPlayer.Position ( BowSpam.mc.player.posX , BowSpam.mc.player.posY - 10000.0 , BowSpam.mc.player.posZ , true ) );
         }
@@ -147,7 +147,7 @@ class BowSpam
         double maxHealth = 36.0;
         EntityPlayer target = null;
         for (EntityPlayer player : BowSpam.mc.world.playerEntities) {
-            if ( player == null || EntityUtil.isDead ( player ) || EntityUtil.getHealth ( player ) > this.health.getValue ( ).floatValue ( ) || player.equals ( BowSpam.mc.player ) || Phobos.friendManager.isFriend ( player ) || BowSpam.mc.player.getDistanceSq ( player ) > MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) || ! BowSpam.mc.player.canEntityBeSeen ( player ) && ! EntityUtil.canEntityFeetBeSeen ( player ) )
+            if ( player == null || EntityUtil.isDead ( player ) || EntityUtil.getHealth ( player ) > this.health.getValue ( ) || player.equals ( BowSpam.mc.player ) || Phobos.friendManager.isFriend ( player ) || BowSpam.mc.player.getDistanceSq ( player ) > MathUtil.square ( this.range.getValue ( ) ) || ! BowSpam.mc.player.canEntityBeSeen ( player ) && ! EntityUtil.canEntityFeetBeSeen ( player ) )
                 continue;
             if ( target == null ) {
                 target = player;

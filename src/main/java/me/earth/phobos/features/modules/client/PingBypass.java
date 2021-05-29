@@ -93,7 +93,7 @@ class PingBypass
     public
     void onTick ( ) {
         if ( mc.getConnection ( ) != null && this.isConnected ( ) ) {
-            if ( this.getName.getValue ( ).booleanValue ( ) ) {
+            if ( this.getName.getValue ( ) ) {
                 mc.getConnection ( ).sendPacket ( new CPacketChatMessage ( "@Servername" ) );
                 this.getName.setValue ( false );
             }
@@ -104,7 +104,7 @@ class PingBypass
                 mc.getConnection ( ).sendPacket ( new CPacketKeepAlive ( 100L ) );
                 this.pingTimer.reset ( );
             }
-            if ( this.clear.getValue ( ).booleanValue ( ) ) {
+            if ( this.clear.getValue ( ) ) {
                 this.pingList.clear ( );
             }
         }
@@ -122,7 +122,7 @@ class PingBypass
             }
         } else if ( event.getPacket ( ) instanceof SPacketKeepAlive && ( alive = event.getPacket ( ) ).getId ( ) > 0L && alive.getId ( ) < 1000L ) {
             this.serverPing = alive.getId ( );
-            this.currentPing = this.oneWay.getValue ( ) != false ? this.pingTimer.getPassedTimeMs ( ) / 2L : this.pingTimer.getPassedTimeMs ( );
+            this.currentPing = this.oneWay.getValue ( ) ? this.pingTimer.getPassedTimeMs ( ) / 2L : this.pingTimer.getPassedTimeMs ( );
             this.pingList.add ( this.currentPing );
             this.averagePing = this.getAveragePing ( );
         }
@@ -148,7 +148,7 @@ class PingBypass
 
     private
     long getAveragePing ( ) {
-        if ( ! this.average.getValue ( ).booleanValue ( ) || this.pingList.isEmpty ( ) ) {
+        if ( ! this.average.getValue ( ) || this.pingList.isEmpty ( ) ) {
             return this.currentPing;
         }
         int full = 0;

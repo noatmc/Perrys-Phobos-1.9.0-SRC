@@ -244,7 +244,7 @@ class NoteBot
                     e.printStackTrace ( );
                 }
                 event.setCanceled ( true );
-            } else if ( event.getSetting ( ).equals ( this.tune ) && this.tune.getPlannedValue ( ).booleanValue ( ) ) {
+            } else if ( event.getSetting ( ).equals ( this.tune ) && this.tune.getPlannedValue ( ) ) {
                 this.resetTuning ( );
             }
         }
@@ -253,7 +253,7 @@ class NoteBot
     @SubscribeEvent
     public
     void onPacketReceive ( PacketEvent.Receive event ) {
-        if ( this.tune.getValue ( ).booleanValue ( ) && event.getPacket ( ) instanceof SPacketBlockAction && this.tuneStage == 0 && this.soundPositions != null ) {
+        if ( this.tune.getValue ( ) && event.getPacket ( ) instanceof SPacketBlockAction && this.tuneStage == 0 && this.soundPositions != null ) {
             SPacketBlockAction packet = event.getPacket ( );
             Sound sound = Sound.values ( )[packet.getData1 ( )];
             int pitch = packet.getData2 ( );
@@ -280,20 +280,20 @@ class NoteBot
     @SubscribeEvent
     public
     void onUpdateWalkingPlayerEvent ( UpdateWalkingPlayerEvent event ) {
-        if ( this.downloadSongs.getValue ( ).booleanValue ( ) ) {
+        if ( this.downloadSongs.getValue ( ) ) {
             this.downloadSongs ( );
             Command.sendMessage ( "Songs downloaded" );
             this.downloadSongs.setValue ( false );
         }
         if ( event.getStage ( ) == 0 ) {
-            if ( this.tune.getValue ( ).booleanValue ( ) ) {
+            if ( this.tune.getValue ( ) ) {
                 this.tunePre ( );
-            } else if ( this.active.getValue ( ).booleanValue ( ) ) {
+            } else if ( this.active.getValue ( ) ) {
                 this.noteBotPre ( );
             }
-        } else if ( this.tune.getValue ( ).booleanValue ( ) ) {
+        } else if ( this.tune.getValue ( ) ) {
             this.tunePost ( );
-        } else if ( this.active.getValue ( ).booleanValue ( ) ) {
+        } else if ( this.active.getValue ( ) ) {
             this.noteBotPost ( );
         }
     }

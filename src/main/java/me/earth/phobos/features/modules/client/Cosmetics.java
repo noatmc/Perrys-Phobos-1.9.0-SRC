@@ -59,7 +59,7 @@ class Cosmetics
             double rotate1 = this.interpolate ( event.getEntityPlayer ( ).prevRotationPitch , event.getEntityPlayer ( ).rotationPitch , event.getPartialRenderTick ( ) );
             double rotate3 = event.getEntityPlayer ( ).isSneaking ( ) ? 22.0 : 0.0;
             float limbSwingAmount = this.interpolate ( event.getEntityPlayer ( ).prevLimbSwingAmount , event.getEntityPlayer ( ).limbSwingAmount , event.getPartialRenderTick ( ) );
-            float rotate2 = MathHelper.cos ( event.getEntityPlayer ( ).limbSwing * 0.6662f + (float) Math.PI ) * 1.4f * limbSwingAmount / 1.0f;
+            float rotate2 = MathHelper.cos ( event.getEntityPlayer ( ).limbSwing * 0.6662f + (float) Math.PI ) * 1.4f * limbSwingAmount;
             GL11.glScaled ( - scale , - scale , scale );
             GL11.glTranslated ( 0.0 , - ( (double) event.getEntityPlayer ( ).height - ( event.getEntityPlayer ( ).isSneaking ( ) ? 0.25 : 0.0 ) - 0.38 ) / scale , 0.0 );
             GL11.glRotated ( 180.0 + rotate , 0.0 , 1.0 , 0.0 );

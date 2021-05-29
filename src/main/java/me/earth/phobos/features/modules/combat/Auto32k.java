@@ -49,7 +49,7 @@ class Auto32k
         extends Module {
     private static Auto32k instance;
     private final Setting < Integer > delay = this.register ( new Setting < Integer > ( "Delay/Place" , 25 , 0 , 250 ) );
-    private final Setting < Float > range = this.register ( new Setting < Float > ( "PlaceRange" , Float.valueOf ( 4.5f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 6.0f ) ) );
+    private final Setting < Float > range = this.register ( new Setting < Float > ( "PlaceRange" , 4.5f , 0.0f , 6.0f ) );
     private final Setting < Boolean > raytrace = this.register ( new Setting < Boolean > ( "Raytrace" , false ) );
     private final Setting < Boolean > rotate = this.register ( new Setting < Boolean > ( "Rotate" , false ) );
     private final Setting < Double > targetRange = this.register ( new Setting < Double > ( "TargetRange" , 6.0 , 0.0 , 20.0 ) );
@@ -58,29 +58,29 @@ class Auto32k
     private final Setting < Boolean > freecam = this.register ( new Setting < Boolean > ( "Freecam" , false ) );
     private final Setting < Boolean > onOtherHoppers = this.register ( new Setting < Boolean > ( "UseHoppers" , false ) );
     private final Setting < Boolean > checkForShulker = this.register ( new Setting < Boolean > ( "CheckShulker" , true ) );
-    private final Setting < Integer > checkDelay = this.register ( new Setting < Object > ( "CheckDelay" , Integer.valueOf ( 500 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 500 ) , v -> this.checkForShulker.getValue ( ) ) );
+    private final Setting < Integer > checkDelay = this.register ( new Setting < Object > ( "CheckDelay" , 500 , 0 , 500 , v -> this.checkForShulker.getValue ( ) ) );
     private final Setting < Boolean > drop = this.register ( new Setting < Boolean > ( "Drop" , false ) );
-    private final Setting < Boolean > mine = this.register ( new Setting < Object > ( "Mine" , Boolean.valueOf ( false ) , v -> this.drop.getValue ( ) ) );
+    private final Setting < Boolean > mine = this.register ( new Setting < Object > ( "Mine" , Boolean.FALSE , v -> this.drop.getValue ( ) ) );
     private final Setting < Boolean > checkStatus = this.register ( new Setting < Boolean > ( "CheckState" , true ) );
     private final Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , false ) );
     private final Setting < Boolean > superPacket = this.register ( new Setting < Boolean > ( "DispExtra" , false ) );
     private final Setting < Boolean > secretClose = this.register ( new Setting < Boolean > ( "SecretClose" , false ) );
-    private final Setting < Boolean > closeGui = this.register ( new Setting < Object > ( "CloseGui" , Boolean.valueOf ( false ) , v -> this.secretClose.getValue ( ) ) );
+    private final Setting < Boolean > closeGui = this.register ( new Setting < Object > ( "CloseGui" , Boolean.FALSE , v -> this.secretClose.getValue ( ) ) );
     private final Setting < Boolean > repeatSwitch = this.register ( new Setting < Boolean > ( "SwitchOnFail" , true ) );
-    private final Setting < Float > hopperDistance = this.register ( new Setting < Float > ( "HopperRange" , Float.valueOf ( 8.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 20.0f ) ) );
+    private final Setting < Float > hopperDistance = this.register ( new Setting < Float > ( "HopperRange" , 8.0f , 0.0f , 20.0f ) );
     private final Setting < Integer > trashSlot = this.register ( new Setting < Integer > ( "32kSlot" , 0 , 0 , 9 ) );
     private final Setting < Boolean > messages = this.register ( new Setting < Boolean > ( "Messages" , false ) );
     private final Setting < Boolean > antiHopper = this.register ( new Setting < Boolean > ( "AntiHopper" , false ) );
     private final Timer placeTimer = new Timer ( );
     private final Timer disableTimer = new Timer ( );
     public Setting < Mode > mode = this.register ( new Setting < Mode > ( "Mode" , Mode.NORMAL ) );
-    private final Setting < Integer > delayDispenser = this.register ( new Setting < Object > ( "Blocks/Place" , Integer.valueOf ( 1 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 8 ) , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
-    private final Setting < Integer > blocksPerPlace = this.register ( new Setting < Object > ( "Actions/Place" , Integer.valueOf ( 1 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 3 ) , v -> this.mode.getValue ( ) == Mode.NORMAL ) );
-    private final Setting < Boolean > preferObby = this.register ( new Setting < Object > ( "UseObby" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
-    private final Setting < Boolean > simulate = this.register ( new Setting < Object > ( "Simulate" , Boolean.valueOf ( true ) , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
-    public Setting < Boolean > autoSwitch = this.register ( new Setting < Object > ( "AutoSwitch" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.NORMAL ) );
-    public Setting < Boolean > withBind = this.register ( new Setting < Object > ( "WithBind" , Boolean.valueOf ( false ) , v -> this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ) != false ) );
-    public Setting < Bind > switchBind = this.register ( new Setting < Object > ( "SwitchBind" , new Bind ( - 1 ) , v -> this.autoSwitch.getValue ( ) != false && this.mode.getValue ( ) == Mode.NORMAL && this.withBind.getValue ( ) != false ) );
+    private final Setting < Integer > delayDispenser = this.register ( new Setting < Object > ( "Blocks/Place" , 1 , 1 , 8 , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
+    private final Setting < Integer > blocksPerPlace = this.register ( new Setting < Object > ( "Actions/Place" , 1 , 1 , 3 , v -> this.mode.getValue ( ) == Mode.NORMAL ) );
+    private final Setting < Boolean > preferObby = this.register ( new Setting < Object > ( "UseObby" , Boolean.FALSE , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
+    private final Setting < Boolean > simulate = this.register ( new Setting < Object > ( "Simulate" , Boolean.TRUE , v -> this.mode.getValue ( ) != Mode.NORMAL ) );
+    public Setting < Boolean > autoSwitch = this.register ( new Setting < Object > ( "AutoSwitch" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.NORMAL ) );
+    public Setting < Boolean > withBind = this.register ( new Setting < Object > ( "WithBind" , Boolean.FALSE , v -> this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ) ) );
+    public Setting < Bind > switchBind = this.register ( new Setting < Object > ( "SwitchBind" , new Bind ( - 1 ) , v -> this.autoSwitch.getValue ( ) && this.mode.getValue ( ) == Mode.NORMAL && this.withBind.getValue ( ) ) );
     public boolean switching;
     public Step currentStep = Step.PRE;
     private float yaw;
@@ -123,7 +123,7 @@ class Auto32k
         if ( Auto32k.mc.currentScreen instanceof GuiHopper ) {
             this.currentStep = Step.HOPPERGUI;
         }
-        if ( this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ).booleanValue ( ) && ! this.withBind.getValue ( ).booleanValue ( ) ) {
+        if ( this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ) && ! this.withBind.getValue ( ) ) {
             this.switching = true;
         }
     }
@@ -141,7 +141,7 @@ class Auto32k
         }
         this.checkedThisTick = false;
         this.actionsThisTick = 0;
-        if ( this.isOff ( ) || this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ).booleanValue ( ) && ! this.switching ) {
+        if ( this.isOff ( ) || this.mode.getValue ( ) == Mode.NORMAL && this.autoSwitch.getValue ( ) && ! this.switching ) {
             return;
         }
         if ( this.mode.getValue ( ) == Mode.NORMAL ) {
@@ -157,13 +157,13 @@ class Auto32k
         if ( Auto32k.fullNullCheck ( ) || this.isOff ( ) ) {
             return;
         }
-        if ( ! this.secretClose.getValue ( ).booleanValue ( ) && Auto32k.mc.currentScreen instanceof GuiHopper ) {
-            if ( this.drop.getValue ( ).booleanValue ( ) && Auto32k.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.DIAMOND_SWORD && this.hopperPos != null ) {
+        if ( ! this.secretClose.getValue ( ) && Auto32k.mc.currentScreen instanceof GuiHopper ) {
+            if ( this.drop.getValue ( ) && Auto32k.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.DIAMOND_SWORD && this.hopperPos != null ) {
                 int pickaxeSlot;
                 Auto32k.mc.player.dropItem ( true );
-                if ( this.mine.getValue ( ).booleanValue ( ) && this.hopperPos != null && ( pickaxeSlot = InventoryUtil.findHotbarBlock ( ItemPickaxe.class ) ) != - 1 ) {
+                if ( this.mine.getValue ( ) && this.hopperPos != null && ( pickaxeSlot = InventoryUtil.findHotbarBlock ( ItemPickaxe.class ) ) != - 1 ) {
                     InventoryUtil.switchToHotbarSlot ( pickaxeSlot , false );
-                    if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                    if ( this.rotate.getValue ( ) ) {
                         this.rotateToPos ( this.hopperPos.up ( ) , null );
                     }
                     Auto32k.mc.playerController.onPlayerDamageBlock ( this.hopperPos.up ( ) , Auto32k.mc.player.getHorizontalFacing ( ) );
@@ -176,9 +176,9 @@ class Auto32k
                 this.disable ( );
                 return;
             }
-            if ( ! this.autoSwitch.getValue ( ).booleanValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
+            if ( ! this.autoSwitch.getValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
                 this.disable ( );
-            } else if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+            } else if ( ! this.withBind.getValue ( ) ) {
                 this.disable ( );
             }
         } else if ( event.getGui ( ) instanceof GuiHopper ) {
@@ -201,7 +201,7 @@ class Auto32k
         if ( this.isOff ( ) ) {
             return;
         }
-        if ( Keyboard.getEventKeyState ( ) && ! ( Auto32k.mc.currentScreen instanceof PhobosGui ) && this.switchBind.getValue ( ).getKey ( ) == Keyboard.getEventKey ( ) && this.withBind.getValue ( ).booleanValue ( ) ) {
+        if ( Keyboard.getEventKeyState ( ) && ! ( Auto32k.mc.currentScreen instanceof PhobosGui ) && this.switchBind.getValue ( ).getKey ( ) == Keyboard.getEventKey ( ) && this.withBind.getValue ( ) ) {
             if ( this.switching ) {
                 this.resetFields ( );
                 this.switching = true;
@@ -233,13 +233,13 @@ class Auto32k
                 this.spoof = false;
             }
         } else if ( event.getPacket ( ) instanceof CPacketCloseWindow ) {
-            if ( ! this.secretClose.getValue ( ).booleanValue ( ) && Auto32k.mc.currentScreen instanceof GuiHopper && this.hopperPos != null ) {
-                if ( this.drop.getValue ( ).booleanValue ( ) && Auto32k.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.DIAMOND_SWORD ) {
+            if ( ! this.secretClose.getValue ( ) && Auto32k.mc.currentScreen instanceof GuiHopper && this.hopperPos != null ) {
+                if ( this.drop.getValue ( ) && Auto32k.mc.player.getHeldItemMainhand ( ).getItem ( ) == Items.DIAMOND_SWORD ) {
                     int pickaxeSlot;
                     Auto32k.mc.player.dropItem ( true );
-                    if ( this.mine.getValue ( ).booleanValue ( ) && ( pickaxeSlot = InventoryUtil.findHotbarBlock ( ItemPickaxe.class ) ) != - 1 ) {
+                    if ( this.mine.getValue ( ) && ( pickaxeSlot = InventoryUtil.findHotbarBlock ( ItemPickaxe.class ) ) != - 1 ) {
                         InventoryUtil.switchToHotbarSlot ( pickaxeSlot , false );
-                        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+                        if ( this.rotate.getValue ( ) ) {
                             this.rotateToPos ( this.hopperPos.up ( ) , null );
                         }
                         Auto32k.mc.playerController.onPlayerDamageBlock ( this.hopperPos.up ( ) , Auto32k.mc.player.getHorizontalFacing ( ) );
@@ -248,12 +248,12 @@ class Auto32k
                     }
                 }
                 this.resetFields ( );
-                if ( ! this.autoSwitch.getValue ( ).booleanValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
+                if ( ! this.autoSwitch.getValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
                     this.disable ( );
-                } else if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+                } else if ( ! this.withBind.getValue ( ) ) {
                     this.disable ( );
                 }
-            } else if ( this.secretClose.getValue ( ).booleanValue ( ) && ( ! this.autoSwitch.getValue ( ).booleanValue ( ) || this.switching || this.mode.getValue ( ) == Mode.DISPENSER ) && this.currentStep == Step.HOPPERGUI ) {
+            } else if ( this.secretClose.getValue ( ) && ( ! this.autoSwitch.getValue ( ) || this.switching || this.mode.getValue ( ) == Mode.DISPENSER ) && this.currentStep == Step.HOPPERGUI ) {
                 event.setCanceled ( true );
             }
         }
@@ -261,7 +261,7 @@ class Auto32k
 
     private
     void normal32k ( ) {
-        if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+        if ( this.autoSwitch.getValue ( ) ) {
             if ( this.switching ) {
                 this.processNormal32k ( );
             } else {
@@ -277,7 +277,7 @@ class Auto32k
         if ( this.isOff ( ) ) {
             return;
         }
-        if ( this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) ) {
+        if ( this.placeTimer.passedMs ( this.delay.getValue ( ) ) ) {
             this.check ( );
             switch (this.currentStep) {
                 case PRE: {
@@ -294,7 +294,7 @@ class Auto32k
                             return;
                         }
                         this.runHopperStep ( );
-                        if ( this.actionsThisTick >= this.blocksPerPlace.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                        if ( this.actionsThisTick >= this.blocksPerPlace.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                             break;
                     }
                 }
@@ -307,7 +307,7 @@ class Auto32k
                         return;
                     }
                     this.runShulkerStep ( );
-                    if ( this.actionsThisTick >= this.blocksPerPlace.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick >= this.blocksPerPlace.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                 }
                 case CLICKHOPPER: {
@@ -325,11 +325,11 @@ class Auto32k
                     break;
                 }
                 default: {
-                    Command.sendMessage ( "\u00a7cThis shouldnt happen, report to 3arthqu4ke!!!" );
-                    Command.sendMessage ( "\u00a7cThis shouldnt happen, report to 3arthqu4ke!!!" );
-                    Command.sendMessage ( "\u00a7cThis shouldnt happen, report to 3arthqu4ke!!!" );
-                    Command.sendMessage ( "\u00a7cThis shouldnt happen, report to 3arthqu4ke!!!" );
-                    Command.sendMessage ( "\u00a7cThis shouldnt happen, report to 3arthqu4ke!!!" );
+                    Command.sendMessage ( "\u00a7cThis shouldn't happen, report to 3arthqu4ke!!!" );
+                    Command.sendMessage ( "\u00a7cThis shouldn't happen, report to 3arthqu4ke!!!" );
+                    Command.sendMessage ( "\u00a7cThis shouldn't happen, report to 3arthqu4ke!!!" );
+                    Command.sendMessage ( "\u00a7cThis shouldn't happen, report to 3arthqu4ke!!!" );
+                    Command.sendMessage ( "\u00a7cThis shouldn't happen, report to 3arthqu4ke!!!" );
                     this.currentStep = Step.PRE;
                 }
             }
@@ -342,13 +342,13 @@ class Auto32k
             return;
         }
         PlaceType type = this.placeType.getValue ( );
-        if ( Freecam.getInstance ( ).isOn ( ) && ! this.freecam.getValue ( ).booleanValue ( ) ) {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+        if ( Freecam.getInstance ( ).isOn ( ) && ! this.freecam.getValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Disable Freecam." );
             }
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+            if ( this.autoSwitch.getValue ( ) ) {
                 this.resetFields ( );
-                if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+                if ( ! this.withBind.getValue ( ) ) {
                     this.disable ( );
                 }
             } else {
@@ -368,12 +368,12 @@ class Auto32k
             }
         }
         if ( this.shulkerSlot == - 1 || this.hopperSlot == - 1 ) {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Materials not found." );
             }
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+            if ( this.autoSwitch.getValue ( ) ) {
                 this.resetFields ( );
-                if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+                if ( ! this.withBind.getValue ( ) ) {
                     this.disable ( );
                 }
             } else {
@@ -383,7 +383,7 @@ class Auto32k
         }
         this.target = EntityUtil.getClosestEnemy ( this.targetRange.getValue ( ) );
         if ( this.target == null ) {
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+            if ( this.autoSwitch.getValue ( ) ) {
                 if ( this.switching ) {
                     this.resetFields ( );
                     this.switching = true;
@@ -398,12 +398,12 @@ class Auto32k
         if ( this.hopperPos != null ) {
             this.currentStep = Auto32k.mc.world.getBlockState ( this.hopperPos ).getBlock ( ) instanceof BlockHopper ? Step.SHULKER : Step.HOPPER;
         } else {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Block not found." );
             }
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) ) {
+            if ( this.autoSwitch.getValue ( ) ) {
                 this.resetFields ( );
-                if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+                if ( ! this.withBind.getValue ( ) ) {
                     this.disable ( );
                 }
             } else {
@@ -442,8 +442,8 @@ class Auto32k
         if ( this.currentStep != Step.CLICKHOPPER ) {
             return;
         }
-        if ( this.mode.getValue ( ) == Mode.NORMAL && ! ( Auto32k.mc.world.getBlockState ( this.hopperPos.up ( ) ).getBlock ( ) instanceof BlockShulkerBox ) && this.checkForShulker.getValue ( ).booleanValue ( ) ) {
-            if ( this.placeTimer.passedMs ( this.checkDelay.getValue ( ).intValue ( ) ) ) {
+        if ( this.mode.getValue ( ) == Mode.NORMAL && ! ( Auto32k.mc.world.getBlockState ( this.hopperPos.up ( ) ).getBlock ( ) instanceof BlockShulkerBox ) && this.checkForShulker.getValue ( ) ) {
+            if ( this.placeTimer.passedMs ( this.checkDelay.getValue ( ) ) ) {
                 this.currentStep = Step.SHULKER;
             }
             return;
@@ -478,13 +478,13 @@ class Auto32k
                     InventoryUtil.switchToHotbarSlot ( 44 - this.shulkerSlot , false );
                 }
                 Auto32k.mc.playerController.windowClick ( Auto32k.mc.player.openContainer.windowId , swordIndex , this.trashSlot.getValue ( ) == 0 ? Auto32k.mc.player.inventory.currentItem : this.trashSlot.getValue ( ) - 1 , ClickType.SWAP , Auto32k.mc.player );
-            } else if ( this.closeGui.getValue ( ).booleanValue ( ) && this.secretClose.getValue ( ).booleanValue ( ) ) {
+            } else if ( this.closeGui.getValue ( ) && this.secretClose.getValue ( ) ) {
                 Auto32k.mc.player.closeScreen ( );
             }
         } else if ( EntityUtil.holding32k ( Auto32k.mc.player ) ) {
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) && this.mode.getValue ( ) == Mode.NORMAL ) {
+            if ( this.autoSwitch.getValue ( ) && this.mode.getValue ( ) == Mode.NORMAL ) {
                 this.switching = false;
-            } else if ( ! this.autoSwitch.getValue ( ).booleanValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
+            } else if ( ! this.autoSwitch.getValue ( ) || this.mode.getValue ( ) == Mode.DISPENSER ) {
                 this.shouldDisable = true;
                 this.disableTimer.reset ( );
             }
@@ -497,7 +497,7 @@ class Auto32k
             return;
         }
         EnumFacing side = EnumFacing.UP;
-        if ( this.antiHopper.getValue ( ).booleanValue ( ) && this.currentStep == Step.HOPPER ) {
+        if ( this.antiHopper.getValue ( ) && this.currentStep == Step.HOPPER ) {
             boolean foundfacing = false;
             for (EnumFacing facing : EnumFacing.values ( )) {
                 if ( Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getBlock ( ) == Blocks.HOPPER || Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getMaterial ( ).isReplaceable ( ) )
@@ -524,10 +524,10 @@ class Auto32k
         this.authSneakPacket = true;
         Auto32k.mc.player.connection.sendPacket ( new CPacketEntityAction ( Auto32k.mc.player , CPacketEntityAction.Action.START_SNEAKING ) );
         this.authSneakPacket = false;
-        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.rotate.getValue ( ) ) {
             if ( this.blocksPerPlace.getValue ( ) > 1 ) {
                 float[] angle = RotationUtil.getLegitRotations ( hitVec );
-                if ( this.extra.getValue ( ).booleanValue ( ) ) {
+                if ( this.extra.getValue ( ) ) {
                     RotationUtil.faceYawAndPitch ( angle[0] , angle[1] );
                 }
             } else {
@@ -547,7 +547,7 @@ class Auto32k
     BlockPos findBestPos ( PlaceType type , EntityPlayer target ) {
         BlockPos pos = null;
         NonNullList < BlockPos > positions = NonNullList.create ( );
-        positions.addAll ( BlockUtil.getSphere ( EntityUtil.getPlayerPos ( Auto32k.mc.player ) , this.range.getValue ( ).floatValue ( ) , this.range.getValue ( ).intValue ( ) , false , true , 0 ).stream ( ).filter ( this::canPlace ).collect ( Collectors.toList ( ) ) );
+        positions.addAll ( BlockUtil.getSphere ( EntityUtil.getPlayerPos ( Auto32k.mc.player ) , this.range.getValue ( ) , this.range.getValue ( ).intValue ( ) , false , true , 0 ).stream ( ).filter ( this::canPlace ).collect ( Collectors.toList ( ) ) );
         if ( positions.isEmpty ( ) ) {
             return null;
         }
@@ -615,13 +615,13 @@ class Auto32k
         if ( ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( pos ).getBlock ( ) , this.onOtherHoppers.getValue ( ) ) || ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( boost ).getBlock ( ) , false ) ) {
             return false;
         }
-        if ( ! ( ! this.raytrace.getValue ( ).booleanValue ( ) || BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) && BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) ) ) {
+        if ( ! ( ! this.raytrace.getValue ( ) || BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) && BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) ) ) {
             return false;
         }
         if ( this.badEntities ( pos ) || this.badEntities ( boost ) ) {
             return false;
         }
-        if ( this.onOtherHoppers.getValue ( ).booleanValue ( ) && Auto32k.mc.world.getBlockState ( pos ).getBlock ( ) instanceof BlockHopper ) {
+        if ( this.onOtherHoppers.getValue ( ) && Auto32k.mc.world.getBlockState ( pos ).getBlock ( ) instanceof BlockHopper ) {
             return true;
         }
         return this.findFacing ( pos );
@@ -629,9 +629,9 @@ class Auto32k
 
     private
     void check ( ) {
-        if ( ! ( this.currentStep == Step.PRE || this.currentStep == Step.HOPPER || this.hopperPos == null || Auto32k.mc.currentScreen instanceof GuiHopper || EntityUtil.holding32k ( Auto32k.mc.player ) || ! ( Auto32k.mc.player.getDistanceSq ( this.hopperPos ) > MathUtil.square ( this.hopperDistance.getValue ( ).floatValue ( ) ) ) && Auto32k.mc.world.getBlockState ( this.hopperPos ).getBlock ( ) == Blocks.HOPPER ) ) {
+        if ( ! ( this.currentStep == Step.PRE || this.currentStep == Step.HOPPER || this.hopperPos == null || Auto32k.mc.currentScreen instanceof GuiHopper || EntityUtil.holding32k ( Auto32k.mc.player ) || ! ( Auto32k.mc.player.getDistanceSq ( this.hopperPos ) > MathUtil.square ( this.hopperDistance.getValue ( ) ) ) && Auto32k.mc.world.getBlockState ( this.hopperPos ).getBlock ( ) == Blocks.HOPPER ) ) {
             this.resetFields ( );
-            if ( ! this.autoSwitch.getValue ( ).booleanValue ( ) || ! this.withBind.getValue ( ).booleanValue ( ) || this.mode.getValue ( ) != Mode.NORMAL ) {
+            if ( ! this.autoSwitch.getValue ( ) || ! this.withBind.getValue ( ) || this.mode.getValue ( ) != Mode.NORMAL ) {
                 this.disable ( );
             }
         }
@@ -639,21 +639,21 @@ class Auto32k
 
     private
     void checkState ( ) {
-        if ( ! this.checkStatus.getValue ( ).booleanValue ( ) || this.checkedThisTick || this.currentStep != Step.HOPPER && this.currentStep != Step.SHULKER && this.currentStep != Step.CLICKHOPPER ) {
+        if ( ! this.checkStatus.getValue ( ) || this.checkedThisTick || this.currentStep != Step.HOPPER && this.currentStep != Step.SHULKER && this.currentStep != Step.CLICKHOPPER ) {
             this.checkedThisTick = false;
             return;
         }
         if ( this.hopperPos == null || ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( this.hopperPos ).getBlock ( ) , true ) || ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( this.hopperPos.up ( ) ).getBlock ( ) , false ) && ! ( Auto32k.mc.world.getBlockState ( this.hopperPos.up ( ) ).getBlock ( ) instanceof BlockShulkerBox ) || this.badEntities ( this.hopperPos ) || this.badEntities ( this.hopperPos.up ( ) ) ) {
-            if ( this.autoSwitch.getValue ( ).booleanValue ( ) && this.mode.getValue ( ) == Mode.NORMAL ) {
+            if ( this.autoSwitch.getValue ( ) && this.mode.getValue ( ) == Mode.NORMAL ) {
                 if ( this.switching ) {
                     this.resetFields ( );
-                    if ( this.repeatSwitch.getValue ( ).booleanValue ( ) ) {
+                    if ( this.repeatSwitch.getValue ( ) ) {
                         this.switching = true;
                     }
                 } else {
                     this.resetFields ( );
                 }
-                if ( ! this.withBind.getValue ( ).booleanValue ( ) ) {
+                if ( ! this.withBind.getValue ( ) ) {
                     this.disable ( );
                 }
             } else {
@@ -668,7 +668,7 @@ class Auto32k
         if ( this.isOff ( ) ) {
             return;
         }
-        if ( this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) ) {
+        if ( this.placeTimer.passedMs ( this.delay.getValue ( ) ) ) {
             this.check ( );
             switch (this.currentStep) {
                 case PRE: {
@@ -678,24 +678,24 @@ class Auto32k
                 case HOPPER: {
                     this.runHopperStep ( );
                     this.currentStep = Step.DISPENSER;
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                 }
                 case DISPENSER: {
                     boolean quickCheck;
                     this.runDispenserStep ( );
                     boolean bl = quickCheck = ! Auto32k.mc.world.getBlockState ( this.finalDispenserData.getHelpingPos ( ) ).getMaterial ( ).isReplaceable ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.currentStep != Step.DISPENSER_HELPING && this.currentStep != Step.CLICK_DISPENSER || this.rotate.getValue ( ).booleanValue ( ) && quickCheck )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.DISPENSER_HELPING && this.currentStep != Step.CLICK_DISPENSER || this.rotate.getValue ( ).booleanValue ( ) && quickCheck )
                         break;
                 }
                 case DISPENSER_HELPING: {
                     this.runDispenserStep ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.currentStep != Step.CLICK_DISPENSER && this.currentStep != Step.DISPENSER_HELPING || this.rotate.getValue ( ).booleanValue ( ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) || this.currentStep != Step.CLICK_DISPENSER && this.currentStep != Step.DISPENSER_HELPING || this.rotate.getValue ( ).booleanValue ( ) )
                         break;
                 }
                 case CLICK_DISPENSER: {
                     this.clickDispenser ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                 }
                 case DISPENSER_GUI: {
@@ -704,17 +704,17 @@ class Auto32k
                 }
                 case REDSTONE: {
                     this.placeRedstone ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                 }
                 case CLICKHOPPER: {
                     this.runClickHopper ( );
-                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick >= this.delayDispenser.getValue ( ) && ! this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                 }
                 case HOPPERGUI: {
                     this.runHopperGuiStep ( );
-                    if ( this.actionsThisTick < this.delayDispenser.getValue ( ) || this.placeTimer.passedMs ( this.delay.getValue ( ).intValue ( ) ) )
+                    if ( this.actionsThisTick < this.delayDispenser.getValue ( ) || this.placeTimer.passedMs ( this.delay.getValue ( ) ) )
                         break;
                     break;
                 }
@@ -765,7 +765,7 @@ class Auto32k
         Auto32k.mc.player.connection.sendPacket ( new CPacketEntityAction ( Auto32k.mc.player , CPacketEntityAction.Action.STOP_SNEAKING ) );
         this.authSneakPacket = false;
         Vec3d hitVec = new Vec3d ( pos ).add ( 0.5 , - 0.5 , 0.5 );
-        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.rotate.getValue ( ) ) {
             this.rotateToPos ( null , hitVec );
         }
         EnumFacing facing = EnumFacing.UP;
@@ -798,7 +798,7 @@ class Auto32k
             boolean foundHelpingPos = false;
             for (EnumFacing enumFacing : EnumFacing.values ( )) {
                 BlockPos position = helpingPos.offset ( enumFacing );
-                if ( position.equals ( this.hopperPos ) || position.equals ( this.hopperPos.up ( ) ) || position.equals ( dispenserPos ) || position.equals ( this.finalDispenserData.getRedStonePos ( ) ) || ! ( Auto32k.mc.player.getDistanceSq ( position ) <= MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) ) || this.raytrace.getValue ( ).booleanValue ( ) && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) || Auto32k.mc.world.getBlockState ( position ).getMaterial ( ).isReplaceable ( ) )
+                if ( position.equals ( this.hopperPos ) || position.equals ( this.hopperPos.up ( ) ) || position.equals ( dispenserPos ) || position.equals ( this.finalDispenserData.getRedStonePos ( ) ) || ! ( Auto32k.mc.player.getDistanceSq ( position ) <= MathUtil.square ( this.range.getValue ( ) ) ) || this.raytrace.getValue ( ) && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) || Auto32k.mc.world.getBlockState ( position ).getMaterial ( ).isReplaceable ( ) )
                     continue;
                 foundHelpingPos = true;
                 facing = enumFacing;
@@ -815,17 +815,17 @@ class Auto32k
             this.authSneakPacket = true;
             Auto32k.mc.player.connection.sendPacket ( new CPacketEntityAction ( Auto32k.mc.player , CPacketEntityAction.Action.START_SNEAKING ) );
             this.authSneakPacket = false;
-            if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+            if ( this.rotate.getValue ( ) ) {
                 if ( this.blocksPerPlace.getValue ( ) > 1 ) {
                     float[] angle = RotationUtil.getLegitRotations ( hitVec );
-                    if ( this.extra.getValue ( ).booleanValue ( ) ) {
+                    if ( this.extra.getValue ( ) ) {
                         RotationUtil.faceYawAndPitch ( angle[0] , angle[1] );
                     }
                 } else {
                     this.rotateToPos ( null , hitVec );
                 }
             }
-            int slot = this.preferObby.getValue ( ) != false && this.obbySlot != - 1 ? this.obbySlot : this.dispenserSlot;
+            int slot = this.preferObby.getValue ( ) && this.obbySlot != - 1 ? this.obbySlot : this.dispenserSlot;
             InventoryUtil.switchToHotbarSlot ( slot , false );
             BlockUtil.rightClickBlock ( neighbour , hitVec , slot == - 2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , opposite , this.packet.getValue ( ) );
             this.authSneakPacket = true;
@@ -860,10 +860,10 @@ class Auto32k
         this.authSneakPacket = false;
         Vec3d rotationVec = null;
         EnumFacing facings = EnumFacing.UP;
-        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.rotate.getValue ( ) ) {
             if ( this.blocksPerPlace.getValue ( ) > 1 ) {
                 float[] arrf = RotationUtil.getLegitRotations ( hitVec );
-                if ( this.extra.getValue ( ).booleanValue ( ) ) {
+                if ( this.extra.getValue ( ) ) {
                     RotationUtil.faceYawAndPitch ( arrf[0] , arrf[1] );
                 }
             } else {
@@ -890,8 +890,8 @@ class Auto32k
         rotationVec = new Vec3d ( helpingPos ).add ( 0.5 , 0.5 , 0.5 ).add ( new Vec3d ( opposite.getDirectionVec ( ) ).scale ( 0.5 ) );
         float[] arrf = RotationUtil.simpleFacing ( facings );
         float[] angle = RotationUtil.getLegitRotations ( hitVec );
-        if ( this.superPacket.getValue ( ).booleanValue ( ) ) {
-            RotationUtil.faceYawAndPitch ( this.rotate.getValue ( ) == false ? arrf[0] : angle[0] , this.rotate.getValue ( ) == false ? arrf[1] : angle[1] );
+        if ( this.superPacket.getValue ( ) ) {
+            RotationUtil.faceYawAndPitch ( ! this.rotate.getValue ( ) ? arrf[0] : angle[0] , ! this.rotate.getValue ( ) ? arrf[1] : angle[1] );
         }
         InventoryUtil.switchToHotbarSlot ( this.dispenserSlot , false );
         BlockUtil.rightClickBlock ( helpingPos , rotationVec , this.dispenserSlot == - 2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , opposite , this.packet.getValue ( ) );
@@ -908,8 +908,8 @@ class Auto32k
         if ( this.isOff ( ) ) {
             return;
         }
-        if ( Freecam.getInstance ( ).isOn ( ) && ! this.freecam.getValue ( ).booleanValue ( ) ) {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+        if ( Freecam.getInstance ( ).isOn ( ) && ! this.freecam.getValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Disable Freecam." );
             }
             this.disable ( );
@@ -934,7 +934,7 @@ class Auto32k
             }
         }
         if ( this.shulkerSlot == - 1 || this.hopperSlot == - 1 || this.dispenserSlot == - 1 || this.redstoneSlot == - 1 ) {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Materials not found." );
             }
             this.disable ( );
@@ -945,7 +945,7 @@ class Auto32k
             this.hopperPos = this.finalDispenserData.getHopperPos ( );
             this.currentStep = Auto32k.mc.world.getBlockState ( this.hopperPos ).getBlock ( ) instanceof BlockHopper ? Step.DISPENSER : Step.HOPPER;
         } else {
-            if ( this.messages.getValue ( ).booleanValue ( ) ) {
+            if ( this.messages.getValue ( ) ) {
                 Command.sendMessage ( "\u00a7c<Auto32k> Block not found." );
             }
             this.disable ( );
@@ -960,7 +960,7 @@ class Auto32k
             type = this.placeType.getValue ( ) == PlaceType.MOUSE ? PlaceType.MOUSE : PlaceType.CLOSE;
         }
         NonNullList < BlockPos > positions = NonNullList.create ( );
-        positions.addAll ( BlockUtil.getSphere ( EntityUtil.getPlayerPos ( Auto32k.mc.player ) , this.range.getValue ( ).floatValue ( ) , this.range.getValue ( ).intValue ( ) , false , true , 0 ) );
+        positions.addAll ( BlockUtil.getSphere ( EntityUtil.getPlayerPos ( Auto32k.mc.player ) , this.range.getValue ( ) , this.range.getValue ( ).intValue ( ) , false , true , 0 ) );
         DispenserData data = new DispenserData ( );
         switch (type) {
             case MOUSE: {
@@ -1027,7 +1027,7 @@ class Auto32k
         if ( ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( pos ).getBlock ( ) , this.onOtherHoppers.getValue ( ) ) || ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( pos.up ( ) ).getBlock ( ) , false ) ) {
             return data;
         }
-        if ( this.raytrace.getValue ( ).booleanValue ( ) && ! BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) ) {
+        if ( this.raytrace.getValue ( ) && ! BlockUtil.rayTracePlaceCheck ( pos , this.raytrace.getValue ( ) ) ) {
             return data;
         }
         if ( this.badEntities ( pos ) || this.badEntities ( pos.up ( ) ) ) {
@@ -1055,11 +1055,11 @@ class Auto32k
         boolean foundFacing = false;
         for (EnumFacing facing : EnumFacing.values ( )) {
             if ( facing == EnumFacing.UP ) continue;
-            if ( facing == EnumFacing.DOWN && this.antiHopper.getValue ( ).booleanValue ( ) && Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getBlock ( ) == Blocks.HOPPER ) {
+            if ( facing == EnumFacing.DOWN && this.antiHopper.getValue ( ) && Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getBlock ( ) == Blocks.HOPPER ) {
                 foundFacing = false;
                 break;
             }
-            if ( Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getMaterial ( ).isReplaceable ( ) || this.antiHopper.getValue ( ).booleanValue ( ) && Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getBlock ( ) == Blocks.HOPPER )
+            if ( Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getMaterial ( ).isReplaceable ( ) || this.antiHopper.getValue ( ) && Auto32k.mc.world.getBlockState ( pos.offset ( facing ) ).getBlock ( ) == Blocks.HOPPER )
                 continue;
             foundFacing = true;
         }
@@ -1088,17 +1088,17 @@ class Auto32k
                     possiblePositions.remove ( posIn.south ( ).up ( ) );
                     possiblePositions.remove ( posIn.east ( ).up ( ) );
                 }
-                if ( ! this.rotate.getValue ( ).booleanValue ( ) && ! this.simulate.getValue ( ).booleanValue ( ) )
+                if ( ! this.rotate.getValue ( ) && ! this.simulate.getValue ( ) )
                     break block11;
                 possiblePositions.sort ( Comparator.comparingDouble ( pos2 -> - Auto32k.mc.player.getDistanceSq ( pos2 ) ) );
                 BlockPos posToCheck = possiblePositions.get ( 0 );
                 if ( ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( posToCheck ).getBlock ( ) , false ) ) {
                     return pos;
                 }
-                if ( Auto32k.mc.player.getDistanceSq ( posToCheck ) > MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) ) {
+                if ( Auto32k.mc.player.getDistanceSq ( posToCheck ) > MathUtil.square ( this.range.getValue ( ) ) ) {
                     return pos;
                 }
-                if ( this.raytrace.getValue ( ).booleanValue ( ) && ! BlockUtil.rayTracePlaceCheck ( posToCheck , this.raytrace.getValue ( ) ) ) {
+                if ( this.raytrace.getValue ( ) && ! BlockUtil.rayTracePlaceCheck ( posToCheck , this.raytrace.getValue ( ) ) ) {
                     return pos;
                 }
                 if ( this.badEntities ( posToCheck ) ) {
@@ -1118,9 +1118,9 @@ class Auto32k
                 pos[2] = helpingStuff[0];
                 break block12;
             }
-            possiblePositions.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) );
+            possiblePositions.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ) ) );
             possiblePositions.removeIf ( position -> ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( position ).getBlock ( ) , false ) );
-            possiblePositions.removeIf ( position -> this.raytrace.getValue ( ) != false && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) );
+            possiblePositions.removeIf ( position -> this.raytrace.getValue ( ) && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) );
             possiblePositions.removeIf ( this::badEntities );
             possiblePositions.removeIf ( this::hasAdjancedRedstone );
             for (BlockPos position2 : possiblePositions) {
@@ -1144,9 +1144,9 @@ class Auto32k
             toCheck.add ( pos.offset ( facing ) );
         }
         toCheck.removeIf ( position -> position.equals ( hopperPos.up ( ) ) );
-        toCheck.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) );
+        toCheck.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ) ) );
         toCheck.removeIf ( position -> ! this.isGoodMaterial ( Auto32k.mc.world.getBlockState ( position ).getBlock ( ) , false ) );
-        toCheck.removeIf ( position -> this.raytrace.getValue ( ) != false && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) );
+        toCheck.removeIf ( position -> this.raytrace.getValue ( ) && ! BlockUtil.rayTracePlaceCheck ( position , this.raytrace.getValue ( ) ) );
         toCheck.removeIf ( this::badEntities );
         toCheck.sort ( Comparator.comparingDouble ( pos2 -> Auto32k.mc.player.getDistanceSq ( pos2 ) ) );
         return toCheck;
@@ -1214,7 +1214,7 @@ class Auto32k
                 possiblePositions.add ( facingPos );
             }
         }
-        possiblePositions.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ).floatValue ( ) ) );
+        possiblePositions.removeIf ( position -> Auto32k.mc.player.getDistanceSq ( position ) > MathUtil.square ( this.range.getValue ( ) ) );
         possiblePositions.sort ( Comparator.comparingDouble ( position -> Auto32k.mc.player.getDistanceSq ( position ) ) );
         if ( ! possiblePositions.isEmpty ( ) ) {
             redStonePositions.remove ( possiblePositions.get ( 0 ) );

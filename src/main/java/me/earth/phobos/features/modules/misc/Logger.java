@@ -27,11 +27,11 @@ class Logger
     @SubscribeEvent(receiveCanceled = true)
     public
     void onPacketSend ( PacketEvent.Send event ) {
-        if ( this.noPing.getValue ( ).booleanValue ( ) && Logger.mc.currentScreen instanceof GuiMultiplayer ) {
+        if ( this.noPing.getValue ( ) && Logger.mc.currentScreen instanceof GuiMultiplayer ) {
             return;
         }
         if ( this.packets.getValue ( ) == Packets.OUTGOING || this.packets.getValue ( ) == Packets.ALL ) {
-            if ( this.chat.getValue ( ).booleanValue ( ) ) {
+            if ( this.chat.getValue ( ) ) {
                 Command.sendMessage ( event.getPacket ( ).toString ( ) );
             } else {
                 this.writePacketOnConsole ( event.getPacket ( ) , false );
@@ -42,11 +42,11 @@ class Logger
     @SubscribeEvent(receiveCanceled = true)
     public
     void onPacketReceive ( PacketEvent.Receive event ) {
-        if ( this.noPing.getValue ( ).booleanValue ( ) && Logger.mc.currentScreen instanceof GuiMultiplayer ) {
+        if ( this.noPing.getValue ( ) && Logger.mc.currentScreen instanceof GuiMultiplayer ) {
             return;
         }
         if ( this.packets.getValue ( ) == Packets.INCOMING || this.packets.getValue ( ) == Packets.ALL ) {
-            if ( this.chat.getValue ( ).booleanValue ( ) ) {
+            if ( this.chat.getValue ( ) ) {
                 Command.sendMessage ( event.getPacket ( ).toString ( ) );
             } else {
                 this.writePacketOnConsole ( event.getPacket ( ) , true );
@@ -56,7 +56,7 @@ class Logger
 
     private
     void writePacketOnConsole ( Packet < ? > packet , boolean in ) {
-        if ( this.fullInfo.getValue ( ).booleanValue ( ) ) {
+        if ( this.fullInfo.getValue ( ) ) {
             System.out.println ( ( in ? "In: " : "Send: " ) + packet.getClass ( ).getSimpleName ( ) + " {" );
             try {
                 for (Class < ? > clazz = packet.getClass ( ); clazz != Object.class; clazz = clazz.getSuperclass ( )) {

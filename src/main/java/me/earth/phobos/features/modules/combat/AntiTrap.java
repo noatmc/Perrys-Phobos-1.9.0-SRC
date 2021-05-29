@@ -43,7 +43,7 @@ class AntiTrap
     @Override
     public
     void onEnable ( ) {
-        if ( AntiTrap.fullNullCheck ( ) || ! this.timer.passedMs ( this.coolDown.getValue ( ).intValue ( ) ) ) {
+        if ( AntiTrap.fullNullCheck ( ) || ! this.timer.passedMs ( this.coolDown.getValue ( ) ) ) {
             this.disable ( );
             return;
         }
@@ -80,7 +80,7 @@ class AntiTrap
         EntityPlayer closestPlayer = EntityUtil.getClosestEnemy ( 6.0 );
         if ( closestPlayer != null ) {
             targets.sort ( ( vec3d , vec3d2 ) -> Double.compare ( closestPlayer.getDistanceSq ( vec3d2.x , vec3d2.y , vec3d2.z ) , closestPlayer.getDistanceSq ( vec3d.x , vec3d.y , vec3d.z ) ) );
-            if ( this.sortY.getValue ( ).booleanValue ( ) ) {
+            if ( this.sortY.getValue ( ) ) {
                 targets.sort ( Comparator.comparingDouble ( vec3d -> vec3d.y ) );
             }
         }

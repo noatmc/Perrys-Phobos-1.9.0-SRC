@@ -82,7 +82,7 @@ class AutoReconnect
 
         public
         void updateScreen ( ) {
-            if ( this.timer.passedS ( AutoReconnect.this.delay.getValue ( ).intValue ( ) ) ) {
+            if ( this.timer.passedS ( AutoReconnect.this.delay.getValue ( ) ) ) {
                 this.mc.displayGuiScreen ( new GuiConnecting ( this.parentScreen , this.mc , serverData == null ? this.mc.currentServerData : serverData ) );
             }
         }

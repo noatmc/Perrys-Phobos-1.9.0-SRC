@@ -37,7 +37,7 @@ class NoRotate
     @Override
     public
     void onUpdate ( ) {
-        if ( this.timerReset && ! this.cancelPackets && this.timer.passedMs ( this.waitDelay.getValue ( ).intValue ( ) ) ) {
+        if ( this.timerReset && ! this.cancelPackets && this.timer.passedMs ( this.waitDelay.getValue ( ) ) ) {
             Command.sendMessage ( "<NoRotate> \u00a7cThis module might desync you!" );
             this.cancelPackets = true;
             this.timerReset = false;

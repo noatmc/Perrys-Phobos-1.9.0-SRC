@@ -47,20 +47,20 @@ class ToolTips
     public Setting < Boolean > shulkers = this.register ( new Setting < Boolean > ( "ShulkerViewer" , true ) );
     public Setting < Bind > peek = this.register ( new Setting < Bind > ( "Peek" , new Bind ( - 1 ) ) );
     public Setting < Boolean > shulkerSpy = this.register ( new Setting < Boolean > ( "ShulkerSpy" , true ) );
-    public Setting < Boolean > render = this.register ( new Setting < Object > ( "Render" , Boolean.valueOf ( true ) , v -> this.shulkerSpy.getValue ( ) ) );
-    public Setting < Boolean > own = this.register ( new Setting < Object > ( "OwnShulker" , Boolean.valueOf ( true ) , v -> this.shulkerSpy.getValue ( ) ) );
-    public Setting < Integer > cooldown = this.register ( new Setting < Object > ( "ShowForS" , Integer.valueOf ( 2 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 5 ) , v -> this.shulkerSpy.getValue ( ) ) );
-    public Setting < Boolean > textColor = this.register ( new Setting < Object > ( "TextColor" , Boolean.valueOf ( false ) , v -> this.shulkers.getValue ( ) ) );
-    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.textColor.getValue ( ) ) );
-    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.textColor.getValue ( ) ) );
-    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , Integer.valueOf ( 0 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.textColor.getValue ( ) ) );
-    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , Integer.valueOf ( 255 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 255 ) , v -> this.textColor.getValue ( ) ) );
+    public Setting < Boolean > render = this.register ( new Setting < Object > ( "Render" , Boolean.TRUE , v -> this.shulkerSpy.getValue ( ) ) );
+    public Setting < Boolean > own = this.register ( new Setting < Object > ( "OwnShulker" , Boolean.TRUE , v -> this.shulkerSpy.getValue ( ) ) );
+    public Setting < Integer > cooldown = this.register ( new Setting < Object > ( "ShowForS" , 2 , 0 , 5 , v -> this.shulkerSpy.getValue ( ) ) );
+    public Setting < Boolean > textColor = this.register ( new Setting < Object > ( "TextColor" , Boolean.FALSE , v -> this.shulkers.getValue ( ) ) );
+    private final Setting < Integer > red = this.register ( new Setting < Object > ( "Red" , 255 , 0 , 255 , v -> this.textColor.getValue ( ) ) );
+    private final Setting < Integer > green = this.register ( new Setting < Object > ( "Green" , 0 , 0 , 255 , v -> this.textColor.getValue ( ) ) );
+    private final Setting < Integer > blue = this.register ( new Setting < Object > ( "Blue" , 0 , 0 , 255 , v -> this.textColor.getValue ( ) ) );
+    private final Setting < Integer > alpha = this.register ( new Setting < Object > ( "Alpha" , 255 , 0 , 255 , v -> this.textColor.getValue ( ) ) );
     public Setting < Boolean > offsets = this.register ( new Setting < Boolean > ( "Offsets" , false ) );
-    private final Setting < Integer > yPerPlayer = this.register ( new Setting < Object > ( "Y/Player" , Integer.valueOf ( 18 ) , v -> this.offsets.getValue ( ) ) );
-    private final Setting < Integer > xOffset = this.register ( new Setting < Object > ( "XOffset" , Integer.valueOf ( 4 ) , v -> this.offsets.getValue ( ) ) );
-    private final Setting < Integer > yOffset = this.register ( new Setting < Object > ( "YOffset" , Integer.valueOf ( 2 ) , v -> this.offsets.getValue ( ) ) );
-    private final Setting < Integer > trOffset = this.register ( new Setting < Object > ( "TROffset" , Integer.valueOf ( 2 ) , v -> this.offsets.getValue ( ) ) );
-    public Setting < Integer > invH = this.register ( new Setting < Object > ( "InvH" , Integer.valueOf ( 3 ) , v -> this.offsets.getValue ( ) ) );
+    private final Setting < Integer > yPerPlayer = this.register ( new Setting < Object > ( "Y/Player" , 18 , v -> this.offsets.getValue ( ) ) );
+    private final Setting < Integer > xOffset = this.register ( new Setting < Object > ( "XOffset" , 4 , v -> this.offsets.getValue ( ) ) );
+    private final Setting < Integer > yOffset = this.register ( new Setting < Object > ( "YOffset" , 2 , v -> this.offsets.getValue ( ) ) );
+    private final Setting < Integer > trOffset = this.register ( new Setting < Object > ( "TROffset" , 2 , v -> this.offsets.getValue ( ) ) );
+    public Setting < Integer > invH = this.register ( new Setting < Object > ( "InvH" , 3 , v -> this.offsets.getValue ( ) ) );
     public Map < EntityPlayer, ItemStack > spiedPlayers = new ConcurrentHashMap < EntityPlayer, ItemStack > ( );
     public Map < EntityPlayer, Timer > playerTimers = new ConcurrentHashMap < EntityPlayer, Timer > ( );
     private int textRadarY = 0;
@@ -113,14 +113,14 @@ class ToolTips
     void onUpdate ( ) {
         ItemStack stack;
         Slot slot;
-        if ( ToolTips.fullNullCheck ( ) || ! this.shulkerSpy.getValue ( ).booleanValue ( ) ) {
+        if ( ToolTips.fullNullCheck ( ) || ! this.shulkerSpy.getValue ( ) ) {
             return;
         }
         if ( this.peek.getValue ( ).getKey ( ) != - 1 && ToolTips.mc.currentScreen instanceof GuiContainer && Keyboard.isKeyDown ( this.peek.getValue ( ).getKey ( ) ) && ( slot = ( (GuiContainer) ToolTips.mc.currentScreen ).getSlotUnderMouse ( ) ) != null && ( stack = slot.getStack ( ) ) != null && stack.getItem ( ) instanceof ItemShulkerBox ) {
             ToolTips.displayInv ( stack , null );
         }
         for (EntityPlayer player : ToolTips.mc.world.playerEntities) {
-            if ( player == null || player.getHeldItemMainhand ( ) == null || ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) || EntityUtil.isFakePlayer ( player ) || ! this.own.getValue ( ).booleanValue ( ) && ToolTips.mc.player.equals ( player ) )
+            if ( player == null || player.getHeldItemMainhand ( ) == null || ! ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox ) || EntityUtil.isFakePlayer ( player ) || ! this.own.getValue ( ) && ToolTips.mc.player.equals ( player ) )
                 continue;
             ItemStack stack2 = player.getHeldItemMainhand ( );
             this.spiedPlayers.put ( player , stack2 );
@@ -130,7 +130,7 @@ class ToolTips
     @Override
     public
     void onRender2D ( Render2DEvent event ) {
-        if ( ToolTips.fullNullCheck ( ) || ! this.shulkerSpy.getValue ( ).booleanValue ( ) || ! this.render.getValue ( ).booleanValue ( ) ) {
+        if ( ToolTips.fullNullCheck ( ) || ! this.shulkerSpy.getValue ( ) || ! this.render.getValue ( ) ) {
             return;
         }
         int x = - 4 + this.xOffset.getValue ( );
@@ -145,7 +145,7 @@ class ToolTips
                     Timer timer = new Timer ( );
                     timer.reset ( );
                     this.playerTimers.put ( player , timer );
-                } else if ( playerTimer.passedS ( this.cooldown.getValue ( ).intValue ( ) ) ) {
+                } else if ( playerTimer.passedS ( this.cooldown.getValue ( ) ) ) {
                     continue;
                 }
             } else if ( player.getHeldItemMainhand ( ).getItem ( ) instanceof ItemShulkerBox && ( playerTimer = this.playerTimers.get ( player ) ) != null ) {
@@ -172,7 +172,7 @@ class ToolTips
     public
     void renderTooltip ( RenderTooltipEvent.PostText event ) {
         MapData mapData;
-        if ( this.maps.getValue ( ).booleanValue ( ) && ! event.getStack ( ).isEmpty ( ) && event.getStack ( ).getItem ( ) instanceof ItemMap && ( mapData = Items.FILLED_MAP.getMapData ( event.getStack ( ) , ToolTips.mc.world ) ) != null ) {
+        if ( this.maps.getValue ( ) && ! event.getStack ( ).isEmpty ( ) && event.getStack ( ).getItem ( ) instanceof ItemMap && ( mapData = Items.FILLED_MAP.getMapData ( event.getStack ( ) , ToolTips.mc.world ) ) != null ) {
             GlStateManager.pushMatrix ( );
             GlStateManager.color ( 1.0f , 1.0f , 1.0f );
             RenderHelper.disableStandardItemLighting ( );
@@ -212,7 +212,7 @@ class ToolTips
             RenderUtil.drawTexturedRect ( x , y + 16 + 54 , 0 , 160 , 176 , 8 , 500 );
             GlStateManager.disableDepth ( );
             Color color = new Color ( 0 , 0 , 0 , 255 );
-            if ( this.textColor.getValue ( ).booleanValue ( ) ) {
+            if ( this.textColor.getValue ( ) ) {
                 color = new Color ( this.red.getValue ( ) , this.green.getValue ( ) , this.blue.getValue ( ) , this.alpha.getValue ( ) );
             }
             this.renderer.drawStringWithShadow ( name == null ? stack.getDisplayName ( ) : name , x + 8 , y + 6 , ColorUtil.toRGBA ( color ) );
@@ -238,4 +238,3 @@ class ToolTips
         }
     }
 }
-

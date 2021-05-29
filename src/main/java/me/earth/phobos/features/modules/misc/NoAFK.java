@@ -25,13 +25,13 @@ class NoAFK
         if ( NoAFK.mc.playerController.getIsHittingBlock ( ) ) {
             return;
         }
-        if ( NoAFK.mc.player.ticksExisted % 40 == 0 && this.swing.getValue ( ).booleanValue ( ) ) {
+        if ( NoAFK.mc.player.ticksExisted % 40 == 0 && this.swing.getValue ( ) ) {
             NoAFK.mc.player.connection.sendPacket ( new CPacketAnimation ( EnumHand.MAIN_HAND ) );
         }
-        if ( NoAFK.mc.player.ticksExisted % 15 == 0 && this.turn.getValue ( ).booleanValue ( ) ) {
+        if ( NoAFK.mc.player.ticksExisted % 15 == 0 && this.turn.getValue ( ) ) {
             NoAFK.mc.player.rotationYaw = this.random.nextInt ( 360 ) - 180;
         }
-        if ( ! this.swing.getValue ( ).booleanValue ( ) && ! this.turn.getValue ( ).booleanValue ( ) && NoAFK.mc.player.ticksExisted % 80 == 0 ) {
+        if ( ! this.swing.getValue ( ) && ! this.turn.getValue ( ) && NoAFK.mc.player.ticksExisted % 80 == 0 ) {
             NoAFK.mc.player.jump ( );
         }
     }

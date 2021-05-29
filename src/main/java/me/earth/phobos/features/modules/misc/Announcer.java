@@ -48,7 +48,7 @@ class Announcer
     @Override
     public
     void onUpdate ( ) {
-        if ( this.loadFiles.getValue ( ).booleanValue ( ) ) {
+        if ( this.loadFiles.getValue ( ) ) {
             this.loadMessages ( );
             Command.sendMessage ( "<Announcer> Loaded messages." );
             this.loadFiles.setValue ( false );

@@ -25,8 +25,8 @@ import java.util.List;
 public
 class AnvilAura
         extends Module {
-    public Setting < Float > range = this.register ( new Setting < Float > ( "Range" , Float.valueOf ( 6.0f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 10.0f ) ) );
-    public Setting < Float > wallsRange = this.register ( new Setting < Float > ( "WallsRange" , Float.valueOf ( 3.5f ) , Float.valueOf ( 0.0f ) , Float.valueOf ( 10.0f ) ) );
+    public Setting < Float > range = this.register ( new Setting < Float > ( "Range" , 6.0f , 0.0f , 10.0f ) );
+    public Setting < Float > wallsRange = this.register ( new Setting < Float > ( "WallsRange" , 3.5f , 0.0f , 10.0f ) );
     public Setting < Integer > placeDelay = this.register ( new Setting < Integer > ( "PlaceDelay" , 0 , 0 , 500 ) );
     public Setting < Boolean > rotate = this.register ( new Setting < Boolean > ( "Rotate" , true ) );
     public Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , true ) );
@@ -53,7 +53,7 @@ class AnvilAura
     @SubscribeEvent
     public
     void onPacketSend ( PacketEvent.Send event ) {
-        if ( event.getStage ( ) == 0 && this.rotate.getValue ( ).booleanValue ( ) && this.rotating ) {
+        if ( event.getStage ( ) == 0 && this.rotate.getValue ( ) && this.rotating ) {
             if ( event.getPacket ( ) instanceof CPacketPlayer ) {
                 CPacketPlayer packet = event.getPacket ( );
                 packet.yaw = this.yaw;
@@ -80,10 +80,10 @@ class AnvilAura
 
     public
     void placeAnvil ( BlockPos pos ) {
-        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.rotate.getValue ( ) ) {
             this.rotateToPos ( pos );
         }
-        if ( this.switcher.getValue ( ).booleanValue ( ) && ! this.isHoldingAnvil ( ) ) {
+        if ( this.switcher.getValue ( ) && ! this.isHoldingAnvil ( ) ) {
             this.doSwitch ( );
         }
         BlockUtil.placeBlock ( pos , EnumHand.MAIN_HAND , false , this.packet.getValue ( ) , AnvilAura.mc.player.isSneaking ( ) );
@@ -150,7 +150,7 @@ class AnvilAura
 
     private
     void rotateToPos ( BlockPos pos ) {
-        if ( this.rotate.getValue ( ).booleanValue ( ) ) {
+        if ( this.rotate.getValue ( ) ) {
             float[] angle = MathUtil.calcAngle ( AnvilAura.mc.player.getPositionEyes ( mc.getRenderPartialTicks ( ) ) , new Vec3d ( (float) pos.getX ( ) + 0.5f , (float) pos.getY ( ) - 0.5f , (float) pos.getZ ( ) + 0.5f ) );
             this.yaw = angle[0];
             this.pitch = angle[1];

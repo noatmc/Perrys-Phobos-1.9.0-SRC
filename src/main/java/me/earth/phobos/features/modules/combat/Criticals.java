@@ -21,7 +21,7 @@ class Criticals
     private final Timer timer32k = new Timer ( );
     public Setting < Boolean > noDesync = this.register ( new Setting < Boolean > ( "NoDesync" , true ) );
     public Setting < Boolean > cancelFirst = this.register ( new Setting < Boolean > ( "CancelFirst32k" , true ) );
-    public Setting < Integer > delay32k = this.register ( new Setting < Object > ( "32kDelay" , Integer.valueOf ( 25 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 500 ) , v -> this.cancelFirst.getValue ( ) ) );
+    public Setting < Integer > delay32k = this.register ( new Setting < Object > ( "32kDelay" , 25 , 0 , 500 , v -> this.cancelFirst.getValue ( ) ) );
     private boolean firstCanceled = false;
     private boolean resetTimer = false;
 
@@ -34,9 +34,9 @@ class Criticals
     public
     void onPacketSend ( PacketEvent.Send event ) {
         CPacketUseEntity packet;
-        if ( Auto32k.getInstance ( ).isOn ( ) && ( Auto32k.getInstance ( ).switching || ! Auto32k.getInstance ( ).autoSwitch.getValue ( ).booleanValue ( ) || Auto32k.getInstance ( ).mode.getValue ( ) == Auto32k.Mode.DISPENSER ) && this.timer.passedMs ( 500L ) && this.cancelFirst.getValue ( ).booleanValue ( ) ) {
+        if ( Auto32k.getInstance ( ).isOn ( ) && ( Auto32k.getInstance ( ).switching || ! Auto32k.getInstance ( ).autoSwitch.getValue ( ) || Auto32k.getInstance ( ).mode.getValue ( ) == Auto32k.Mode.DISPENSER ) && this.timer.passedMs ( 500L ) && this.cancelFirst.getValue ( ) ) {
             this.firstCanceled = true;
-        } else if ( Auto32k.getInstance ( ).isOff ( ) || ! Auto32k.getInstance ( ).switching && Auto32k.getInstance ( ).autoSwitch.getValue ( ).booleanValue ( ) && Auto32k.getInstance ( ).mode.getValue ( ) != Auto32k.Mode.DISPENSER || ! this.cancelFirst.getValue ( ).booleanValue ( ) ) {
+        } else if ( Auto32k.getInstance ( ).isOff ( ) || ! Auto32k.getInstance ( ).switching && Auto32k.getInstance ( ).autoSwitch.getValue ( ) && Auto32k.getInstance ( ).mode.getValue ( ) != Auto32k.Mode.DISPENSER || ! this.cancelFirst.getValue ( ) ) {
             this.firstCanceled = false;
         }
         if ( event.getPacket ( ) instanceof CPacketUseEntity && ( packet = event.getPacket ( ) ).getAction ( ) == CPacketUseEntity.Action.ATTACK ) {
@@ -47,16 +47,16 @@ class Criticals
                 this.firstCanceled = false;
                 return;
             }
-            if ( this.resetTimer && ! this.timer32k.passedMs ( this.delay32k.getValue ( ).intValue ( ) ) ) {
+            if ( this.resetTimer && ! this.timer32k.passedMs ( this.delay32k.getValue ( ) ) ) {
                 return;
             }
-            if ( this.resetTimer && this.timer32k.passedMs ( this.delay32k.getValue ( ).intValue ( ) ) ) {
+            if ( this.resetTimer && this.timer32k.passedMs ( this.delay32k.getValue ( ) ) ) {
                 this.resetTimer = false;
             }
-            if ( ! this.timer.passedMs ( this.desyncDelay.getValue ( ).intValue ( ) ) ) {
+            if ( ! this.timer.passedMs ( this.desyncDelay.getValue ( ) ) ) {
                 return;
             }
-            if ( ! ( ! Criticals.mc.player.onGround || Criticals.mc.gameSettings.keyBindJump.isKeyDown ( ) || ! ( packet.getEntityFromWorld ( Criticals.mc.world ) instanceof EntityLivingBase ) && this.noDesync.getValue ( ).booleanValue ( ) || Criticals.mc.player.isInWater ( ) || Criticals.mc.player.isInLava ( ) ) ) {
+            if ( ! ( ! Criticals.mc.player.onGround || Criticals.mc.gameSettings.keyBindJump.isKeyDown ( ) || ! ( packet.getEntityFromWorld ( Criticals.mc.world ) instanceof EntityLivingBase ) && this.noDesync.getValue ( ) || Criticals.mc.player.isInWater ( ) || Criticals.mc.player.isInLava ( ) ) ) {
                 if ( this.mode.getValue ( ) == Mode.PACKET ) {
                     switch (this.packets.getValue ( )) {
                         case 1: {

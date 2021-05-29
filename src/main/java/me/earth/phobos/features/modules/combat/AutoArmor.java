@@ -28,11 +28,11 @@ class AutoArmor
         extends Module {
     private final Setting < Integer > delay = this.register ( new Setting < Integer > ( "Delay" , 50 , 0 , 500 ) );
     private final Setting < Boolean > mendingTakeOff = this.register ( new Setting < Boolean > ( "AutoMend" , false ) );
-    private final Setting < Integer > closestEnemy = this.register ( new Setting < Object > ( "Enemy" , Integer.valueOf ( 8 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 20 ) , v -> this.mendingTakeOff.getValue ( ) ) );
-    private final Setting < Integer > helmetThreshold = this.register ( new Setting < Object > ( "Helmet%" , Integer.valueOf ( 80 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 100 ) , v -> this.mendingTakeOff.getValue ( ) ) );
-    private final Setting < Integer > chestThreshold = this.register ( new Setting < Object > ( "Chest%" , Integer.valueOf ( 80 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 100 ) , v -> this.mendingTakeOff.getValue ( ) ) );
-    private final Setting < Integer > legThreshold = this.register ( new Setting < Object > ( "Legs%" , Integer.valueOf ( 80 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 100 ) , v -> this.mendingTakeOff.getValue ( ) ) );
-    private final Setting < Integer > bootsThreshold = this.register ( new Setting < Object > ( "Boots%" , Integer.valueOf ( 80 ) , Integer.valueOf ( 1 ) , Integer.valueOf ( 100 ) , v -> this.mendingTakeOff.getValue ( ) ) );
+    private final Setting < Integer > closestEnemy = this.register ( new Setting < Object > ( "Enemy" , 8 , 1 , 20 , v -> this.mendingTakeOff.getValue ( ) ) );
+    private final Setting < Integer > helmetThreshold = this.register ( new Setting < Object > ( "Helmet%" , 80 , 1 , 100 , v -> this.mendingTakeOff.getValue ( ) ) );
+    private final Setting < Integer > chestThreshold = this.register ( new Setting < Object > ( "Chest%" , 80 , 1 , 100 , v -> this.mendingTakeOff.getValue ( ) ) );
+    private final Setting < Integer > legThreshold = this.register ( new Setting < Object > ( "Legs%" , 80 , 1 , 100 , v -> this.mendingTakeOff.getValue ( ) ) );
+    private final Setting < Integer > bootsThreshold = this.register ( new Setting < Object > ( "Boots%" , 80 , 1 , 100 , v -> this.mendingTakeOff.getValue ( ) ) );
     private final Setting < Boolean > curse = this.register ( new Setting < Boolean > ( "CurseOfBinding" , false ) );
     private final Setting < Integer > actions = this.register ( new Setting < Integer > ( "Actions" , 3 , 1 , 12 ) );
     private final Setting < Bind > elytraBind = this.register ( new Setting < Bind > ( "Elytra" , new Bind ( - 1 ) ) );
@@ -94,7 +94,7 @@ class AutoArmor
             int slot3;
             ItemStack chest;
             int slot4;
-            if ( this.mendingTakeOff.getValue ( ).booleanValue ( ) && InventoryUtil.holdingItem ( ItemExpBottle.class ) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown ( ) && ( this.isSafe ( ) || EntityUtil.isSafe ( AutoArmor.mc.player , 1 , false , true ) ) ) {
+            if ( this.mendingTakeOff.getValue ( ) && InventoryUtil.holdingItem ( ItemExpBottle.class ) && AutoArmor.mc.gameSettings.keyBindUseItem.isKeyDown ( ) && ( this.isSafe ( ) || EntityUtil.isSafe ( AutoArmor.mc.player , 1 , false , true ) ) ) {
                 int bootDamage;
                 int leggingDamage;
                 int chestDamage;
@@ -126,13 +126,13 @@ class AutoArmor
                     if ( this.elytraOn && this.elytraTimer.passedMs ( 500L ) ) {
                         int elytraSlot = InventoryUtil.findItemInventorySlot ( Items.ELYTRA , false , XCarry.getInstance ( ).isOn ( ) );
                         if ( elytraSlot != - 1 ) {
-                            if ( elytraSlot < 5 && elytraSlot > 1 || ! this.shiftClick.getValue ( ).booleanValue ( ) ) {
+                            if ( elytraSlot < 5 && elytraSlot > 1 || ! this.shiftClick.getValue ( ) ) {
                                 this.taskList.add ( new InventoryUtil.Task ( elytraSlot ) );
                                 this.taskList.add ( new InventoryUtil.Task ( 6 ) );
                             } else {
                                 this.taskList.add ( new InventoryUtil.Task ( elytraSlot , true ) );
                             }
-                            if ( this.updateController.getValue ( ).booleanValue ( ) ) {
+                            if ( this.updateController.getValue ( ) ) {
                                 this.taskList.add ( new InventoryUtil.Task ( ) );
                             }
                             this.elytraTimer.reset ( );
@@ -148,7 +148,7 @@ class AutoArmor
                         this.taskList.add ( new InventoryUtil.Task ( slot3 ) );
                         this.taskList.add ( new InventoryUtil.Task ( 6 ) );
                         this.taskList.add ( new InventoryUtil.Task ( slot3 ) );
-                        if ( this.updateController.getValue ( ).booleanValue ( ) ) {
+                        if ( this.updateController.getValue ( ) ) {
                             this.taskList.add ( new InventoryUtil.Task ( ) );
                         }
                     }
@@ -163,7 +163,7 @@ class AutoArmor
                     this.taskList.add ( new InventoryUtil.Task ( slot3 ) );
                     this.taskList.add ( new InventoryUtil.Task ( 6 ) );
                     this.taskList.add ( new InventoryUtil.Task ( slot3 ) );
-                    if ( this.updateController.getValue ( ).booleanValue ( ) ) {
+                    if ( this.updateController.getValue ( ) ) {
                         this.taskList.add ( new InventoryUtil.Task ( ) );
                     }
                 }
@@ -176,7 +176,7 @@ class AutoArmor
                 this.getSlotOn ( 8 , slot );
             }
         }
-        if ( this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ).intValue ( ) * ( this.tps.getValue ( ) != false ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) ) {
+        if ( this.timer.passedMs ( (int) ( (float) this.delay.getValue ( ) * ( this.tps.getValue ( ) ? Phobos.serverManager.getTpsFactor ( ) : 1.0f ) ) ) ) {
             if ( ! this.taskList.isEmpty ( ) ) {
                 for (int i = 0; i < this.actions.getValue ( ); ++ i) {
                     InventoryUtil.Task task = this.taskList.poll ( );
@@ -207,13 +207,13 @@ class AutoArmor
                 this.doneSlots.add ( i );
             }
             if ( target != - 1 ) {
-                if ( target < 5 && target > 0 || ! this.shiftClick.getValue ( ).booleanValue ( ) ) {
+                if ( target < 5 && target > 0 || ! this.shiftClick.getValue ( ) ) {
                     this.taskList.add ( new InventoryUtil.Task ( slot ) );
                     this.taskList.add ( new InventoryUtil.Task ( target ) );
                 } else {
                     this.taskList.add ( new InventoryUtil.Task ( slot , true ) );
                 }
-                if ( this.updateController.getValue ( ).booleanValue ( ) ) {
+                if ( this.updateController.getValue ( ) ) {
                     this.taskList.add ( new InventoryUtil.Task ( ) );
                 }
             }
@@ -224,13 +224,13 @@ class AutoArmor
     void getSlotOn ( int slot , int target ) {
         if ( this.taskList.isEmpty ( ) ) {
             this.doneSlots.remove ( (Object) target );
-            if ( target < 5 && target > 0 || ! this.shiftClick.getValue ( ).booleanValue ( ) ) {
+            if ( target < 5 && target > 0 || ! this.shiftClick.getValue ( ) ) {
                 this.taskList.add ( new InventoryUtil.Task ( target ) );
                 this.taskList.add ( new InventoryUtil.Task ( slot ) );
             } else {
                 this.taskList.add ( new InventoryUtil.Task ( target , true ) );
             }
-            if ( this.updateController.getValue ( ).booleanValue ( ) ) {
+            if ( this.updateController.getValue ( ) ) {
                 this.taskList.add ( new InventoryUtil.Task ( ) );
             }
         }
@@ -238,11 +238,11 @@ class AutoArmor
 
     private
     boolean isSafe ( ) {
-        EntityPlayer closest = EntityUtil.getClosestEnemy ( this.closestEnemy.getValue ( ).intValue ( ) );
+        EntityPlayer closest = EntityUtil.getClosestEnemy ( this.closestEnemy.getValue ( ) );
         if ( closest == null ) {
             return true;
         }
-        return AutoArmor.mc.player.getDistanceSq ( closest ) >= MathUtil.square ( this.closestEnemy.getValue ( ).intValue ( ) );
+        return AutoArmor.mc.player.getDistanceSq ( closest ) >= MathUtil.square ( this.closestEnemy.getValue ( ) );
     }
 }
 

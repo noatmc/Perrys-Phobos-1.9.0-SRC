@@ -16,8 +16,8 @@ public
 class PingSpoof
         extends Module {
     private final Setting < Boolean > seconds = this.register ( new Setting < Boolean > ( "Seconds" , false ) );
-    private final Setting < Integer > delay = this.register ( new Setting < Object > ( "DelayMS" , Integer.valueOf ( 20 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 1000 ) , v -> this.seconds.getValue ( ) == false ) );
-    private final Setting < Integer > secondDelay = this.register ( new Setting < Object > ( "DelayS" , Integer.valueOf ( 5 ) , Integer.valueOf ( 0 ) , Integer.valueOf ( 30 ) , v -> this.seconds.getValue ( ) ) );
+    private final Setting < Integer > delay = this.register ( new Setting < Object > ( "DelayMS" , 20 , 0 , 1000 , v -> ! this.seconds.getValue ( ) ) );
+    private final Setting < Integer > secondDelay = this.register ( new Setting < Object > ( "DelayS" , 5 , 0 , 30 , v -> this.seconds.getValue ( ) ) );
     private final Setting < Boolean > offOnLogout = this.register ( new Setting < Boolean > ( "Logout" , false ) );
     private final Queue < Packet < ? > > packets = new ConcurrentLinkedQueue ( );
     private final Timer timer = new Timer ( );
@@ -31,7 +31,7 @@ class PingSpoof
     @Override
     public
     void onLoad ( ) {
-        if ( this.offOnLogout.getValue ( ).booleanValue ( ) ) {
+        if ( this.offOnLogout.getValue ( ) ) {
             this.disable ( );
         }
     }
@@ -39,7 +39,7 @@ class PingSpoof
     @Override
     public
     void onLogout ( ) {
-        if ( this.offOnLogout.getValue ( ).booleanValue ( ) ) {
+        if ( this.offOnLogout.getValue ( ) ) {
             this.disable ( );
         }
     }
@@ -67,7 +67,7 @@ class PingSpoof
 
     public
     void clearQueue ( ) {
-        if ( PingSpoof.mc.player != null && ! mc.isSingleplayer ( ) && PingSpoof.mc.player.isEntityAlive ( ) && ( ! this.seconds.getValue ( ).booleanValue ( ) && this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.seconds.getValue ( ).booleanValue ( ) && this.timer.passedS ( this.secondDelay.getValue ( ).intValue ( ) ) ) ) {
+        if ( PingSpoof.mc.player != null && ! mc.isSingleplayer ( ) && PingSpoof.mc.player.isEntityAlive ( ) && ( ! this.seconds.getValue ( ) && this.timer.passedMs ( this.delay.getValue ( ) ) || this.seconds.getValue ( ) && this.timer.passedS ( this.secondDelay.getValue ( ) ) ) ) {
             double limit = MathUtil.getIncremental ( Math.random ( ) * 10.0 , 1.0 );
             this.receive = false;
             int i = 0;

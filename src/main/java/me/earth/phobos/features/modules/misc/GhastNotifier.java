@@ -33,11 +33,11 @@ class GhastNotifier
     void onUpdate ( ) {
         for (Entity entity : GhastNotifier.mc.world.getLoadedEntityList ( )) {
             if ( ! ( entity instanceof EntityGhast ) || this.ghasts.contains ( entity ) ) continue;
-            if ( this.Chat.getValue ( ).booleanValue ( ) ) {
+            if ( this.Chat.getValue ( ) ) {
                 Command.sendMessage ( "Ghast Detected at: " + entity.getPosition ( ).getX ( ) + "x, " + entity.getPosition ( ).getY ( ) + "y, " + entity.getPosition ( ).getZ ( ) + "z." );
             }
             this.ghasts.add ( entity );
-            if ( ! this.Sound.getValue ( ).booleanValue ( ) ) continue;
+            if ( ! this.Sound.getValue ( ) ) continue;
             GhastNotifier.mc.player.playSound ( SoundEvents.BLOCK_ANVIL_DESTROY , 1.0f , 1.0f );
         }
     }

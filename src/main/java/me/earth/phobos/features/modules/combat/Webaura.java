@@ -60,7 +60,7 @@ class Webaura
 
     private
     boolean shouldServer ( ) {
-        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( ) != false;
+        return PingBypass.getInstance ( ).isConnected ( ) && this.server.getValue ( );
     }
 
     @Override
@@ -90,7 +90,7 @@ class Webaura
     public
     void onUpdateWalkingPlayer ( UpdateWalkingPlayerEvent event ) {
         if ( event.getStage ( ) == 0 && this.eventMode.getValue ( ) == 2 ) {
-            this.smartRotate = this.rotate.getValue ( ) != false && this.blocksPerPlace.getValue ( ) == 1;
+            this.smartRotate = this.rotate.getValue ( ) && this.blocksPerPlace.getValue ( ) == 1;
             this.doTrap ( );
         }
     }
@@ -107,7 +107,7 @@ class Webaura
     @Override
     public
     String getDisplayInfo ( ) {
-        if ( this.info.getValue ( ).booleanValue ( ) && this.target != null ) {
+        if ( this.info.getValue ( ) && this.target != null ) {
             return this.target.getName ( );
         }
         return null;
@@ -147,13 +147,13 @@ class Webaura
     List < Vec3d > getPlacements ( ) {
         ArrayList < Vec3d > list = new ArrayList < Vec3d > ( );
         Vec3d baseVec = this.target.getPositionVector ( );
-        if ( this.ylower.getValue ( ).booleanValue ( ) ) {
+        if ( this.ylower.getValue ( ) ) {
             list.add ( baseVec.add ( 0.0 , - 1.0 , 0.0 ) );
         }
-        if ( this.lowerbody.getValue ( ).booleanValue ( ) ) {
+        if ( this.lowerbody.getValue ( ) ) {
             list.add ( baseVec );
         }
-        if ( this.upperBody.getValue ( ).booleanValue ( ) ) {
+        if ( this.upperBody.getValue ( ) ) {
             list.add ( baseVec.add ( 0.0 , 1.0 , 0.0 ) );
         }
         return list;
@@ -166,7 +166,7 @@ class Webaura
         for (Vec3d vec3d3 : list) {
             BlockPos position = new BlockPos ( vec3d3 );
             int placeability = BlockUtil.isPositionPlaceable ( position , this.raytrace.getValue ( ) );
-            if ( placeability != 3 && placeability != 1 || this.antiSelf.getValue ( ).booleanValue ( ) && MathUtil.areVec3dsAligned ( Webaura.mc.player.getPositionVector ( ) , vec3d3 ) )
+            if ( placeability != 3 && placeability != 1 || this.antiSelf.getValue ( ) && MathUtil.areVec3dsAligned ( Webaura.mc.player.getPositionVector ( ) , vec3d3 ) )
                 continue;
             this.placeBlock ( position );
         }
@@ -181,13 +181,13 @@ class Webaura
         if ( this.isOff ( ) ) {
             return true;
         }
-        if ( this.disable.getValue ( ).booleanValue ( ) && ! this.startPos.equals ( EntityUtil.getRoundedBlockPos ( Webaura.mc.player ) ) ) {
+        if ( this.disable.getValue ( ) && ! this.startPos.equals ( EntityUtil.getRoundedBlockPos ( Webaura.mc.player ) ) ) {
             this.disable ( );
             return true;
         }
         if ( obbySlot == - 1 ) {
             if ( this.switchMode.getValue ( ) != InventoryUtil.Switch.NONE ) {
-                if ( this.info.getValue ( ).booleanValue ( ) ) {
+                if ( this.info.getValue ( ) ) {
                     Command.sendMessage ( "<" + this.getDisplayName ( ) + "> " + "\u00a7c" + "You are out of Webs." );
                 }
                 this.disable ( );
@@ -200,7 +200,7 @@ class Webaura
         this.switchItem ( true );
         this.isSneaking = EntityUtil.stopSneaking ( this.isSneaking );
         this.target = this.getTarget ( this.targetRange.getValue ( ) , this.targetMode.getValue ( ) == TargetMode.UNTRAPPED );
-        return this.target == null || Phobos.moduleManager.isModuleEnabled ( "Freecam" ) && this.freecam.getValue ( ) == false || ! this.timer.passedMs ( this.delay.getValue ( ).intValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && Webaura.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockWeb.class );
+        return this.target == null || Phobos.moduleManager.isModuleEnabled ( "Freecam" ) && ! this.freecam.getValue ( ) || ! this.timer.passedMs ( this.delay.getValue ( ) ) || this.switchMode.getValue ( ) == InventoryUtil.Switch.NONE && Webaura.mc.player.inventory.currentItem != InventoryUtil.findHotbarBlock ( BlockWeb.class );
     }
 
     private
@@ -208,7 +208,7 @@ class Webaura
         EntityPlayer target = null;
         double distance = Math.pow ( range , 2.0 ) + 1.0;
         for (EntityPlayer player : Webaura.mc.world.playerEntities) {
-            if ( EntityUtil.isntValid ( player , range ) || trapped && player.isInWeb || EntityUtil.getRoundedBlockPos ( Webaura.mc.player ).equals ( EntityUtil.getRoundedBlockPos ( player ) ) && this.antiSelf.getValue ( ).booleanValue ( ) || Phobos.speedManager.getPlayerSpeed ( player ) > this.speed.getValue ( ) )
+            if ( EntityUtil.isntValid ( player , range ) || trapped && player.isInWeb || EntityUtil.getRoundedBlockPos ( Webaura.mc.player ).equals ( EntityUtil.getRoundedBlockPos ( player ) ) && this.antiSelf.getValue ( ) || Phobos.speedManager.getPlayerSpeed ( player ) > this.speed.getValue ( ) )
                 continue;
             if ( target == null ) {
                 target = player;
@@ -246,4 +246,3 @@ class Webaura
 
     }
 }
-

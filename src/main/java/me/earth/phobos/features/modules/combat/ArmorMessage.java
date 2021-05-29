@@ -38,18 +38,18 @@ class ArmorMessage
                 if ( stack == ItemStack.EMPTY ) continue;
                 int percent = DamageUtil.getRoundedDamage ( stack );
                 if ( percent <= this.armorThreshhold.getValue ( ) && ! this.entityArmorArraylist.containsKey ( player ) ) {
-                    if ( player == ArmorMessage.mc.player && this.notifySelf.getValue ( ).booleanValue ( ) ) {
+                    if ( player == ArmorMessage.mc.player && this.notifySelf.getValue ( ) ) {
                         Command.sendMessage ( player.getName ( ) + " watchout your " + this.getArmorPieceName ( stack ) + " low dura!" , this.notification.getValue ( ) );
                     } else {
                         ArmorMessage.mc.player.sendChatMessage ( "/msg " + player.getName ( ) + " " + player.getName ( ) + " watchout your " + this.getArmorPieceName ( stack ) + " low dura!" );
                     }
                     this.entityArmorArraylist.put ( player , player.inventory.armorInventory.indexOf ( stack ) );
                 }
-                if ( ! this.entityArmorArraylist.containsKey ( player ) || this.entityArmorArraylist.get ( player ).intValue ( ) != player.inventory.armorInventory.indexOf ( stack ) || percent <= this.armorThreshhold.getValue ( ) )
+                if ( ! this.entityArmorArraylist.containsKey ( player ) || this.entityArmorArraylist.get ( player ) != player.inventory.armorInventory.indexOf ( stack ) || percent <= this.armorThreshhold.getValue ( ) )
                     continue;
                 this.entityArmorArraylist.remove ( player );
             }
-            if ( ! this.entityArmorArraylist.containsKey ( player ) || player.inventory.armorInventory.get ( this.entityArmorArraylist.get ( player ).intValue ( ) ) != ItemStack.EMPTY )
+            if ( ! this.entityArmorArraylist.containsKey ( player ) || player.inventory.armorInventory.get ( this.entityArmorArraylist.get ( player ) ) != ItemStack.EMPTY )
                 continue;
             this.entityArmorArraylist.remove ( player );
         }

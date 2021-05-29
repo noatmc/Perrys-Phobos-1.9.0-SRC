@@ -64,7 +64,8 @@ class NoSlowDown
                 for (KeyBinding bind : keys) {
                     KeyBinding.setKeyBindState ( bind.getKeyCode ( ) , Keyboard.isKeyDown ( bind.getKeyCode ( ) ) );
                 }
-            } if ( NoSlowDown.mc.currentScreen == null ) {
+            }
+            if ( NoSlowDown.mc.currentScreen == null ) {
                 for (KeyBinding bind : keys) {
                     if ( Keyboard.isKeyDown ( bind.getKeyCode ( ) ) ) continue;
                     KeyBinding.setKeyBindState ( bind.getKeyCode ( ) , false );

@@ -25,7 +25,7 @@ class ServerManager
 
     public
     boolean isServerNotResponding ( ) {
-        return this.timer.passedMs ( Management.getInstance ( ).respondTime.getValue ( ).intValue ( ) );
+        return this.timer.passedMs ( Management.getInstance ( ).respondTime.getValue ( ) );
     }
 
     public

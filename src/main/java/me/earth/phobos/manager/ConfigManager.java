@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public
 class ConfigManager
         implements Util {
-    public ArrayList < Feature > features = new ArrayList ( );
+    public ArrayList < Feature > features = new ArrayList <> ( );
     public String config = "phobos/config/";
     public boolean loadingConfig;
     public boolean savingConfig;
@@ -38,7 +38,7 @@ class ConfigManager
                 break;
             }
             case "Float": {
-                setting.setValue ( Float.valueOf ( element.getAsFloat ( ) ) );
+                setting.setValue ( element.getAsFloat ( ) );
                 break;
             }
             case "Integer": {
@@ -71,9 +71,9 @@ class ConfigManager
 
     private static
     void loadFile ( JsonObject input , Feature feature ) {
-        for (Map.Entry entry : input.entrySet ( )) {
-            String settingName = (String) entry.getKey ( );
-            JsonElement element = (JsonElement) entry.getValue ( );
+        for (Map.Entry < String, JsonElement > entry : input.entrySet ( )) {
+            String settingName = entry.getKey ( );
+            JsonElement element = entry.getValue ( );
             if ( feature instanceof FriendManager ) {
                 try {
                     Phobos.friendManager.addFriend ( new FriendManager.Friend ( element.getAsString ( ) , UUID.fromString ( settingName ) ) );
@@ -94,12 +94,12 @@ class ConfigManager
                 if ( settingFound ) continue;
             }
             if ( feature instanceof XRay ) {
-                feature.register ( new Setting < Boolean > ( settingName , Boolean.valueOf ( true ) , v -> ( (XRay) feature ).showBlocks.getValue ( ) ) );
+                feature.register ( new Setting < Boolean > ( settingName , Boolean.TRUE , v -> ( (XRay) feature ).showBlocks.getValue ( ) ) );
                 continue;
             }
             if ( ! ( feature instanceof AntiDDoS ) ) continue;
             AntiDDoS antiDDoS = (AntiDDoS) feature;
-            Setting setting = feature.register ( new Setting < Boolean > ( settingName , Boolean.valueOf ( true ) , v -> antiDDoS.showServer.getValue ( ) != false && antiDDoS.full.getValue ( ) == false ) );
+            Setting < ? extends Object > setting = feature.register ( new Setting < Boolean > ( settingName , Boolean.TRUE , v -> antiDDoS.showServer.getValue ( ) && ! antiDDoS.full.getValue ( ) ) );
             antiDDoS.registerServer ( setting );
         }
     }

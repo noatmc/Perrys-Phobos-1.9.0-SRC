@@ -20,7 +20,7 @@ class TotemPopManager
 
     public
     void onUpdate ( ) {
-        if ( this.notifications.totemAnnounce.passedMs ( this.notifications.delay.getValue ( ).intValue ( ) ) && this.notifications.isOn ( ) && this.notifications.totemPops.getValue ( ).booleanValue ( ) ) {
+        if ( this.notifications.totemAnnounce.passedMs ( this.notifications.delay.getValue ( ) ) && this.notifications.isOn ( ) && this.notifications.totemPops.getValue ( ) ) {
             for (EntityPlayer player : this.toAnnounce) {
                 if ( player == null ) continue;
                 int playerNumber = 0;
@@ -57,7 +57,7 @@ class TotemPopManager
 
     public
     void onDeath ( EntityPlayer player ) {
-        if ( this.getTotemPops ( player ) != 0 && ! player.equals ( TotemPopManager.mc.player ) && this.notifications.isOn ( ) && this.notifications.totemPops.getValue ( ).booleanValue ( ) ) {
+        if ( this.getTotemPops ( player ) != 0 && ! player.equals ( TotemPopManager.mc.player ) && this.notifications.isOn ( ) && this.notifications.totemPops.getValue ( ) ) {
             int playerNumber = 0;
             for (char character : player.getName ( ).toCharArray ( )) {
                 playerNumber += character;

@@ -64,7 +64,8 @@ class TextManager
         for (int i = 0; i < text.length ( ); ++ i) {
             char currentChar = text.charAt ( i );
             char nextChar = text.charAt ( MathUtil.clamp ( i + 1 , 0 , text.length ( ) - 1 ) );
-            if ( ( String.valueOf ( currentChar ) + nextChar ).equals ( "\u00a7r" ) ) {
+            final boolean equals = ( String.valueOf ( currentChar ) + nextChar ).equals ( "\u00a7r" );
+            if ( equals ) {
                 shouldRainbow = false;
             } else if ( ( String.valueOf ( currentChar ) + nextChar ).equals ( "\u00a7+" ) ) {
                 shouldRainbow = true;
@@ -73,7 +74,7 @@ class TextManager
                 shouldContinue = false;
                 continue;
             }
-            if ( ( String.valueOf ( currentChar ) + nextChar ).equals ( "\u00a7r" ) ) {
+            if ( equals ) {
                 String escapeString = text.substring ( i );
                 this.drawString ( escapeString , x + (float) currentWidth , y , Color.WHITE.getRGB ( ) , shadow );
                 break;

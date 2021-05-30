@@ -1,6 +1,7 @@
 package me.earth.phobos.mixin.mixins;
 
 import com.google.common.base.Predicate;
+import me.earth.phobos.event.events.PerspectiveEvent;
 import me.earth.phobos.features.modules.client.Notifications;
 import me.earth.phobos.features.modules.player.Speedmine;
 import me.earth.phobos.features.modules.render.CameraClip;
@@ -18,6 +19,8 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.util.glu.Project;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -89,6 +92,30 @@ class MixinEntityRenderer {
             return - 3.4028235E38f;
         }
         return entityPlayerSP.prevTimeInPortal;
+    }
+
+    @Redirect(method = {"setupCameraTransform"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    private
+    void onSetupCameraTransform ( float f , float f2 , float f3 , float f4 ) {
+        PerspectiveEvent perspectiveEvent = new PerspectiveEvent ( (float) mc.displayWidth / (float) mc.displayHeight );
+        MinecraftForge.EVENT_BUS.post ( perspectiveEvent );
+        Project.gluPerspective ( f , perspectiveEvent.getAspect ( ) , f3 , f4 );
+    }
+
+    @Redirect(method = {"renderWorldPass"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    private
+    void onRenderWorldPass ( float f , float f2 , float f3 , float f4 ) {
+        PerspectiveEvent perspectiveEvent = new PerspectiveEvent ( (float) mc.displayWidth / (float) mc.displayHeight );
+        MinecraftForge.EVENT_BUS.post ( perspectiveEvent );
+        Project.gluPerspective ( f , perspectiveEvent.getAspect ( ) , f3 , f4 );
+    }
+
+    @Redirect(method = {"renderCloudsCheck"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V"))
+    private
+    void onRenderCloudsCheck ( float f , float f2 , float f3 , float f4 ) {
+        PerspectiveEvent perspectiveEvent = new PerspectiveEvent ( (float) mc.displayWidth / (float) mc.displayHeight );
+        MinecraftForge.EVENT_BUS.post ( perspectiveEvent );
+        Project.gluPerspective ( f , perspectiveEvent.getAspect ( ) , f3 , f4 );
     }
 
     @Inject(method = {"setupFog"}, at = {@At(value = "HEAD")}, cancellable = true)

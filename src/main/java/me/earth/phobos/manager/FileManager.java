@@ -33,15 +33,13 @@ class FileManager
     }
 
     public static
-    boolean appendTextFile ( String data , String file ) {
+    void appendTextFile ( String data , String file ) {
         try {
             Path path = Paths.get ( file );
             Files.write ( path , Collections.singletonList ( data ) , StandardCharsets.UTF_8 , Files.exists ( path ) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE );
         } catch ( IOException e ) {
             System.out.println ( "WARNING: Unable to write file: " + file );
-            return false;
         }
-        return true;
     }
 
     public static

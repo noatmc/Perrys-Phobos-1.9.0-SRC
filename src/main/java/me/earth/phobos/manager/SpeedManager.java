@@ -46,7 +46,7 @@ class SpeedManager
         double distTraveledLastTickZ = SpeedManager.mc.player.posZ - SpeedManager.mc.player.prevPosZ;
         this.speedometerCurrentSpeed = distTraveledLastTickX * distTraveledLastTickX + distTraveledLastTickZ * distTraveledLastTickZ;
         if ( didJumpThisTick && ( ! SpeedManager.mc.player.onGround || isJumping ) ) {
-            if ( didJumpThisTick && ! this.didJumpLastTick ) {
+            if ( ! this.didJumpLastTick ) {
                 this.wasFirstJump = this.lastJumpSpeed == 0.0;
                 this.percentJumpSpeedChanged = this.speedometerCurrentSpeed != 0.0 ? this.speedometerCurrentSpeed / this.lastJumpSpeed - 1.0 : - 1.0;
                 this.jumpSpeedChanged = this.speedometerCurrentSpeed - this.lastJumpSpeed;
@@ -59,7 +59,7 @@ class SpeedManager
             this.didJumpLastTick = false;
             this.lastJumpSpeed = 0.0;
         }
-        if ( Management.getInstance ( ).speed.getValue ( ).booleanValue ( ) ) {
+        if ( Management.getInstance ( ).speed.getValue ( ) ) {
             this.updatePlayers ( );
         }
     }

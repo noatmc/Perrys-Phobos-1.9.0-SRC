@@ -67,7 +67,7 @@ class EventManager
             Phobos.safetyManager.onUpdate ( );
             Phobos.moduleManager.onUpdate ( );
             Phobos.timerManager.update ( );
-            if ( this.timer.passedMs ( Management.getInstance ( ).moduleListUpdates.getValue ( ).intValue ( ) ) ) {
+            if ( this.timer.passedMs ( Management.getInstance ( ).moduleListUpdates.getValue ( ) ) ) {
                 Phobos.moduleManager.sortModules ( true );
                 Phobos.moduleManager.alphabeticallySortModules ( );
                 this.timer.reset ( );

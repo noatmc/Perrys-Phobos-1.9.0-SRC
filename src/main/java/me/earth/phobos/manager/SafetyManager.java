@@ -39,8 +39,8 @@ class SafetyManager
         if ( ! SafetyManager.fullNullCheck ( ) ) {
             EntityPlayer closest;
             boolean safe = true;
-            EntityPlayer entityPlayer = closest = Management.getInstance ( ).safety.getValue ( ) != false ? EntityUtil.getClosestEnemy ( 18.0 ) : null;
-            if ( Management.getInstance ( ).safety.getValue ( ).booleanValue ( ) && closest == null ) {
+            EntityPlayer entityPlayer = closest = Management.getInstance ( ).safety.getValue ( ) ? EntityUtil.getClosestEnemy ( 18.0 ) : null;
+            if ( Management.getInstance ( ).safety.getValue ( ) && closest == null ) {
                 this.SAFE.set ( true );
                 return;
             }
@@ -84,7 +84,7 @@ class SafetyManager
     public
     ScheduledExecutorService getService ( ) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor ( );
-        service.scheduleAtFixedRate ( this , 0L , Management.getInstance ( ).safetyCheck.getValue ( ).intValue ( ) , TimeUnit.MILLISECONDS );
+        service.scheduleAtFixedRate ( this , 0L , Management.getInstance ( ).safetyCheck.getValue ( ) , TimeUnit.MILLISECONDS );
         return service;
     }
 }

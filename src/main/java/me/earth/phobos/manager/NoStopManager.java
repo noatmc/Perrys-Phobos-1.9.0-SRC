@@ -31,7 +31,7 @@ class NoStopManager
                 return;
             }
             if ( currentPos.equals ( this.lastPos ) ) {
-                if ( this.stopped && this.timer.passedS ( Management.getInstance ( ).baritoneTimeOut.getValue ( ).intValue ( ) ) ) {
+                if ( this.stopped && this.timer.passedS ( Management.getInstance ( ).baritoneTimeOut.getValue ( ) ) ) {
                     this.sendMessage ( );
                     this.stopped = false;
                     return;

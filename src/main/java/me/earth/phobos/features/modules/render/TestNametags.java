@@ -351,10 +351,8 @@ class TestNametags
                 encName = encName + level;
             }
             if ( ! this.altEnchantNames.getValue ( ) ) {
-                assert encName != null;
-                encName = encName.toLowerCase ( );
+                encName = encName != null ? encName.toLowerCase ( ) : null;
             }
-            this.renderer.drawStringWithShadow ( encName , x * 2 , enchantmentY , - 1 );
             enchantmentY -= 8;
         }
         if ( DamageUtil.hasDurability ( stack ) ) {
@@ -363,6 +361,7 @@ class TestNametags
             this.renderer.drawStringWithShadow ( color + percent + "%" , x * 2 , enchantmentY , - 1 );
         }
     }
+
 
     private
     float getEnchantHeight ( ItemStack stack ) {

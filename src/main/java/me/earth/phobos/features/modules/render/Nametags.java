@@ -200,7 +200,7 @@ class Nametags
             if ( renderOffhand.hasEffect ( ) && ( renderOffhand.getItem ( ) instanceof ItemTool || renderOffhand.getItem ( ) instanceof ItemArmor ) ) {
                 renderOffhand.stackSize = 1;
             }
-            this.renderItemStack ( renderOffhand , xOffset , - 26 );
+            this.renderItemStack ( renderOffhand , xOffset );
             xOffset += 16;
             for (ItemStack stack : player.inventory.armorInventory) {
                 if ( stack == null ) continue;
@@ -208,10 +208,10 @@ class Nametags
                 if ( armourStack.hasEffect ( ) && ( armourStack.getItem ( ) instanceof ItemTool || armourStack.getItem ( ) instanceof ItemArmor ) ) {
                     armourStack.stackSize = 1;
                 }
-                this.renderItemStack ( armourStack , xOffset , - 26 );
+                this.renderItemStack ( armourStack , xOffset );
                 xOffset += 16;
             }
-            this.renderItemStack ( renderMainHand , xOffset , - 26 );
+            this.renderItemStack ( renderMainHand , xOffset );
             GlStateManager.popMatrix ( );
         }
         this.renderer.drawStringWithShadow ( displayTag , - width , - ( this.renderer.getFontHeight ( ) - 1 ) , this.getDisplayColour ( player ) );
@@ -226,7 +226,7 @@ class Nametags
     }
 
     private
-    void renderItemStack ( ItemStack stack , int x , int y ) {
+    void renderItemStack ( ItemStack stack , int x ) {
         GlStateManager.pushMatrix ( );
         GlStateManager.depthMask ( true );
         GlStateManager.clear ( 256 );
@@ -235,23 +235,23 @@ class Nametags
         GlStateManager.disableAlpha ( );
         GlStateManager.enableDepth ( );
         GlStateManager.disableCull ( );
-        mc.getRenderItem ( ).renderItemAndEffectIntoGUI ( stack , x , y );
-        mc.getRenderItem ( ).renderItemOverlays ( Nametags.mc.fontRenderer , stack , x , y );
+        mc.getRenderItem ( ).renderItemAndEffectIntoGUI ( stack , x , - 26 );
+        mc.getRenderItem ( ).renderItemOverlays ( Nametags.mc.fontRenderer , stack , x , - 26 );
         Nametags.mc.getRenderItem ( ).zLevel = 0.0f;
         RenderHelper.disableStandardItemLighting ( );
         GlStateManager.enableCull ( );
         GlStateManager.enableAlpha ( );
         GlStateManager.scale ( 0.5f , 0.5f , 0.5f );
         GlStateManager.disableDepth ( );
-        this.renderEnchantmentText ( stack , x , y );
+        this.renderEnchantmentText ( stack , x );
         GlStateManager.enableDepth ( );
         GlStateManager.scale ( 2.0f , 2.0f , 2.0f );
         GlStateManager.popMatrix ( );
     }
 
     private
-    void renderEnchantmentText ( ItemStack stack , int x , int y ) {
-        int enchantmentY = y - 8;
+    void renderEnchantmentText ( ItemStack stack , int x ) {
+        int enchantmentY = - 26 - 8;
         if ( stack.getItem ( ) == Items.GOLDEN_APPLE && stack.hasEffect ( ) ) {
             this.renderer.drawStringWithShadow ( "god" , x * 2 , enchantmentY , - 3977919 );
             enchantmentY -= 8;

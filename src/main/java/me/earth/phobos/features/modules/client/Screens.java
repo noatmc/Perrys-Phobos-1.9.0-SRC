@@ -7,7 +7,7 @@ public
 class Screens
         extends Module {
     public static Screens INSTANCE;
-    public Setting < Boolean > mainScreen = this.register ( new Setting < Boolean > ( "MainScreen" , true ) );
+    public Setting < Boolean > mainScreen = this.register ( new Setting < Boolean > ( "MainScreen" , false ) );
 
     public
     Screens ( ) {

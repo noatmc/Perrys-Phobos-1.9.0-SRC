@@ -7,11 +7,12 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   Anchor. <br>
   Aspect. <br>
   CA Optimized. <br>
-  Fix TestNameTags. <br>
+  Fixed TestNameTags. <br>
   General Code Improvement. <br>
   GUI Move works anywhere. <br>
   CA Offhandswing now works. <br>
   Made ReverseStep better so if u get stuck in the air all u gotta do is hit space or sneak and it stops. <br>
   Yport mode in speed. <br>
+  Placebo settings removed. <br>
   And much more stuff thats all i think of off the top of my head. <br><br>
 </details>

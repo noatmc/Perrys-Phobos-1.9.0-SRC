@@ -6,6 +6,7 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   All modules on modulemanager. <br>
   Godly Burrow (HUGE thanks to bush). <br>
   Quiver. <br>
+  Animations. <br>
   Anchor. <br>
   Aspect. <br>
   Shaders. <br>
@@ -17,5 +18,6 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   Made ReverseStep better so if u get stuck in the air all u gotta do is hit space or sneak and it stops. <br>
   Yport mode in speed. <br>
   Placebo settings removed. <br>
+  Made Placebo settings non placebo. <br>
   And much more stuff thats all i think of off the top of my head. <br><br>
 </details>

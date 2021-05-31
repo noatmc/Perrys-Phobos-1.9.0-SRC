@@ -20,5 +20,6 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   Placebo settings removed. <br>
   Made Placebo settings non placebo. <br>
   Strength & Burrow Alert in notifcations. <br>
+  ViewModel. <br>
   And much more stuff thats all i think of off the top of my head. <br><br>
 </details>

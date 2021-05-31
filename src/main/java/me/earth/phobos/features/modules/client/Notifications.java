@@ -1,5 +1,6 @@
 package me.earth.phobos.features.modules.client;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import me.earth.phobos.Phobos;
 import me.earth.phobos.event.events.ClientEvent;
 import me.earth.phobos.event.events.PacketEvent;
@@ -9,22 +10,35 @@ import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.manager.FileManager;
 import me.earth.phobos.util.Timer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.server.SPacketSpawnObject;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.living.PotionColorCalculationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public
 class Notifications
         extends Module {
     private static final String fileName = "phobos/util/ModuleMessage_List.txt";
     private static final List < String > modules = new ArrayList < String > ( );
+    public static Set < EntityPlayer > strengthPlayers;
+    public static Map < EntityPlayer, Integer > strMap;
     private static Notifications INSTANCE = new Notifications ( );
+
+    static {
+        strengthPlayers = new HashSet < EntityPlayer > ( );
+        strMap = new HashMap < EntityPlayer, Integer > ( );
+    }
+
     private final Timer timer = new Timer ( );
+    private final List < EntityPlayer > burrowedPlayers = new ArrayList <> ( );
     public Setting < Boolean > totemPops = this.register ( new Setting < Boolean > ( "TotemPops" , true ) );
     public Setting < Boolean > totemNoti = this.register ( new Setting < Object > ( "TotemNoti" , Boolean.FALSE , v -> this.totemPops.getValue ( ) ) );
     public Setting < Integer > delay = this.register ( new Setting < Object > ( "Delay" , 0 , 0 , 5000 , v -> this.totemPops.getValue ( ) , "Delays messages." ) );
@@ -40,6 +54,8 @@ class Notifications
     public Setting < Boolean > pearls = this.register ( new Setting < Boolean > ( "PearlNotifs" , true ) );
     public Setting < Boolean > crash = this.register ( new Setting < Boolean > ( "Crash" , true ) );
     public Setting < Boolean > popUp = this.register ( new Setting < Boolean > ( "PopUpVisualRange" , false ) );
+    public Setting < Boolean > burrow = this.register ( new Setting < Boolean > ( "Burrow" , false ) );
+    public Setting < Boolean > strength = this.register ( new Setting < Boolean > ( "Strength" , false ) );
     public Timer totemAnnounce = new Timer ( );
     private List < EntityPlayer > knownPlayers = new ArrayList < EntityPlayer > ( );
     private boolean check;
@@ -131,6 +147,65 @@ class Notifications
                     }
                     return;
                 }
+            }
+        }
+    }
+
+    @Override
+    public
+    void onTick ( ) {
+        if ( ! this.burrow.getValue ( ) ) {
+            return;
+        }
+        for (EntityPlayer entityPlayer : mc.world.playerEntities.stream ( ).filter ( entityPlayer -> entityPlayer != mc.player ).collect ( Collectors.toList ( ) )) {
+            if ( ! burrowedPlayers.contains ( entityPlayer ) && isInBurrow ( entityPlayer ) ) {
+                Command.sendMessage ( ChatFormatting.RED + entityPlayer.getDisplayNameString ( ) + ChatFormatting.GREEN + " - has burrowed." );
+                burrowedPlayers.add ( entityPlayer );
+            }
+        }
+    }
+
+    private
+    boolean isInBurrow ( EntityPlayer entityPlayer ) {
+        BlockPos playerPos = new BlockPos ( getMiddlePosition ( entityPlayer.posX ) , entityPlayer.posY , getMiddlePosition ( entityPlayer.posZ ) );
+
+        return mc.world.getBlockState ( playerPos ).getBlock ( ) == Blocks.OBSIDIAN
+                || mc.world.getBlockState ( playerPos ).getBlock ( ) == Blocks.ENDER_CHEST
+                || mc.world.getBlockState ( playerPos ).getBlock ( ) == Blocks.ANVIL;
+    }
+
+    private
+    double getMiddlePosition ( double positionIn ) {
+        double positionFinal = Math.round ( positionIn );
+
+        if ( Math.round ( positionIn ) > positionIn ) {
+            positionFinal -= 0.5;
+        } else if ( Math.round ( positionIn ) <= positionIn ) {
+            positionFinal += 0.5;
+        }
+
+        return positionFinal;
+    }
+
+    @SubscribeEvent
+    public
+    void onPotionColor ( final PotionColorCalculationEvent event ) {
+        if ( ! this.strength.getValue ( ) ) {
+            return;
+        }
+        if ( event.getEntityLiving ( ) instanceof EntityPlayer ) {
+            boolean hasStrength = false;
+            for (final PotionEffect potionEffect : event.getEffects ( )) {
+                if ( potionEffect.getPotion ( ) == MobEffects.STRENGTH ) {
+                    strMap.put ( (EntityPlayer) event.getEntityLiving ( ) , potionEffect.getAmplifier ( ) );
+                    Command.sendMessage ( ChatFormatting.RED + event.getEntityLiving ( ).getName ( ) + ChatFormatting.GREEN + " has strength." );
+                    hasStrength = true;
+                    break;
+                }
+            }
+            if ( strMap.containsKey ( event.getEntityLiving ( ) ) && ! hasStrength ) {
+                strMap.remove ( event.getEntityLiving ( ) );
+                Command.sendMessage ( ChatFormatting.RED + event.getEntityLiving ( ).getName ( ) + ChatFormatting.GREEN + " no longer has strength" );
             }
         }
     }

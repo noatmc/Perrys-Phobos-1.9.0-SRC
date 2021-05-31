@@ -39,6 +39,7 @@ class TextUtil {
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile ( "(?i)" + "\u00a7" + "[0-9A-FK-OR]" );
     private static final Random rand = new Random ( );
     public static String shrug = "\u00af\\_(\u30c4)_/\u00af";
+    public static String disability = "\u267F";
 
     public static
     String stripColor ( String input ) {

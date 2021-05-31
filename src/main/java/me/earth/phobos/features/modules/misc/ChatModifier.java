@@ -62,6 +62,10 @@ class ChatModifier
             ChatModifier.mc.player.sendChatMessage ( TextUtil.shrug );
             this.shrug.setValue ( false );
         }
+        if ( this.disability.getValue ( ) ) {
+            ChatModifier.mc.player.sendChatMessage ( TextUtil.disability );
+            this.disability.setValue ( false );
+        }
         if ( this.autoQMain.getValue ( ) ) {
             if ( ! this.shouldSendMessage ( ChatModifier.mc.player ) ) {
                 return;
@@ -103,9 +107,9 @@ class ChatModifier
     @SubscribeEvent
     public
     void onChatPacketReceive ( PacketEvent.Receive event ) {
-        if ( event.getStage ( ) != 0 || event.getPacket ( ) instanceof SPacketChat ) {
-            // empty if block
-        }
+        if ( event.getStage ( ) == 0 ) {
+            event.getPacket ( );
+        }// empty if block
     }
 
     @SubscribeEvent

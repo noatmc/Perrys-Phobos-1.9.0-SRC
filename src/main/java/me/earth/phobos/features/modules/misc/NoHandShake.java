@@ -13,7 +13,7 @@ class NoHandShake
         extends Module {
     public
     NoHandShake ( ) {
-        super ( "NoHandshake" , "Doesn't send your modlist to the server." , Module.Category.MISC , true , false , false );
+        super ( "NoHandshake" , "Doesn't send your mod list to the server." , Module.Category.MISC , true , false , false );
     }
 
     @SubscribeEvent

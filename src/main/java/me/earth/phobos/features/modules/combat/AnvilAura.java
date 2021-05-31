@@ -26,8 +26,6 @@ public
 class AnvilAura
         extends Module {
     public Setting < Float > range = this.register ( new Setting < Float > ( "Range" , 6.0f , 0.0f , 10.0f ) );
-    public Setting < Float > wallsRange = this.register ( new Setting < Float > ( "WallsRange" , 3.5f , 0.0f , 10.0f ) );
-    public Setting < Integer > placeDelay = this.register ( new Setting < Integer > ( "PlaceDelay" , 0 , 0 , 500 ) );
     public Setting < Boolean > rotate = this.register ( new Setting < Boolean > ( "Rotate" , true ) );
     public Setting < Boolean > packet = this.register ( new Setting < Boolean > ( "Packet" , true ) );
     public Setting < Boolean > switcher = this.register ( new Setting < Boolean > ( "Switch" , true ) );
@@ -36,7 +34,6 @@ class AnvilAura
     private float pitch = 0.0f;
     private boolean rotating = false;
     private int rotationPacketsSpoofed = 0;
-    private EntityPlayer finalTarget;
     private BlockPos placeTarget;
 
     public
@@ -69,11 +66,11 @@ class AnvilAura
 
     public
     void doAnvilAura ( ) {
-        this.finalTarget = this.getTarget ( );
-        if ( this.finalTarget != null ) {
-            this.placeTarget = this.getTargetPos ( this.finalTarget );
+        EntityPlayer finalTarget = this.getTarget ( );
+        if ( finalTarget != null ) {
+            this.placeTarget = this.getTargetPos ( finalTarget );
         }
-        if ( this.placeTarget != null && this.finalTarget != null ) {
+        if ( this.placeTarget != null && finalTarget != null ) {
             this.placeAnvil ( this.placeTarget );
         }
     }
@@ -141,7 +138,7 @@ class AnvilAura
     List < BlockPos > getPlaceableBlocksAboveEntity ( Entity target ) {
         BlockPos pos;
         BlockPos playerPos = new BlockPos ( Math.floor ( AnvilAura.mc.player.posX ) , Math.floor ( AnvilAura.mc.player.posY ) , Math.floor ( AnvilAura.mc.player.posZ ) );
-        ArrayList < BlockPos > positions = new ArrayList < BlockPos > ( );
+        ArrayList < BlockPos > positions = new ArrayList <> ( );
         for (int i = (int) Math.floor ( AnvilAura.mc.player.posY + 2.0 ); i <= 256 && BlockUtil.isPositionPlaceable ( pos = new BlockPos ( Math.floor ( AnvilAura.mc.player.posX ) , i , Math.floor ( AnvilAura.mc.player.posZ ) ) , false ) != 0 && BlockUtil.isPositionPlaceable ( pos , false ) != - 1 && BlockUtil.isPositionPlaceable ( pos , false ) != 2; ++ i) {
             positions.add ( pos );
         }

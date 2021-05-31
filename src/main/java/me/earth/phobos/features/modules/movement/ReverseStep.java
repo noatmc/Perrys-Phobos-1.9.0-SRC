@@ -13,7 +13,7 @@ class ReverseStep
     @Override
     public
     void onUpdate ( ) {
-        if ( mc.player != null && mc.world != null && mc.player.onGround && ! mc.player.isInWater ( ) && ! mc.player.isInLava ( ) && ! mc.player.isOnLadder ( ) && ! mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
+        if ( mc.player != null && mc.world != null && mc.player.onGround && ! mc.player.isInWater ( ) && ! mc.player.isInLava ( ) && ! mc.player.isOnLadder ( ) && ! mc.gameSettings.keyBindSneak.isKeyDown ( ) && ! mc.gameSettings.keyBindJump.isKeyDown ( ) ) {
             if ( ReverseStep.mc.player.onGround ) {
                 ReverseStep.mc.player.motionY -= 1.0;
             }

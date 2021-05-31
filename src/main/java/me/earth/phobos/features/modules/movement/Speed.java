@@ -6,9 +6,7 @@ import me.earth.phobos.event.events.MoveEvent;
 import me.earth.phobos.event.events.UpdateWalkingPlayerEvent;
 import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
-import me.earth.phobos.util.BlockUtil;
-import me.earth.phobos.util.EntityUtil;
-import me.earth.phobos.util.MathUtil;
+import me.earth.phobos.util.*;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.MovementInput;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,6 +26,7 @@ class Speed
     public Setting < Double > speed = this.register ( new Setting < Object > ( "Speed" , 10.0 , 0.1 , 100.0 , v -> this.mode.getValue ( ) == Mode.VANILLA ) );
     public Setting < Double > blocked = this.register ( new Setting < Object > ( "Blocked" , 10.0 , 0.0 , 100.0 , v -> this.mode.getValue ( ) == Mode.VANILLA ) );
     public Setting < Double > unblocked = this.register ( new Setting < Object > ( "Unblocked" , 10.0 , 0.0 , 100.0 , v -> this.mode.getValue ( ) == Mode.VANILLA ) );
+    public Setting < Double > yspeed = this.register ( new Setting < Object > ( "YSpeed" , 1.0 , 0.1 , 10.0 , v -> this.mode.getValue ( ) == Mode.Yport ) );
     public double startY = 0.0;
     public boolean antiShake = false;
     public double minY = 0.0;
@@ -78,6 +77,10 @@ class Speed
                 this.doAccel ( );
                 break;
             }
+            case Yport: {
+                this.handleYPortSpeed ( );
+                break;
+            }
             case ONGROUND: {
                 this.doOnground ( );
                 break;
@@ -124,16 +127,21 @@ class Speed
     }
 
     private
-    boolean vanillaCheck ( ) {
-        if ( Speed.mc.player.onGround ) {
-            // empty if block
-        }
-        return false;
+    boolean vanilla ( ) {
+        return Speed.mc.player.onGround;
     }
 
     private
-    boolean vanilla ( ) {
-        return Speed.mc.player.onGround;
+    void handleYPortSpeed ( ) {
+        if ( ! MovementUtil.isMoving ( Speed.mc.player ) || Speed.mc.player.isInWater ( ) && Speed.mc.player.isInLava ( ) || Speed.mc.player.collidedHorizontally ) {
+            return;
+        }
+        if ( Speed.mc.player.onGround ) {
+            Speed.mc.player.jump ( );
+            MovementUtil.setSpeed ( Speed.mc.player , MovementUtil.getBaseMoveSpeed ( ) + this.yspeed.getValue ( ) );
+        } else {
+            Speed.mc.player.motionY = - 1.0;
+        }
     }
 
     private
@@ -611,8 +619,8 @@ class Speed
         ONGROUND,
         ACCEL,
         BOOST,
-        VANILLA
-
+        VANILLA,
+        Yport
     }
 }
 

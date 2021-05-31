@@ -1,9 +1,14 @@
 package me.earth.phobos.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.Objects;
 
 public
 class MovementUtil
@@ -57,6 +62,53 @@ class MovementUtil
             return new Vec3d ( tempPos.x , finalY , tempPos.z );
         }
         return result.hitVec;
+    }
+
+    public static
+    double[] forward ( double d ) {
+        float f = Minecraft.getMinecraft ( ).player.movementInput.moveForward;
+        float f2 = Minecraft.getMinecraft ( ).player.movementInput.moveStrafe;
+        float f3 = Minecraft.getMinecraft ( ).player.prevRotationYaw + ( Minecraft.getMinecraft ( ).player.rotationYaw - Minecraft.getMinecraft ( ).player.prevRotationYaw ) * Minecraft.getMinecraft ( ).getRenderPartialTicks ( );
+        if ( f != 0.0f ) {
+            if ( f2 > 0.0f ) {
+                f3 += (float) ( f > 0.0f ? - 45 : 45 );
+            } else if ( f2 < 0.0f ) {
+                f3 += (float) ( f > 0.0f ? 45 : - 45 );
+            }
+            f2 = 0.0f;
+            if ( f > 0.0f ) {
+                f = 1.0f;
+            } else if ( f < 0.0f ) {
+                f = - 1.0f;
+            }
+        }
+        double d2 = Math.sin ( Math.toRadians ( f3 + 90.0f ) );
+        double d3 = Math.cos ( Math.toRadians ( f3 + 90.0f ) );
+        double d4 = (double) f * d * d3 + (double) f2 * d * d2;
+        double d5 = (double) f * d * d2 - (double) f2 * d * d3;
+        return new double[]{d4 , d5};
+    }
+
+    public static
+    boolean isMoving ( EntityLivingBase entityLivingBase ) {
+        return entityLivingBase.moveForward != 0.0f || entityLivingBase.moveStrafing != 0.0f;
+    }
+
+    public static
+    void setSpeed ( EntityLivingBase entityLivingBase , double d ) {
+        double[] dArray = MovementUtil.forward ( d );
+        entityLivingBase.motionX = dArray[0];
+        entityLivingBase.motionZ = dArray[1];
+    }
+
+    public static
+    double getBaseMoveSpeed ( ) {
+        double d = 0.2873;
+        if ( Minecraft.getMinecraft ( ).player != null && Minecraft.getMinecraft ( ).player.isPotionActive ( Objects.requireNonNull ( Potion.getPotionById ( 1 ) ) ) ) {
+            int n = Objects.requireNonNull ( Minecraft.getMinecraft ( ).player.getActivePotionEffect ( Objects.requireNonNull ( Potion.getPotionById ( 1 ) ) ) ).getAmplifier ( );
+            d *= 1.0 + 0.2 * (double) ( n + 1 );
+        }
+        return d;
     }
 
     public static

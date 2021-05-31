@@ -13,5 +13,5 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   CA Offhandswing now works. <br>
   Made ReverseStep better so if u get stuck in the air all u gotta do is hit space or sneak and it stops. <br>
   Yport mode in speed. <br>
-  And much more stuff thats all i think of off the type of my head. <br><br>
+  And much more stuff thats all i think of off the top of my head. <br><br>
 </details>

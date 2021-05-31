@@ -8,13 +8,21 @@ All modules on modulemanager.
 Anchor.
 
 Aspect.
+
 CA Optimized.
+
 Fix TestNameTags.
+
 General Code Improvement.
+
 Fixed HUD and a few commands showing characters from gopros decompiler making errors.
+
 GUI Move works anywhere.
+
 CA Offhandswing now works.
+
 Made ReverseStep better so if u get stuck in the air all u gotta do is hit space or sneak and it stops.
+
 Yport mode in speed.
 
 And much more stuff thats all i think of off the type of my head.

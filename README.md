@@ -4,6 +4,8 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
 <details>
   <summary>Changelog (Differnce from normal 1.9.0 and this edit of mine.)</summary> <br>
   All modules on modulemanager. <br>
+  Godly Burrow (HUGE thanks to bush). <br>
+  Quiver. <br>
   Anchor. <br>
   Aspect. <br>
   CA Optimized. <br>

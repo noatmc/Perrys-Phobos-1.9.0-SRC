@@ -53,7 +53,7 @@ class BlockLag
         }
         this.blockSlot = this.findBlockSlot ( );
         this.startPos = new BlockPos ( BlockLag.mc.player.getPositionVector ( ) );
-        if ( ! BlockUtil.isElseHole ( this.startPos ) || this.blockSlot == - 1 ) {
+        if ( this.blockSlot == - 1 ) {
             this.disable ( );
             return;
         }

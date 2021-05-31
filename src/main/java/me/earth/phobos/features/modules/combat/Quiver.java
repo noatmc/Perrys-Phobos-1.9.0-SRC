@@ -38,10 +38,4 @@ class Quiver extends Module {
             }
         }
     }
-
-    @Override
-    public
-    void onEnable ( ) {
-
-    }
 }

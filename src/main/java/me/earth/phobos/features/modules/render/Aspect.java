@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public
 class Aspect
         extends Module {
-    public Setting < Float > aspect = this.register ( new Setting < Float > ( "Alpha" , 0.1f , 1.0f , 5.0f ) );
+    public Setting < Float > aspect = this.register ( new Setting < Float > ( "Alpha" , 1.0f , 0.1f , 5.0f ) );
 
     public
     Aspect ( ) {

@@ -8,6 +8,7 @@ A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works 
   Quiver. <br>
   Anchor. <br>
   Aspect. <br>
+  Shaders. <br>
   CA Optimized. <br>
   Fixed TestNameTags. <br>
   General Code Improvement. <br>

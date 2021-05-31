@@ -159,7 +159,7 @@ class Notifications
         }
         for (EntityPlayer entityPlayer : mc.world.playerEntities.stream ( ).filter ( entityPlayer -> entityPlayer != mc.player ).collect ( Collectors.toList ( ) )) {
             if ( ! burrowedPlayers.contains ( entityPlayer ) && isInBurrow ( entityPlayer ) ) {
-                Command.sendMessage ( ChatFormatting.RED + entityPlayer.getDisplayNameString ( ) + ChatFormatting.GREEN + " - has burrowed." );
+                Command.sendMessage ( ChatFormatting.RED + entityPlayer.getDisplayNameString ( ) + ChatFormatting.GREEN + " has burrowed." );
                 burrowedPlayers.add ( entityPlayer );
             }
         }

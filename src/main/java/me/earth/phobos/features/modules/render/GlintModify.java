@@ -14,7 +14,7 @@ class GlintModify extends Module {
 
     public
     GlintModify ( ) {
-        super ( "GlintModify" , "Changes the enchant glint color" , Module.Category.RENDER , true , true , true );
+        super ( "GlintModify" , "Changes the enchant glint color" , Module.Category.RENDER , true , false , true );
     }
 
     public static

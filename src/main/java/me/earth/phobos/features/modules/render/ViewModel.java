@@ -20,14 +20,13 @@ class ViewModel extends Module {
     public Setting < Float > positionX;
     public Setting < Float > positionY;
     public Setting < Float > positionZ;
-    public Setting < Float > itemFOV;
 
     public
     ViewModel ( ) {
         super ( "ViewModel" , "Changes view of items held in ur main/offhand" , Module.Category.RENDER , false , false , false );
         this.sizeX = (Setting < Float >) this.register ( new Setting <> ( "Size-X" , 1.0f , 0.0f , 2.0f ) );
         this.sizeY = (Setting < Float >) this.register ( new Setting <> ( "Size-Y" , 1.0f , 0.0f , 2.0f ) );
-        this.sizeZ = (Setting < Float >) this.register ( new Setting <> ( "Size-X" , 1.0f , 0.0f , 2.0f ) );
+        this.sizeZ = (Setting < Float >) this.register ( new Setting <> ( "Size-Z" , 1.0f , 0.0f , 2.0f ) );
         this.rotationX = (Setting < Float >) this.register ( new Setting <> ( "Rotation-X" , 0.0f , 0.0f , 1.0f ) );
         this.rotationY = (Setting < Float >) this.register ( new Setting <> ( "Rotation-Y" , 0.0f , 0.0f , 1.0f ) );
         this.rotationZ = (Setting < Float >) this.register ( new Setting <> ( "Rotation-Z" , 0.0f , 0.0f , 1.0f ) );

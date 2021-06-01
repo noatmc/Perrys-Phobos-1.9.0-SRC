@@ -1,5 +1,5 @@
 # Perry's-Phobos-1.9.0-SRC
-Since listed cries about me putting stuff all into 1 client I admit its all skidded happy? Jesus cry babys I just do this for fun and they whine and act like I said its all custom and that its private and paid sad people got egos over block game.
+Since a person by "Listed" cries about me putting stuff all into 1 client for fun thats open source and public I admit its all skidded happy? Jesus cry babys I just do this for fun and they whine and act like I said its all custom and act that its private and paid sad people got egos over block game can't even make something for fun nowadays.
 
 A public Phobos 1.9.0 SRC edit by a person called "Perry" he occasionally works on it when he is bored and needs or wants something in the client so please don't message him about adding some insane features im just doing this to learn java better and for fun so u can use this if u want ill be updating mostly.
 

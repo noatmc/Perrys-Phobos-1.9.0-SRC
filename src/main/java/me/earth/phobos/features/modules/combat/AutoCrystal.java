@@ -220,7 +220,7 @@ class AutoCrystal
 
     public
     AutoCrystal ( ) {
-        super ( "AutoCrystal" , "Best CA on the market" , Module.Category.COMBAT , true , false , false );
+        super ( "AutoCrystal" , "Best CA on the market (Optimized)." , Module.Category.COMBAT , true , false , false );
         instance = this;
     }
 

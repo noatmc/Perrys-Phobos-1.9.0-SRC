@@ -44,11 +44,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public
 class EntityUtil implements Util {
@@ -551,6 +553,25 @@ class EntityUtil implements Util {
             return livingBase.getHealth ( ) + livingBase.getAbsorptionAmount ( );
         }
         return 0.0f;
+    }
+
+    public static
+    List < EntityPlayer > getNearbyPlayers ( double d ) {
+        if ( EntityUtil.mc.world.getLoadedEntityList ( ).size ( ) == 0 ) {
+            return null;
+        }
+        List < EntityPlayer > list = EntityUtil.mc.world.playerEntities.stream ( ).filter ( entityPlayer -> EntityUtil.mc.player != entityPlayer ).filter ( entityPlayer -> (double) EntityUtil.mc.player.getDistance ( entityPlayer ) <= d ).filter ( entityPlayer -> ! ( EntityUtil.getHealth ( entityPlayer ) < 0.0f ) ).collect ( Collectors.toList ( ) );
+        list.removeIf ( entityPlayer -> Phobos.friendManager.isFriend ( entityPlayer.getName ( ) ) );
+        return list;
+    }
+
+    public static
+    BlockPos GetPositionVectorBlockPos ( Entity entity , @Nullable BlockPos blockPos ) {
+        Vec3d vec3d = entity.getPositionVector ( );
+        if ( blockPos == null ) {
+            return new BlockPos ( vec3d.x , vec3d.y , vec3d.z );
+        }
+        return new BlockPos ( vec3d.x , vec3d.y , vec3d.z ).add ( blockPos );
     }
 
     public static

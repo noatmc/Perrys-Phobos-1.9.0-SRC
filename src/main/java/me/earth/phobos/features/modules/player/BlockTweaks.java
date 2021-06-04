@@ -101,12 +101,11 @@ class BlockTweaks
     @SubscribeEvent
     public
     void onPacketSend ( PacketEvent.Send event ) {
-        CPacketUseEntity packet;
         Entity entity;
         if ( BlockTweaks.fullNullCheck ( ) ) {
             return;
         }
-        if ( this.noFriendAttack.getValue ( ) && event.getPacket ( ) instanceof CPacketUseEntity && ( entity = ( packet = event.getPacket ( ) ).getEntityFromWorld ( BlockTweaks.mc.world ) ) != null && Phobos.friendManager.isFriend ( entity.getName ( ) ) ) {
+        if ( this.noFriendAttack.getValue ( ) && event.getPacket ( ) instanceof CPacketUseEntity && ( entity = ( (CPacketUseEntity) event.getPacket ( ) ).getEntityFromWorld ( BlockTweaks.mc.world ) ) != null && Phobos.friendManager.isFriend ( entity.getName ( ) ) ) {
             event.setCanceled ( true );
         }
     }
@@ -195,4 +194,3 @@ class BlockTweaks
         }
     }
 }
-

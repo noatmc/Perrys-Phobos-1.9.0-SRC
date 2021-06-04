@@ -182,6 +182,7 @@ class ModuleManager
         this.modules.add ( new ViewModel ( ) );
         this.modules.add ( new GlintModify ( ) );
         this.modules.add ( new CrystalAura ( ) );
+        this.modules.add ( new AutoCity ( ) );
         this.moduleColorMap.put ( this.getModuleByClass ( AntiTrap.class ) , new Color ( 128 , 53 , 69 ) );
         this.moduleColorMap.put ( this.getModuleByClass ( AnvilAura.class ) , new Color ( 90 , 227 , 96 ) );
         this.moduleColorMap.put ( this.getModuleByClass ( ArmorMessage.class ) , new Color ( 255 , 51 , 51 ) );

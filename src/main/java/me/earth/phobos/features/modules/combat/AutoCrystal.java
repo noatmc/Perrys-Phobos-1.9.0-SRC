@@ -351,7 +351,7 @@ class AutoCrystal
         if ( ! this.justRender.getValue ( ) && this.switchTimer.passedMs ( this.switchCooldown.getValue ( ) ) && this.explode.getValue ( ) && this.instant.getValue ( ) && event.getPacket ( ) instanceof SPacketSpawnObject && ( this.syncedCrystalPos == null || ! this.syncedFeetPlace.getValue ( ) || this.damageSync.getValue ( ) == DamageSync.NONE ) ) {
             BlockPos pos;
             SPacketSpawnObject packet2 = event.getPacket ( );
-            if ( packet2.getType ( ) == 51 && AutoCrystal.mc.player.getDistanceSq ( pos = new BlockPos ( packet2.getX ( ) , packet2.getY ( ) , packet2.getZ ( ) ) ) + (double) this.predictOffset.getValue ( ) <= MathUtil.square ( this.breakRange.getValue ( ) ) && ( this.instantTimer.getValue ( ) == PredictTimer.NONE || this.instantTimer.getValue ( ) == PredictTimer.BREAK && this.breakTimer.passedMs ( Phobos.serverManager.getPing() ) || this.instantTimer.getValue ( ) == PredictTimer.PREDICT && this.predictTimer.passedMs ( this.predictDelay.getValue ( ) ) ) ) {
+            if ( packet2.getType ( ) == 51 && AutoCrystal.mc.player.getDistanceSq ( pos = new BlockPos ( packet2.getX ( ) , packet2.getY ( ) , packet2.getZ ( ) ) ) + (double) this.predictOffset.getValue ( ) <= MathUtil.square ( this.breakRange.getValue ( ) ) && ( this.instantTimer.getValue ( ) == PredictTimer.NONE || this.instantTimer.getValue ( ) == PredictTimer.BREAK && this.breakTimer.passedMs ( this.breakDelay.getValue ( ) ) || this.instantTimer.getValue ( ) == PredictTimer.PREDICT && this.predictTimer.passedMs ( this.predictDelay.getValue ( ) ) ) ) {
                 if ( this.predictSlowBreak ( pos.down ( ) ) ) {
                     return;
                 }
@@ -1061,7 +1061,7 @@ class AutoCrystal
 
     private
     void breakCrystal ( ) {
-        if ( this.explode.getValue ( ) && this.breakTimer.passedMs ( Phobos.serverManager.getPing() ) && ( this.switchMode.getValue ( ) == Switch.ALWAYS || this.mainHand || this.offHand ) ) {
+        if ( this.explode.getValue ( ) && this.breakTimer.passedMs ( this.breakDelay.getValue ( ) ) && ( this.switchMode.getValue ( ) == Switch.ALWAYS || this.mainHand || this.offHand ) ) {
             if ( this.packets.getValue ( ) == 1 && this.efficientTarget != null ) {
                 if ( this.justRender.getValue ( ) ) {
                     this.doFakeSwing ( );

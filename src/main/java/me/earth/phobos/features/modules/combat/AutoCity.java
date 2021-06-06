@@ -129,9 +129,11 @@ class AutoCity
             this.toggle ( );
             return;
         }
-        Phobos.rotationManager.updateRotations ( );
-        Phobos.rotationManager.lookAtPos ( blockPos );
-        updateWalkingPlayerEvent.setCanceled ( true );
+        if ( this.rotate.getValue ( ) ) {
+            Phobos.rotationManager.updateRotations ( );
+            Phobos.rotationManager.lookAtPos ( blockPos );
+            updateWalkingPlayerEvent.setCanceled ( true );
+        }
         BlockUtil.Update ( this.range.getValue ( ) , this.raytrace.getValue ( ) );
     }
 }

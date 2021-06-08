@@ -1,10 +1,9 @@
-package me.earth.phobos.module.modules.exploit;
+package me.earth.phobos.features.modules.player;
 
-import me.earth.phobos.command.Command;
+import me.earth.phobos.features.command.Command;
 import me.earth.phobos.event.events.*;
-import me.earth.phobos.module.Module;
-import me.earth.phobos.module.Module.Category;
-import me.earth.phobos.setting.Setting;
+import me.earth.phobos.features.Feature;
+import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.Timer;
 import me.earth.phobos.util.AlpineUtil.listener.*;
 import me.earth.phobos.util.AlpineUtil.bus;
@@ -40,8 +39,12 @@ public class InstaMine extends Module {
 	public static InstaMine INSTANCE;
 
   /*
-    Original Author : Kami147 (https://github.com/Kami147)
+  Original Author : Kami147 (https://github.com/Kami147)
   */
+
+  public InstaMine() {
+    super("InstaMine", "Instantly breaks the block using exploit :)", Module.Category.PLAYER, true, false, false);
+  }
 
 	@Override
 	protected void onEnable() {

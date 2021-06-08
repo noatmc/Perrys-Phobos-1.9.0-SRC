@@ -27,6 +27,6 @@ Perry's Phobos 1.9.0 SRC he occasionally works on when he is bored needs or want
   <h4> - Yport mode in speed.</h4>
   <h4> - Placebo settings removed.</h4>
   <h4> - Made Placebo settings non placebo.</h4>
-  <h4> - Strength & Burrow Alert in notifcati</h4>ons.</h4>
+  <h4> - Strength & Burrow Alert in notifcations.</h4>
   <h4> - ViewModel.</h4>
 </details>

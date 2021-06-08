@@ -6,8 +6,7 @@ import me.earth.phobos.module.Module;
 import me.earth.phobos.module.Module.Category;
 import me.earth.phobos.setting.Setting;
 import me.earth.phobos.util.Timer;
-import me.zero.alpine.listener.EventHandler;
-import me.zero.alpine.listener.Listener;
+import me.earth.phobos.util.AlpineUtil
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -42,7 +41,7 @@ public class InstaMine extends Module {
   /*
     Original Author : Kami147 (https://github.com/Kami147)
   */
-  
+
 	@Override
 	protected void onEnable() {
 		INSTANCE = this;

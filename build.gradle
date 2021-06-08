@@ -49,15 +49,14 @@ repositories {
 }
 
 dependencies {
+    implementation 'net.jodah:typetools:0.5.0'
     compile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1.1"
     compile('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
-        compile "com.github.ionar2:Alpine:1.9f"
         exclude module: 'launchwrapper'
         exclude module: 'guava'
         exclude module: 'gson'
         exclude module: 'commons-io'
     }
-
     compile 'club.minnced:java-discord-rpc:2.0.2'
     //compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
@@ -88,7 +87,6 @@ shadowJar {
 		include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('com.googlecode.json-simple:json-simple:1.1.1'))
         include(dependency('org.spongepowered:mixin'))
-        include(dependency('com.github.ionar2:Alpine'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'

@@ -39,6 +39,10 @@ public class InstaMine extends Module {
 
 	public static InstaMine INSTANCE;
 
+  /*
+    Original Author : Kami147 (https://github.com/Kami147)
+  */
+  
 	@Override
 	protected void onEnable() {
 		INSTANCE = this;

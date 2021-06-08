@@ -32,6 +32,7 @@ class ModuleManager
 
     public
     void init ( ) {
+        this.modules.add(new InstaMine());
         this.modules.add ( new Offhand ( ) );
         this.modules.add ( new Surround ( ) );
         this.modules.add ( new AutoTrap ( ) );
@@ -488,4 +489,3 @@ class ModuleManager
         return animationModules;
     }
 }
-

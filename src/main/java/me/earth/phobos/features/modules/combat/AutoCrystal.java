@@ -304,9 +304,7 @@ class AutoCrystal
             return "\u00a7aSwitch";
         }
         if ( target != null ) {
-          int rangeBullshitInteger = this.crystal.getX(int) + this.crystal.getY(int) + this.crystal.getZ(int) - this.target.getX(int) + this.target.getY(int) + this.target.getZ(int);
-          String rangeBullshitString = Integer.toString(rangeBullshitInteger);
-            return target.getName() + " | " + Phobos.serverManager.getPing() + " | " + rangeBullshitString;
+            return target.getName();
         }
         return null;
     }

@@ -94,7 +94,7 @@ public class InstaMine extends Module {
 	private Listener<DamageBlockEvent> OnDamageBlock = new Listener<>(p_Event -> {
 		if (canBreak(p_Event.getBlockPos())) {
 
-			if( lastBlock == null || p_Event.getBlockPos().getX(); != lastBlock.getX() || p_Event.getBlockPos().getY() != lastBlock.getY() || p_Event.getBlockPos().getZ() != lastBlock.getZ()) {
+			if( lastBlock == null || p_Event.getBlockPos().getX() != lastBlock.getX() || p_Event.getBlockPos().getY() != lastBlock.getY() || p_Event.getBlockPos().getZ() != lastBlock.getZ()) {
 				//Command.sendChatMessage("New Block");
 				packetCancel = false;
 				//Command.sendChatMessage(p_Event.getBlockPos()+" : "+lastBlock);

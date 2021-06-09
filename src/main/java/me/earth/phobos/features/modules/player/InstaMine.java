@@ -118,7 +118,7 @@ public class InstaMine extends Module {
 		}
 	});
 
-	private boolean canBreak(BlockPos pos) {
+	Boolean canBreak(BlockPos pos) {
 		final IBlockState blockState = mc.world.getBlockState(pos);
 		final Block block = blockState.getBlock();
 

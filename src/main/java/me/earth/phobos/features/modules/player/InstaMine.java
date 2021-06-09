@@ -142,8 +142,5 @@ public class InstaMine extends Module {
 			p_Event.cancel();
 
 		}
-	});
-
-	// fun fact : code positioning affects how it works
-
+	}
 }

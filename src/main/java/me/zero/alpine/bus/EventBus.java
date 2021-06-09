@@ -1,7 +1,7 @@
-package me.earth.phobos.features.util.AlpineUtil.bus;
+package me.zero.alpine.bus;
 
-import me.earth.phobos.features.util.AlpineUtil.listener.Listenable;
-import me.earth.phobos.features.util.AlpineUtil.Listener;
+import me.zero.alpine.listener.Listenable;
+import me.zero.alpine.listener.Listener;
 
 import java.util.Arrays;
 

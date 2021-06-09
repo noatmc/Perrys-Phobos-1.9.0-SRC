@@ -1,12 +1,15 @@
 package me.earth.phobos.features.modules.player;
 
+// phobos sutff
 import me.earth.phobos.features.command.Command;
 import me.earth.phobos.event.events.*;
-import me.earth.phobos.features.Feature;
+import me.earth.phobos.features.modules.Module;
 import me.earth.phobos.features.setting.Setting;
 import me.earth.phobos.util.Timer;
-import me.earth.phobos.util.AlpineUtil.listener.*;
-import me.earth.phobos.util.AlpineUtil.bus;
+// alpine stuff
+import me.zero.alpine.listener.EventHandler;
+import me.zero.alpine.listener.Listener;
+// minecraft
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,8 +21,9 @@ import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+// lwjgl
 import org.lwjgl.opengl.GL11;
-
+// java stuff
 import java.awt.*;
 import java.text.DecimalFormat;
 

@@ -1,6 +1,6 @@
-package me.earth.phobos.features.util.AlpineUtil.listener;
+package me.zero.alpine.listener;
 
-import me.earth.phobos.features.util.AlpineUtil.bus.EventManager;
+import me.zero.alpine.bus.EventManager;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

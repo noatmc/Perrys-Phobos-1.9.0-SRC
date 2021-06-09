@@ -1,4 +1,4 @@
-package me.earth.phobos.features.util.AlpineUtil.Event;
+package me.zero.alpine.event;
 
 import me.zero.alpine.listener.Listener;
 

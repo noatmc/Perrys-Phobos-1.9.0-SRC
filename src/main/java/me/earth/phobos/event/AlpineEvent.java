@@ -1,6 +1,6 @@
 package me.earth.phobos.event;
 
-import me.earth.phobos.features.util.AlpineUtil.type.Cancellable;
+import me.zero.alpine.type.Cancellable;
 
 public class AlpineEvent extends Cancellable {
 }

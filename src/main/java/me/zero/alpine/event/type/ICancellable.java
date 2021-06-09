@@ -1,4 +1,4 @@
-package me.earth.phobos.features.util.AlpineUtil.Event.type;
+package me.zero.alpine.event.type;
 
 /**
  * A type of event that can be cancelled. The exact effect of cancelling an event

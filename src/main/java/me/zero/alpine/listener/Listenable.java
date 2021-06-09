@@ -1,6 +1,6 @@
-package me.earth.phobos.features.util.AlpineUtil.listener;
+package me.zero.alpine.listener;
 
-import me.earth.phobos.features.util.AlpineUtil.bus.EventBus;
+import me.zero.alpine.bus.EventBus;
 
 /**
  * An interface that must be implemented by a class in order for it to

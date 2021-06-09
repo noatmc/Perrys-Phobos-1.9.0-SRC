@@ -1,4 +1,4 @@
-package me.earth.phobos.features.util.AlpineUtil.event.type;
+package me.zero.alpine.event.type;
 
 /**
  * Implementation of {@link ICancellable}

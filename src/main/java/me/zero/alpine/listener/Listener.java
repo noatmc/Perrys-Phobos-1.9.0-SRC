@@ -1,6 +1,6 @@
-package me.earth.phobos.features.util.AlpineUtil.listener;
+package me.zero.alpine.listener;
 
-import me.earth.phobos.features.util.AlpineUtil.Event.*;
+import me.zero.alpine.event.EventPriority;
 import net.jodah.typetools.TypeResolver;
 
 import java.util.function.Predicate;

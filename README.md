@@ -1,5 +1,5 @@
-# Perrys-Phobos-1.9.0-SRC
-Perry's Phobos 1.9.0 SRC he occasionally works on when he is bored needs or wants something in the client.
+# Perry's Phobos 1.9 Edit Source Code 
+- Perry will occasionally works on this project when he is bored, needs or wants something in the client.
 - (somewhat maintained by noat since perry private his original src)
 # all the codes belong to perry (absolute chad for making this)
 
@@ -31,3 +31,5 @@ Perry's Phobos 1.9.0 SRC he occasionally works on when he is bored needs or want
   <h4> - Strength & Burrow Alert in notifcations.</h4>
   <h4> - ViewModel.</h4>
 </details>
+
+## perry if you want me to take down this repo, you can contact me on discord (stengt#6062)

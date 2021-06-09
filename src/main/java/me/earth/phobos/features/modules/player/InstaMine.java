@@ -35,7 +35,6 @@ public class InstaMine extends Module {
 	private boolean packetCancel = false;
 	private Timer breaktimer = new Timer();
   private EnumFacing direction;
-	private PacketEvent p_Event = new PacketEvent();
 
   public Setting <Boolean> picOnly = this.register(new Setting<Boolean>("PickaxeOnly", true));
   public Setting <Integer> delay = this.register(new Setting<Integer>("Range", 5 ,1 , 6 ));
@@ -57,7 +56,7 @@ public class InstaMine extends Module {
 	}
 
 	public static InstaMine getInstance(){
-		if(INSTANCE==null){
+		if( INSTANCE == null ){
 			INSTANCE = new InstaMine();
 		}
 		return INSTANCE;
@@ -93,26 +92,26 @@ public class InstaMine extends Module {
 
 	@EventHandler
 	private Listener<DamageBlockEvent> OnDamageBlock = new Listener<>(p_Event -> {
-		if (canBreak(p_Event.getPos())) {
+		if (canBreak(p_Event.getBlockPos())) {
 
-			if(lastBlock==null||p_Event.getPos().x!=lastBlock.x || p_Event.getPos().y!=lastBlock.y || p_Event.getPos().z!=lastBlock.z) {
+			if( lastBlock == null || p_Event.getBlockPos().x != lastBlock.x || p_Event.getBlockPos().y != lastBlock.y || p_Event.getBlockPos().z != lastBlock.z) {
 				//Command.sendChatMessage("New Block");
 				packetCancel = false;
-				//Command.sendChatMessage(p_Event.getPos()+" : "+lastBlock);
+				//Command.sendChatMessage(p_Event.getBlockPos()+" : "+lastBlock);
 				mc.player.swingArm(EnumHand.MAIN_HAND);
 				mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
-						p_Event.getPos(), p_Event.getDirection()));
+						p_Event.getBlockPos(), p_Event.getEnumFacing()));
 				packetCancel = true;
-			}else{
+			} else {
 				packetCancel = true;
 			}
 			//Command.sendChatMessage("Breaking");
 			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-					p_Event.getPos(), p_Event.getDirection()));
+					p_Event.getBlockPos(), p_Event.getEnumFacing()));
 
-			renderBlock = p_Event.getPos();
-			lastBlock = p_Event.getPos();
-			direction = p_Event.getDirection();
+			renderBlock = p_Event.getBlockPos();
+			lastBlock = p_Event.getBlockPos();
+			direction = p_Event.getEnumFacing();
 
 			p_Event.cancel();
 

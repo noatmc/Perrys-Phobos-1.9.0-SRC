@@ -86,7 +86,8 @@ public class InstaMine extends Module {
 		Packet packet = event.getPacket();
 		if (packet instanceof CPacketPlayerDigging) {
 			CPacketPlayerDigging digPacket = (CPacketPlayerDigging) packet;
-			if(((CPacketPlayerDigging) packet).getAction()== CPacketPlayerDigging.Action.START_DESTROY_BLOCK && packetCancel) event.cancel();
+			if (((CPacketPlayerDigging) packet).getAction() == CPacketPlayerDigging.Action.START_DESTROY_BLOCK && packetCancel ) {
+				event.cancel();
 		}
 	});
 

@@ -1,5 +1,6 @@
 # Perrys-Phobos-1.9.0-SRC
 Perry's Phobos 1.9.0 SRC he occasionally works on when he is bored needs or wants something in the client.
+(somewhat maintained by noat since perry private his original src)
 # all the codes belong to perry (absolute chad for making this)
 
 # plans :/

@@ -119,12 +119,13 @@ public class InstaMine extends Module {
 	});
 
 	@Override
-	private boolean canBreak(BlockPos pos) {
-		final IBlockState blockState = mc.world.getBlockState(pos);
+	private boolean canBreak(BlockPos blockBullshitSendHelpIAmFuckingBored) {
+		final IBlockState blockState = mc.world.getBlockState(blockBullshitSendHelpIAmFuckingBored);
 		final Block block = blockState.getBlock();
 
-		return block.getBlockHardness(blockState, mc.world, pos) != -1;
+		return block.getBlockHardness(blockState, mc.world, blockBullshitSendHelpIAmFuckingBored) != -1;
 	}
+
 
 	public BlockPos getTarget(){
 		return renderBlock;

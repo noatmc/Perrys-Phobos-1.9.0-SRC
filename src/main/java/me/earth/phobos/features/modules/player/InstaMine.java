@@ -36,9 +36,9 @@ public class InstaMine extends Module {
 	private Timer breaktimer = new Timer();
   private EnumFacing direction;
 
-  public Setting <Boolean> picOnly = this.register(new Setting<Boolean>("PickaxeOnly"), true);
-  public Setting <Integer> delay = this.register (new Setting<Integer>("Range", 5 ,1 , 6 ));
-  public Setting <Boolean> autoBreak = this.register(new Setting<Boolean>("AutoBreak"), true);
+  public Setting <Boolean> picOnly = this.register(new Setting<Boolean>("PickaxeOnly", true));
+  public Setting <Integer> delay = this.register(new Setting<Integer>("Range", 5 ,1 , 6 ));
+  public Setting <Boolean> autoBreak = this.register(new Setting<Boolean>("AutoBreak", true));
 
 	public static InstaMine INSTANCE;
 
@@ -51,7 +51,7 @@ public class InstaMine extends Module {
   }
 
 	@Override
-	protected void onEnable() {
+	public void onEnable() {
 		INSTANCE = this;
 	}
 

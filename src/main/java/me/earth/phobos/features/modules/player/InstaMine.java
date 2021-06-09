@@ -143,4 +143,3 @@ public class InstaMine extends Module {
 
 		}
 	});
-}

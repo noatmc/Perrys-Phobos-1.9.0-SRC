@@ -118,7 +118,7 @@ public class InstaMine extends Module {
 		}
 	});
 
-	Boolean canBreak(BlockPos pos) {
+	public Boolean canBreak(BlockPos pos) {
 		final IBlockState blockState = mc.world.getBlockState(pos);
 		final Block block = blockState.getBlock();
 
@@ -132,10 +132,13 @@ public class InstaMine extends Module {
 	public void setTarget(BlockPos pos){
 		renderBlock = pos;
 		packetCancel = false;
-		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK pos, EnumFacing.DOWN);
+		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
+				pos, EnumFacing.DOWN));
 		packetCancel = true;
-		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK pos, EnumFacing.DOWN);
+		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+				pos, EnumFacing.DOWN));
 		direction = EnumFacing.DOWN;
 		lastBlock = pos;
 	}
+
 }

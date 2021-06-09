@@ -31,5 +31,6 @@
   <h4> - Strength & Burrow Alert in notifcations.</h4>
   <h4> - ViewModel.</h4>
 </details>
-
+# contributing
+- contributing is more than welcome since the owner of the repo (noatmc) is a fucking braindead and a professional blockgame retard so send him help via creating a fork and then update the stuff you want and then create a pull request
 ## perry if you want me to take down this repo, you can contact me on discord (stengt#6062)

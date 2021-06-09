@@ -35,6 +35,7 @@ public class InstaMine extends Module {
 	private boolean packetCancel = false;
 	private Timer breaktimer = new Timer();
   private EnumFacing direction;
+	private PacketEvent p_Event = new PacketEvent();
 
   public Setting <Boolean> picOnly = this.register(new Setting<Boolean>("PickaxeOnly", true));
   public Setting <Integer> delay = this.register(new Setting<Integer>("Range", 5 ,1 , 6 ));

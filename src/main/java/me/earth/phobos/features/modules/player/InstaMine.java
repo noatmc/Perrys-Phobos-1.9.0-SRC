@@ -63,6 +63,32 @@ public class InstaMine extends Module {
 	}
 
 	@Override
+	private boolean canBreak(BlockPos insertSomethingCreativeHere) {
+		final IBlockState blockState = mc.world.getBlockState(blockBullshitSendHelpIAmFuckingBored);
+		final Block block = blockState.getBlock();
+
+		return block.getBlockHardness(blockState, mc.world, blockBullshitSendHelpIAmFuckingBored) != -1;
+	}
+
+	@Override
+	public BlockPos getTarget() {
+		return renderBlock;
+	}
+
+	@Override
+	public void setTarget(BlockPos pos) {
+		renderBlock = pos;
+		packetCancel = false;
+		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
+				pos, EnumFacing.DOWN));
+		packetCancel = true;
+		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+				pos, EnumFacing.DOWN));
+		direction = EnumFacing.DOWN;
+		lastBlock = pos;
+	}
+
+	@Override
 	public void onUpdate() {
 		if(renderBlock != null) {
 			if(autoBreak.getValue() && breaktimer.passedMs(delay.getValue())) {
@@ -118,31 +144,6 @@ public class InstaMine extends Module {
 		}
 	});
 
-	@Override
-	private boolean canBreak(BlockPos blockBullshitSendHelpIAmFuckingBored) {
-		final IBlockState blockState = mc.world.getBlockState(blockBullshitSendHelpIAmFuckingBored);
-		final Block block = blockState.getBlock();
-
-		return block.getBlockHardness(blockState, mc.world, blockBullshitSendHelpIAmFuckingBored) != -1;
-	}
-
-	// if it works once then it should twice lmao 😉
-	@Override
-	public BlockPos getTarget(){
-		return renderBlock;
-	}
-
-	@Override
-	public void setTarget(BlockPos pos){
-		renderBlock = pos;
-		packetCancel = false;
-		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
-				pos, EnumFacing.DOWN));
-		packetCancel = true;
-		mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-				pos, EnumFacing.DOWN));
-		direction = EnumFacing.DOWN;
-		lastBlock = pos;
-	}
+	// fun fact : code positioning affects how it works
 
 }

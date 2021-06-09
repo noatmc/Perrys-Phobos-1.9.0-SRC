@@ -140,7 +140,6 @@ public class InstaMine extends Module {
 			direction = p_Event.getEnumFacing();
 
 			p_Event.cancel();
-
-		});
-	}
+		}
+	});
 }

@@ -86,10 +86,10 @@ public class InstaMine extends Module {
 		Packet packet = event.getPacket();
 		if (packet instanceof CPacketPlayerDigging) {
 			CPacketPlayerDigging digPacket = (CPacketPlayerDigging) packet;
-			if (((CPacketPlayerDigging) packet).getAction() == CPacketPlayerDigging.Action.START_DESTROY_BLOCK && packetCancel ) {
+			if (((CPacketPlayerDigging) packet).getAction() == CPacketPlayerDigging.Action.START_DESTROY_BLOCK && packetCancel) {
 				event.cancel();
 		}
-	});
+	}
 
 	@EventHandler
 	private Listener<DamageBlockEvent> OnDamageBlock = new Listener<>(p_Event -> {
@@ -107,8 +107,7 @@ public class InstaMine extends Module {
 				packetCancel = true;
 			}
 			//Command.sendChatMessage("Breaking");
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-					p_Event.getBlockPos(), p_Event.getEnumFacing()));
+			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, p_Event.getBlockPos(), p_Event.getEnumFacing()));
 
 			renderBlock = p_Event.getBlockPos();
 			lastBlock = p_Event.getBlockPos();

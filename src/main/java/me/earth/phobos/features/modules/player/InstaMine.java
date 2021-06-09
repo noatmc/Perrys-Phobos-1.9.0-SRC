@@ -126,11 +126,13 @@ public class InstaMine extends Module {
 		return block.getBlockHardness(blockState, mc.world, blockBullshitSendHelpIAmFuckingBored) != -1;
 	}
 
-
+	// if it works once then it should twice lmao 😉
+	@Override
 	public BlockPos getTarget(){
 		return renderBlock;
 	}
 
+	@Override
 	public void setTarget(BlockPos pos){
 		renderBlock = pos;
 		packetCancel = false;

@@ -5,6 +5,7 @@
 # contributing
 - contributing is more than welcome since the owner of the repo (noatmc) is a fucking braindead and a professional blockgame retard so send him help via creating a fork and then update the stuff you want and then create a pull request
 # current status
+- maintainer (noatmc) will take a break for a while due to irl stuff and getting tired of the project. 
 - fixing instaminne
 # plans :/
 #### - elevator

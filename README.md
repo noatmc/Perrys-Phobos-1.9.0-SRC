@@ -4,6 +4,8 @@
 # all the codes belong to perry (absolute chad for making this)
 # contributing
 - contributing is more than welcome since the owner of the repo (noatmc) is a fucking braindead and a professional blockgame retard so send him help via creating a fork and then update the stuff you want and then create a pull request
+# current status
+- fixing instaminne
 # plans :/
 #### - elevator
 #### - instamine

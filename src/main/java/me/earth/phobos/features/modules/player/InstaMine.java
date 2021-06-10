@@ -142,4 +142,5 @@ public class InstaMine extends Module {
 			p_Event.cancel();
 		}
 	});
+	});
 }

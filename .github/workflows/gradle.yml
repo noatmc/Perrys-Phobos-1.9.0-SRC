@@ -16,8 +16,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Setup Ci Workspace
-      run: ./gradlew setupCiWorkspace
+    - name: Setup Decomp Workspace
+      run: ./gradlew setupDecompWorkspace
 
     - name: Build
       run: ./gradlew build

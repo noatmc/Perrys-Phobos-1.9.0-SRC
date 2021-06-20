@@ -56,7 +56,6 @@ dependencies {
         exclude module: 'gson'
         exclude module: 'commons-io'
     }
-    compile 'com.github.ZeroMemes:Alpine:1.5'
     compile 'club.minnced:java-discord-rpc:2.0.2'
     //compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
@@ -86,7 +85,6 @@ shadowJar {
     dependencies {
 		include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('com.googlecode.json-simple:json-simple:1.1.1'))
-		    include(dependency('com.github.ZeroMemes:Alpine'))
         include(dependency('org.spongepowered:mixin'))
     }
 

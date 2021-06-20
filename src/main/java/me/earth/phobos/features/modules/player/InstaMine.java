@@ -3,7 +3,6 @@ package me.earth.phobos.features.modules.player;
 import me.earth.phobos.features.command.Command;
 import me.earth.phobos.event.events.*;
 import me.earth.phobos.features.modules.Module;
-import me.earth.phobos.module.modules.combat.AutoCrystal;
 import me.earth.phobos.features.setting.*;
 import me.earth.phobos.util.Timer;
 import me.zero.alpine.listener.EventHandler;
@@ -25,15 +24,9 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class InstaMine extends Module {
-
-  // totally didn't paste the render from speedmine
   private Setting<Boolean> autoBreak = this.register(new Setting <Boolean> ("Auto Break", true));
   private Setting<Integer> delay = this.register (new Setting<Integer>("Delay", 20, 0, 500));
   private Setting<Boolean> picOnly = this.register(new Setting <Boolean> ("Only Pickaxe", true));
-  public Setting < Boolean > box = this.register ( new Setting < Object > ( "Box" , Boolean.FALSE , v -> this.render.getValue ( ) ) );
-  private final Setting < Integer > boxAlpha = this.register ( new Setting < Object > ( "BoxAlpha" , 85 , 0 , 255 , v -> this.box.getValue ( ) && this.render.getValue ( ) ) );
-  public Setting < Boolean > outline = this.register ( new Setting < Object > ( "Outline" , Boolean.TRUE , v -> this.render.getValue ( ) ) );
-  private final Setting < Float > lineWidth = this.register ( new Setting < Object > ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getValue ( ) && this.render.getValue ( ) ) );
 
   private BlockPos renderBlock;
   private BlockPos lastBlock;
@@ -52,14 +45,6 @@ public class InstaMine extends Module {
 			INSTANCE = new InstaMine();
 		}
 		return INSTANCE;
-	}
-
-	@Override
-	public void onWorldRender(RenderEvent event) {
-		if (renderBlock != null) {
-      // i totally didn't copy from onWorldRender() function of SpeedMine
-      RenderUtil.drawBoxESP(this.renderBlock , color, false, color, this.lineWidth.getValue() ,this.outline.getValue() ,this.box.getValue() , this.boxAlpha.getValue(), false );
-		}
 	}
 
 	@Override
@@ -91,7 +76,7 @@ public class InstaMine extends Module {
 	});
 
 	@EventHandler
-	private Listener<DamageBlockEvent> OnDamageBlock = new Listener<>(p_Event -> {
+	private Listener<BlockDamageEvent> OnDamageBlock = new Listener<>(p_Event -> {
 		if (canBreak(p_Event.getPos())) {
 
 			if(lastBlock==null||p_Event.getPos().getX()!=lastBlock.getX() || p_Event.getPos().getY()!=lastBlock.getY() || p_Event.getPos().getZ()!=lastBlock.getZ()) {

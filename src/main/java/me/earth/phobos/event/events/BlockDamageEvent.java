@@ -9,7 +9,7 @@ public class BlockDamageEvent extends PhobosEvent {
     private BlockPos blockPos;
     private EnumFacing enumFacing;
 
-    public DamageBlockEvent(BlockPos blockPos, EnumFacing enumFacing) {
+    public BlockDamageEvent(BlockPos blockPos, EnumFacing enumFacing) {
         this.blockPos = blockPos;
         this.enumFacing = enumFacing;
     }

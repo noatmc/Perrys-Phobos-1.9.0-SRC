@@ -1,5 +1,5 @@
 # Perry's-Phobos-1.9.0-SRC
-- recently noatmc (the maintain guy) brought back the project by reverting all of his old change and restart from the old perrys project!
+- recently noatmc (the maintain guy) brought back the project by reverting all of his old change and restart from the old perrys project. but the project is in hiatus.
 <details>
   <summary>Changelog (Differnce from normal 1.9.0 and this edit of mine.)</summary> <br>
   All modules on modulemanager. <br>
